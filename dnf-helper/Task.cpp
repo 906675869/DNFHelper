@@ -1,5 +1,10 @@
 #include "task.h"
 #include "judge.h"
+#include <algorithm>
+#include "call.h"
+#include "helper.h"
+
+using namespace std;
 
 void Task::HandleMain()
 {
@@ -7,34 +12,160 @@ void Task::HandleMain()
 
 TaskStruct Task::MainLineTask()
 {
-
+	ULONG64 task_addr = rw.ReadLong(任务基址);
+	ULONG64	start = rw.ReadLong(task_addr + 全部任务首地址);
+	ULONG64 end = rw.ReadLong(task_addr + 全部任务尾地址);
+	int	num = int((end - start) / 8);
+	for (int i = 0; i < num; i++) {
+		ULONG64 task_ptr = rw.ReadLong(start + i * 8);
+		int	task_type = rw.ReadInt(task_ptr + 任务类型);
+		if (task_type == 0) {
+			int task_length = rw.ReadInt(task_ptr + 任务大小);
+			wstring task_name;
+			if (task_length > 7) {
+				ULONG64 tmp = rw.ReadLong(task_ptr + 16);
+				task_name = UnicodeToAnsi(rw.ReadBytes(tmp, 100));
+			}
+			else {
+				task_name = UnicodeToAnsi(rw.ReadBytes(task_ptr + 16, 100));
+			}
+			wstring task_conditional = UnicodeToAnsi(rw.ReadBytes(rw.ReadLong(task_ptr + 任务条件), 100));
+				// # 任务编号
+			int	task_id = rw.ReadInt(task_ptr);
+			return { task_name , task_conditional , task_id };
+		}
+		
+	}
 
 	return TaskStruct();
 }
 
 TaskSkip Task::CouldSkip(int taskId)
 {
-	return TaskSkip();
+	ULONG64 task_addr = rw.ReadLong(任务基址);
+	ULONG64 start = rw.ReadLong(task_addr + 已接任务首地址);
+	ULONG64 end = rw.ReadLong(task_addr + 已接任务尾地址);
+	int	num = int((end - start) / 16);
+
+	for (int i = 0; i < num; i++) {
+		ULONG64 task_ptr = rw.ReadLong(start + i * 16);
+		if (rw.ReadInt(task_ptr) == taskId){
+			int task_level = rw.ReadInt(task_ptr + 任务等级);
+			if (task_level < jd.GetRoleLevel()) {
+				return TaskSkip{ TRUE, task_level };
+			}
+		}
+	}
+	return TaskSkip{ FALSE, 0 };
 }
 
-int Task::Conditional(wstring contiditional)
+int Task::Conditional(string contiditional)
 {
+	string brush_conditions = "[meet npc]#[seek n meet npc]#[reach the range]#[look cinematic]#[question]#[quest clear]";
+	auto result = std::search(brush_conditions.begin(), brush_conditions.end(), contiditional.begin(), contiditional.end());
+	if (result != brush_conditions.end()) {
+		return 1;
+	}
+	brush_conditions = "[hunt monster]#[hunt enemy]#[condition under clear]#[clear map]#[question]#[seeking]#[clear dungeon index]";
+	auto result = std::search(brush_conditions.begin(), brush_conditions.end(), contiditional.begin(), contiditional.end());
+	if (result != brush_conditions.end()) {
+		return 2;
+	}
 	return 0;
 }
 
 int Task::TaskMap(int taskId)
 {
+	ULONG64 task_addr = rw.ReadLong(任务基址);
+	ULONG64 start = rw.ReadLong(task_addr + 已接任务首地址);
+	ULONG64 end = rw.ReadLong(task_addr + 已接任务尾地址);
+	int	num = int((end - start) / 16);
+
+	for (int i = 0; i < num; i++) {
+		ULONG64 task_ptr = rw.ReadLong(start + i * 16);
+		if (rw.ReadInt(task_ptr) == taskId) {
+			ULONG64 task_data = rw.ReadLong(task_ptr + 任务副本);
+			return rw.ReadInt(task_data);
+		}
+	}
 	return 0;
 }
 
 void Task::SubmitTask()
 {
+	ULONG64 task_addr = rw.ReadLong(任务基址);
+	ULONG64	start = rw.ReadLong(task_addr + 全部任务首地址);
+	ULONG64 end = rw.ReadLong(task_addr + 全部任务尾地址);
+	int	num = int((end - start) / 8);
+
+	for (int i = 0; i < num; i++) {
+		ULONG64 task_ptr = rw.ReadLong(start + i * 8);
+		int	task_type = rw.ReadInt(task_ptr + 任务类型);
+		if (task_type == 0) {
+			int task_id = rw.ReadInt(task_ptr);
+			cl.SubmitMissionCall(task_id);
+		}
+	}
+
+	start = rw.ReadLong(task_addr + 已接任务首地址);
+	end = rw.ReadLong(task_addr + 已接任务尾地址);
+	num = int((end - start) / 16);
+	for (int i = 0; i < num; i++) {
+		int task_ptr = rw.ReadLong(start + i * 16);
+		int	task_type = rw.ReadInt(task_ptr + 任务类型);
+		if(task_type == 0){
+			int task_id = rw.ReadInt(task_ptr);
+			cl.SubmitMissionCall(task_id);
+		}
+	}
 }
 
 int Task::FinishStatus(int taskId)
 {
-	return 0;
+	ULONG64 task_addr = rw.ReadLong(任务基址);
+	ULONG64	start = rw.ReadLong(task_addr + 已接任务首地址);
+	ULONG64 end = rw.ReadLong(task_addr + 已接任务尾地址);
+	int	num = int((end - start) / 16);
+
+	int tmp_arr[3];
+
+	for (int i = 0; i < num; i++) {
+		ULONG64 pointer = rw.ReadLong(start + i * 16);
+		if (rw.ReadInt(pointer) == taskId) {
+			int frequency = rw.ReadInt(start + i * 16 + 8);
+			if (frequency < 512) {
+				return frequency;
+			}
+			else if (frequency == 512) {
+				return 1;
+			}
+			tmp_arr[0] = int(frequency % 512);
+			int	the_rest = int(frequency) - tmp_arr[0];
+			if (the_rest < 262144) {
+				tmp_arr[1] = int(the_rest / 512);// 无用？
+				tmp_arr[1] = int(the_rest % 262144 / 512);
+			}
+			the_rest = int(the_rest - tmp_arr[0] * 512);
+			if (the_rest < 262144) {
+				tmp_arr[2] = 0;
+				tmp_arr[2] = int(the_rest % 262144);
+			}
+			sort(tmp_arr, tmp_arr + 3 ,greater<int>());
+			if (tmp_arr[0] == 0) {
+				tmp_arr[0] = 1;
+			}
+			return tmp_arr[0];
+		}
+	}
+	return -1;
 }
+
+
+
+
+
+
+
 
 int Task::HighestMap()
 {

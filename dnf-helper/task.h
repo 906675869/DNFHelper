@@ -26,7 +26,7 @@ public:
 	// 任务能否跳过
 	static TaskSkip CouldSkip(int taskId);
 	// 任务条件
-	static int Conditional(wstring contiditional);
+	static int Conditional(string contiditional);
 	// 任务地图
 	static int TaskMap(int taskId);
 	// 提交任务
