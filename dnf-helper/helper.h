@@ -38,3 +38,8 @@ BOOL FindProcessPid(LPCWSTR ProcessName, DWORD& dwPid);
 
 // 创建字节数组
 vector<byte> makeByteArray(vector<byte> data);
+
+// wstring to string 
+wstring string2wstring(string str);
+
+string wstring2string(wstring wstr);
