@@ -29,7 +29,7 @@ void Action::HookHarm()
 	hookSwitch = !hookSwitch;
 	if (hookSwitch)
 	{
-		ULONG64 randomHarm = GetRandomNum(666666, 1999999);
+		ULONG64 randomHarm = GetRandomNum(1666666, 1999999);
 		originHook = rw.ReadBytes(全局基址, 10);
 		rw.WriteBytes(全局基址, AppendBytes({ 72, 190 }, IntToBytes(randomHarm, 8)));
 		printf(">> HOOK伤害开启\n");

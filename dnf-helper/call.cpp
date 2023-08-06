@@ -79,13 +79,13 @@ void Call::MemoryCompileCall(vector<BYTE> vals)
 ULONG64 Call::PersonCall()
 {
 	ULONG64 emptyAddress = 全局空白 + 4000;
-	vector<byte>asm_code;
-	asm_code = makeByteArray({ 72, 131, 236,100 });
-	asm_code = asm_code + makeByteArray({ 72,184 }) + IntToBytes(人物CALL);
-	asm_code = asm_code + makeByteArray({ 255,208 });
-	asm_code = asm_code + makeByteArray({ 72,163 }) + IntToBytes(emptyAddress);
-	asm_code = asm_code + makeByteArray({ 72,131,196,100 });
-	MemoryCompileCall(asm_code);
+	vector<byte>asmCode;
+	asmCode = makeByteArray({ 72, 131, 236,100 });
+	asmCode = asmCode + makeByteArray({ 72,184 }) + IntToBytes(人物CALL);
+	asmCode = asmCode + makeByteArray({ 255,208 });
+	asmCode = asmCode + makeByteArray({ 72,163 }) + IntToBytes(emptyAddress);
+	asmCode = asmCode + makeByteArray({ 72,131,196,100 });
+	MemoryCompileCall(asmCode);
 	return  rw.ReadLong(emptyAddress);
 }
 
@@ -315,7 +315,7 @@ void Call::OverMapCall(int direction)
 	if (!jd.IsOpenDoor()) {
 		return;
 	}
-	ULONG64 emptyAddr = 全局空白2 + 1000;
+	ULONG64 emptyAddr = (ULONG64)rw.ApplyMemory(2048);
 	ULONG64 roomData = rw.ReadLong(rw.ReadLong(rw.ReadLong(房间编号) + 时间基址) + 顺图偏移);
 	vector<byte> shellCode = { 65, 185, 255, 255, 255, 255 };
 	shellCode = shellCode + makeByteArray({73, 184}) + IntToBytes(emptyAddr, 8);
