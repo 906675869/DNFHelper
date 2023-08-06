@@ -74,7 +74,7 @@ VOID HomeActive()
 	//AddHotkey({ VK_F3, 0, 0, (LPTHREAD_START_ROUTINE)SuperSpecialBuff });
 	//AddHotkey({ VK_F4, 0, 0, (LPTHREAD_START_ROUTINE)Invincible });
 
-	hk.AddHotkey({ VK_F1, 0, 0, (LPTHREAD_START_ROUTINE)sl.GoDestation });
+	// hk.AddHotkey({ VK_F1, 0, 0, (LPTHREAD_START_ROUTINE)sl.GoDestation });
 	hk.AddHotkey({ VK_F5, 0, 0, (LPTHREAD_START_ROUTINE)at.HookHarm });
 	hk.AddHotkey({ VK_F6, 0, 0, (LPTHREAD_START_ROUTINE)at.MutiplyHarm });
 
