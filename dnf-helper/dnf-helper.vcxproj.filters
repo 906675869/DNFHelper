@@ -57,6 +57,9 @@
     <ClCompile Include="route.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="task.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="keyboard.h">
@@ -99,6 +102,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="route.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="task.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

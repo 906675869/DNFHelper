@@ -141,6 +141,7 @@
     <ClCompile Include="readwrite.cpp" />
     <ClCompile Include="route.cpp" />
     <ClCompile Include="simulate.cpp" />
+    <ClCompile Include="task.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="action.h" />
@@ -157,6 +158,7 @@
     <ClInclude Include="readwrite.h" />
     <ClInclude Include="route.h" />
     <ClInclude Include="simulate.h" />
+    <ClInclude Include="task.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

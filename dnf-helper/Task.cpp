@@ -1,0 +1,368 @@
+#include "task.h"
+#include "judge.h"
+
+void Task::HandleMain()
+{
+}
+
+TaskStruct Task::MainLineTask()
+{
+
+
+	return TaskStruct();
+}
+
+TaskSkip Task::CouldSkip(int taskId)
+{
+	return TaskSkip();
+}
+
+int Task::Conditional(wstring contiditional)
+{
+	return 0;
+}
+
+int Task::TaskMap(int taskId)
+{
+	return 0;
+}
+
+void Task::SubmitTask()
+{
+}
+
+int Task::FinishStatus(int taskId)
+{
+	return 0;
+}
+
+int Task::HighestMap()
+{
+	int role_level = jd.GetRoleLevel();
+	if (role_level <= 17) {
+		if (role_level <= 3) {
+			return 3; // 雷鸣废墟
+		}
+		if (role_level <= 5) {
+			return 5; // 雷鸣废墟
+		}
+		if (role_level <= 8) {
+			return 6; // 猛毒雷鸣废墟
+		}
+		if (role_level <= 11) {
+			return 9; // 冰霜幽暗密林
+		}
+		if (role_level <= 13) {
+			return 7; // 格拉卡
+		}
+		if (role_level <= 15) {
+			return 8; // 烈焰格拉卡
+		}if (role_level <= 17) {
+			return 1000; // 暗黑雷鸣废墟
+		}return 0;
+	}
+
+	if (role_level <= 23) {
+		if (role_level <= 18) {
+			return 1000; // 10 龙人之塔
+		}if (role_level <= 19) {
+			return 12; // 人偶玄关
+		}if (role_level <= 20) {
+			return 13; // 石巨人塔
+		}if (role_level <= 21) {
+			return 14; // 黑暗玄廊
+		}if (role_level <= 22) {
+			return 17; // 悬空城
+		}if (role_level <= 23) {
+			return 15; // 城主宫殿
+		}return 0
+
+			; // 神殿脊椎
+	}
+
+	if (role_level <= 29) {
+		if (role_level <= 24) {
+			return 15; // 21 神殿外围
+		}
+		if (role_level <= 25) {
+			return 22; // 树精丛林
+		}
+		if (role_level <= 26) {
+			return 23; // 炼狱
+		}
+		if (role_level <= 27) {
+			return 24; // 极昼
+		}
+		if (role_level <= 28) {
+			return 25; // 第一脊椎
+		}
+		if (role_level <= 29) {
+			return 26; // 第二脊椎
+		}
+		return 0;
+
+	}
+	//; // 暗精灵地区
+	if (role_level <= 35) {
+		if (role_level <= 30) {
+			return 26; // 31  浅栖之地
+		}
+		if (role_level <= 31) {
+			return 32; // 蜘蛛洞穴
+		}
+		if (role_level <= 32) {
+			return 150; // 蜘蛛王国
+		}
+		if (role_level <= 33) {
+			return 151; // 英雄冢
+		}
+		if (role_level <= 34) {
+			return 35; // 暗精灵墓地
+		}
+		if (role_level <= 35) {
+			return 34; // 熔岩穴
+		}
+		return 0;
+		//; // 祭坛
+	}
+	if (role_level <= 39) {
+		if (role_level <= 36) {
+			return 34; // 152 暴君的祭坛
+		}
+		if (role_level <= 37) {
+			return 153; // 黄金矿洞
+		}
+		if (role_level <= 38) {
+			return 154; // 远古墓穴深处
+		}
+		if (role_level <= 39) {
+			return 154; // 远古墓穴深处
+		}
+		return 0;
+		// 雪山
+	}
+
+	if (role_level <= 45) {
+		if (role_level <= 40) {
+			return 154; // 40 山脊
+		}if (role_level <= 41) {
+			return 41; // 冰心少年
+		}if (role_level <= 42) {
+			return 42; // 利库天井
+		}if (role_level <= 44) {
+			return 141; // 布万加的修炼场
+		}if (role_level <= 45) {
+			return 141; // 布万加的修炼场
+		}
+		return 0;
+
+		//; // 绿都
+	}
+
+	if (role_level <= 49) {
+		if (role_level <= 46) {
+			return 141; // 61  绿都格罗兹尼
+		}
+		if (role_level <= 47) {
+			return 50; // 堕落的盗贼
+		}
+		if (role_level <= 48) {
+			return 51; // 迷乱之村哈穆林
+		}
+		if (role_level <= 49) {
+			return 53; // 疑惑之村
+		}
+		return 0;
+	}
+
+	if (role_level <= 53) {
+		if (role_level <= 50) {
+			return 53; // 144  炽晶森林
+		}
+		if (role_level <= 51) {
+			return 145; // 冰晶森林
+		}
+		if (role_level <= 52) {
+			return 146; // 水晶矿脉
+		}
+		if (role_level <= 53) {
+			return 148; // 幽冥监狱
+		}
+		return 0;
+	}
+
+	if (role_level <= 58) {
+		if (role_level <= 54) {
+			return 148; // 156 蘑菇庄园
+		}
+		if (role_level <= 55) {
+			return 157; // 蚁后的巢穴
+		}
+		if (role_level <= 56) {
+			return 158; // 腐烂之地
+		}
+		if (role_level <= 57) {
+			return 159; // 赫顿玛尔旧街区
+		}
+		if (role_level <= 58) {
+			return 160; // 鲨鱼栖息地
+		}
+		return 0;
+	}
+
+
+	if (role_level <= 62) {
+		if (role_level <= 59) {
+			return 160; // 162  '人鱼国度
+		}
+		if (role_level <= 60) {
+			return 163; // GBL女神殿
+		}
+		if (role_level <= 61) {
+			return 164; // 树精繁殖地
+		}
+		if (role_level <= 62) {
+			return 164; // 树精繁殖地
+		}
+		return 0;
+	}
+
+	if (role_level <= 70) {
+		if (role_level <= 63) {
+			return 164; // 80  '根特外围
+		}
+		if (role_level <= 64) {
+			return 81; // 根特东门
+		}
+		if (role_level <= 65) {
+			return 82; // 根特南门
+		}
+		if (role_level <= 66) {
+			return 88; // 根特北门
+		}
+		if (role_level <= 67) {
+			return 88; // 根特北门
+		}
+		if (role_level <= 68) {
+			return 83; // 夜间袭击战
+		}
+		if (role_level <= 69) {
+			return 84; // 补给阻断站
+		}
+		if (role_level <= 70) {
+			return 85; // 追击歼灭战
+		}
+		return 0;
+		//; // 海上列车
+	}
+
+	if (role_level <= 74) {
+		if (role_level <= 71) {
+			return 85; // 86 列车上的海贼
+		}
+		if (role_level <= 71) {
+			return 87; // 夺回西部线
+		}
+		if (role_level <= 73) {
+			return 92; // 雾都赫伊斯
+		}
+		if (role_level <= 74) {
+			return 93; // 阿登高地
+		}
+		return 0;
+	}
+
+	if (role_level <= 80) {
+		if (role_level <= 75) {
+			return 93; // 70 格兰之火
+		}
+		if (role_level <= 76) {
+			return 71; // 瘟疫之源
+		}
+		if (role_level <= 77) {
+			return 72; // 卡勒特之刃
+		}
+		if (role_level <= 78) {
+			return 74; // 绝密区域
+		}
+		if (role_level <= 79) {
+			return 75; // 昔日悲鸣
+		}
+		if (role_level <= 80) {
+			return 76; // 凛冬
+		}
+		return 0;
+	}
+	if (role_level <= 85) {
+		if (role_level <= 81) {
+			return 76; // 102 普鲁兹发电站
+		}
+		if (role_level <= 82) {
+			return 103; // 特伦斯发电站
+		}
+		if (role_level <= 85) {
+			return 104; // 格蓝迪发电站
+		}
+		return 0;
+	}
+	if (role_level <= 86) {
+		return 192; // 钢铁之臂
+	}
+
+	if (role_level <= 90) {
+		if (role_level <= 87) {
+			return 310; // 时间广场
+		}
+		if (role_level <= 88) {
+			return 312; // 恐怖的栖息地
+		}
+		if (role_level <= 89) {
+			return 314; // 红色魔女之森
+		}
+		if (role_level <= 90) {
+			return 314; // 红色魔女之森
+		}
+		return 0;
+	}
+
+	if (role_level <= 100) {
+		if (role_level <= 95) {
+			return 291100293; // 全蚀市场
+		}
+		if (role_level <= 98) {
+			return 291100293; // 搏击俱乐部
+		}
+	}
+	if (role_level <= 109) {
+		if (role_level <= 100) {
+			return 100002975; // 圣域外围
+		}
+		if (role_level <= 102) {
+			return 100002976; // 圣域中心
+		}
+		if (role_level <= 103) {
+			return 100002977; // 泽尔峡谷
+		}
+		if (role_level <= 104) {
+			return 100002978; // 洛仑山
+		}
+		if (role_level <= 105) {
+			return 100002979; // 白色雪原
+		}
+		if (role_level <= 106) {
+			return 100002980; // 贝奇的空间
+		}
+		if (role_level <= 107) {
+			return 100002981;
+		}
+		if (role_level <= 108) {
+			return 100002982;
+		}
+		if (role_level <= 109) {
+			return 100002983;
+		}
+
+		return 0;
+	}
+	return 0;
+}
