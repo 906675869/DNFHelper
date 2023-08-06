@@ -7,6 +7,11 @@ int Judge::GetFatigue()
 	return rw.ReadInt(最大疲劳) - rw.ReadInt(当前疲劳);
 }
 
+bool Judge::IsAtRoleList()
+{
+	return rw.ReadInt(游戏状态) == 0;
+}
+
 bool Judge::IsAtTown()
 {
 	return rw.ReadInt(游戏状态) == 1;

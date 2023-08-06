@@ -216,6 +216,44 @@ void PackFunc::PackOverMap(int x, int y)
 	SendCall();
 }
 
+void PackFunc::AcceptTask(int taskId)
+{
+	BufferCall(31);
+	EncryptCall(31, 2);
+	EncryptCall(taskId, 2);
+	SendCall();
+}
+
+void PackFunc::GiveupTask(int taskId)
+{
+	BufferCall(32);
+	EncryptCall(32, 2);
+	EncryptCall(taskId, 2);
+	SendCall();
+
+}
+
+void PackFunc::FinishTask(int taskId)
+{
+	BufferCall(33);
+	EncryptCall(33, 2);
+	EncryptCall(taskId, 2);
+	EncryptCall(0, 1);
+	EncryptCall(0, 1);
+	SendCall();
+}
+
+void PackFunc::SubmitTask(int taskId)
+{
+	BufferCall(34);
+	EncryptCall(34, 2);
+	EncryptCall(taskId, 2);
+	EncryptCall(65535, 2);
+	EncryptCall(1, 2);
+	EncryptCall(65535, 2);
+	SendCall();
+}
+
 void PackFunc::PackSale(int saleSize, vector<int> postions)
 {
 	BufferCall(22);
@@ -252,6 +290,9 @@ void PackFunc::RoleList()
 
 void PackFunc::ChooseRole(int position)
 {
+	if (position == 0) {
+		return;
+	}
 	BufferCall(4);
 	EncryptCall(position, 4);
 	SendCall();

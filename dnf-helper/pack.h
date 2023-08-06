@@ -32,8 +32,21 @@ public:
 	void ChooseMap();
 	// 组包拾取
 	void PackPickup(int code);
-
+	// 组包过图
 	void PackOverMap(int x, int y);
+
+
+
+	// 接受任务
+	void AcceptTask(int taskId);
+	// 放弃任务
+	void GiveupTask(int taskId);
+	// 完成任务
+	void FinishTask(int taskId);
+	// 提交任务
+	void SubmitTask(int taskId);
+
+
 };
 
 extern PackFunc pk;

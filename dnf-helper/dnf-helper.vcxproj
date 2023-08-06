@@ -139,6 +139,7 @@
     <ClCompile Include="pack.cpp" />
     <ClCompile Include="pass_map.cpp" />
     <ClCompile Include="readwrite.cpp" />
+    <ClCompile Include="route.cpp" />
     <ClCompile Include="simulate.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +155,7 @@
     <ClInclude Include="pack.h" />
     <ClInclude Include="pass_map.h" />
     <ClInclude Include="readwrite.h" />
+    <ClInclude Include="route.h" />
     <ClInclude Include="simulate.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

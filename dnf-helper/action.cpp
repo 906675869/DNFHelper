@@ -29,7 +29,7 @@ void Action::HookHarm()
 	hookSwitch = !hookSwitch;
 	if (hookSwitch)
 	{
-		ULONG64 randomHarm = GetRandomNum(666666, 1999999);
+		ULONG64 randomHarm = GetRandomNum(1666666, 1999999);
 		originHook = rw.ReadBytes(全局基址, 10);
 		rw.WriteBytes(全局基址, AppendBytes({ 72, 190 }, IntToBytes(randomHarm, 8)));
 		printf(">> HOOK伤害开启\n");
@@ -125,7 +125,8 @@ void Action::CoordinatePickUp()
 		for (int i = 0; i < coordinates.size(); i++)
 		{
 			// 漂移至坐标
-			cl.DriftCall(personPtr, coordinates[i].x, coordinates[i].y, 0, 50);
+			// cl.DriftCall(personPtr, coordinates[i].x, coordinates[i].y, 0, 50);
+			sl.GoDestation(coordinates[i].x, coordinates[i].y);
 			kb.Press(X键);
 			Sleep(200);
 		}

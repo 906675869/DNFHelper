@@ -6,6 +6,7 @@
 #include "call.h"
 #include "action.h"
 #include "simulate.h"
+#include "route.h"
 
 PassMap pm;
 // 组包过图
@@ -50,6 +51,39 @@ void PassMap::PackPassMapRight()
 	PackPassMap(RIGHT);
 }
 
+void PassMap::PassMapProcess(int direction)
+{
+	if (direction < 0 || direction > 3)
+	{
+		return;
+	}
+	if (as.overMapCnt == 2) {
+		// OverMapCall(direction);
+		pm.SimulateOverMap(direction);
+	}
+	else if (as.overMapCnt == 15) {
+		// OverMapCall(direction);
+		// cl.OverMapCall(direction);
+		pm.SimulateOverMap(direction);
+	}
+	else if (as.overMapCnt % 30 == 0) {
+		// PackPassMap(direction);
+		pm.PackPassMap(direction);
+	}
+
+}
+
+void PassMap::AutoFindRoute()
+{
+	CoordinateStruct currentRoom =  jd.GetCurrentRoom();
+	CoordinateStruct bossRoom = jd.GetBossRoom();
+	if (jd.CoordinateEqual(currentRoom, bossRoom)) {
+		return;
+	}
+	int direction = mapData.GetMapData();
+	PassMapProcess(direction);
+}
+
 
 
 // 纳瑟乌森林顺
@@ -91,18 +125,8 @@ void FixFindRouteA() {
 	if (x == 4 && y == 1) {
 		direction = UP;
 	}
-	if (as.overMapCnt == 2) {
-		// OverMapCall(direction);
-		pm.SimulateOverMap(direction);
-	}
-	else if (as.overMapCnt == 15) {
-		// OverMapCall(direction);
-		// cl.OverMapCall(direction);
-	}
-	else if (as.overMapCnt % 30 == 0) {
-		// PackPassMap(direction);
-		pm.PackPassMap(direction);
-	}
+	
+	pm.PassMapProcess(direction);
 
 }
 
@@ -171,15 +195,8 @@ void FixFindRouteC() {
 		as.pass2 = 0;
 		direction = RIGHT;
 	}
-	if (as.overMapCnt == 2) {
-		pm.SimulateOverMap(direction);
-	}
-	else if (as.overMapCnt == 15) {
-		// cl.OverMapCall(direction);
-	}
-	else if (as.overMapCnt % 30 == 0) {
-		pm.PackPassMap(direction);
-	}
+	
+	pm.PassMapProcess(direction);
 
 }
 
@@ -196,6 +213,7 @@ void PassMap::FixFindRoute()
 		FixFindRouteC();
 		return;
 	}
+	AutoFindRoute();
 }
 
 void PassMap::SimulateOverMap(int direction)

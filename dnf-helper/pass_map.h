@@ -12,6 +12,13 @@ public:
 	static void PackPassMapDown();
 	// 组包过图右
 	static void PackPassMapRight();
+
+	// 过图处理
+	static void PassMapProcess(int direction);
+
+	// 自动寻路
+	static void AutoFindRoute();
+
 	// 固定寻路
 	static void FixFindRoute();
 	// 模拟过图

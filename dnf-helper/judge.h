@@ -5,6 +5,8 @@ class Judge {
 public:
 	// 取剩余疲劳
 	int GetFatigue();
+	// 是否是在选角界面
+	bool IsAtRoleList();
 	// 是否在城镇
 	bool IsAtTown();
 	// 是否在地图内
@@ -34,7 +36,7 @@ public:
 
 	// 获取人物动作 // 0站立、6跳跃、8普攻、14跑动
 	int GetPersonAction();
-
+	// 获取地图等级
 	int GetMapLevel();
 };
 

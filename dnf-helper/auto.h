@@ -12,6 +12,8 @@ public:
 	static void OverMap();
 	// 通关处理
 	static void ClearMap();
+	// 进入城镇
+	static void EnterTown();
 
 };
 

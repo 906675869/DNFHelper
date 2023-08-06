@@ -24,6 +24,13 @@ vector<BYTE> Call::AddResp(int i) {
 	return AppendBytes({ 72, 131, 196 }, { (BYTE)i });
 }
 
+vector<byte> Call::SimpleCall(ULONG64 addr)
+{
+	vector<byte> shellCode = { 255, 21, 2, 0, 0, 0, 235, 8 };
+	shellCode = shellCode + IntToBytes(addr);
+	return shellCode;
+}
+
 
 void Call::MemoryCompileCall(vector<BYTE> vals)
 {
@@ -79,13 +86,13 @@ void Call::MemoryCompileCall(vector<BYTE> vals)
 ULONG64 Call::PersonCall()
 {
 	ULONG64 emptyAddress = 全局空白 + 4000;
-	vector<byte>asm_code;
-	asm_code = makeByteArray({ 72, 131, 236,100 });
-	asm_code = asm_code + makeByteArray({ 72,184 }) + IntToBytes(人物CALL);
-	asm_code = asm_code + makeByteArray({ 255,208 });
-	asm_code = asm_code + makeByteArray({ 72,163 }) + IntToBytes(emptyAddress);
-	asm_code = asm_code + makeByteArray({ 72,131,196,100 });
-	MemoryCompileCall(asm_code);
+	vector<byte>asmCode;
+	asmCode = makeByteArray({ 72, 131, 236,100 });
+	asmCode = asmCode + makeByteArray({ 72,184 }) + IntToBytes(人物CALL);
+	asmCode = asmCode + makeByteArray({ 255,208 });
+	asmCode = asmCode + makeByteArray({ 72,163 }) + IntToBytes(emptyAddress);
+	asmCode = asmCode + makeByteArray({ 72,131,196,100 });
+	MemoryCompileCall(asmCode);
 	return  rw.ReadLong(emptyAddress);
 }
 
@@ -219,38 +226,74 @@ void Call::DriftCall(ULONG ptr, int X, int Y, int Z, int speed)
 //	return AreaStruct();
 //}
 
-void Call::EnterRoleCall(int rolePosition)
-{
-}
-
-void Call::ChooseRoleCall(int rolePosition)
-{
-}
-
-void Call::ExitRoleCall()
-{
-}
-
+//void Call::EnterRoleCall(int rolePosition)
+//{
+//}
+//
+//void Call::ChooseRoleCall(int rolePosition)
+//{
+//}
+//
+//void Call::ExitRoleCall()
+//{
+//}
+//
 void Call::GiveupMissionCall(int taskId)
 {
+	printf("GiveupMissionCall -> 未完成");
+}
+
+void Call::SkipMissionCall()
+{
+	vector<byte> shellCode = SubResp(512);
+	shellCode = shellCode + makeByteArray({ 65, 131, 201, 255});
+	shellCode = shellCode + makeByteArray({ 69, 9, 200});
+	shellCode = shellCode + makeByteArray({ 186, 1, 0, 0, 0 });
+	shellCode = shellCode + makeByteArray({ 72, 185 }) + IntToBytes(任务基址, 8);
+	shellCode = shellCode + makeByteArray({ 72, 139, 9 });
+	shellCode = shellCode, SimpleCall(跳过CALL);
+	shellCode = shellCode + AddResp(512);
+	MemoryCompileCall(shellCode);
 }
 
 void Call::SubmitMissionCall(int taskId)
 {
+	vector<byte> shellCode = SubResp(48);
+	shellCode = shellCode + makeByteArray({ 65, 189, 1, 0, 0, 0 });
+	shellCode = shellCode + makeByteArray({ 65, 190, 255, 255, 255, 255 });
+	shellCode = shellCode + makeByteArray({ 69, 139, 205 });
+	shellCode = shellCode + makeByteArray({ 69, 139, 198 });
+	shellCode = shellCode + makeByteArray({ 72, 185 }) + IntToBytes(任务基址, 8);
+	shellCode = shellCode + makeByteArray({ 72, 139, 9 });
+	shellCode = shellCode + makeByteArray({ 186 }) + IntToBytes(taskId, 4);
+	shellCode = shellCode + SimpleCall(提交CALL);
+	shellCode = shellCode + AddResp(48);
+	MemoryCompileCall(shellCode);
 }
 
 void Call::AcceptMissionCall(int taskId)
 {
+	vector<byte> shellCode = SubResp(40);
+	shellCode = shellCode + makeByteArray ({ 186}) + IntToBytes(taskId, 4);
+	shellCode = shellCode + SimpleCall(接受CALL);
+	shellCode = shellCode + AddResp(40);
+	MemoryCompileCall(shellCode);
 }
 
-void Call::CompleteMissionCall(int taskId, int taskCnt)
+void Call::CompleteMissionCall(int taskId)
 {
+
+	vector<byte> shellCode = SubResp(512);
+	shellCode = shellCode + makeByteArray({ 179, 255 });
+	shellCode = shellCode + makeByteArray({ 68, 15, 182, 203 });
+	shellCode = shellCode + makeByteArray({ 65, 176, 255 });
+	shellCode = shellCode + makeByteArray({ 186 }) + IntToBytes(taskId, 4);
+	shellCode = shellCode + SimpleCall(完成CALL);
+	shellCode = shellCode + AddResp(512);
+	MemoryCompileCall(shellCode);
 }
 
-//ULONG64 Call::GetPersonPtr()
-//{
-//	return ULONG64();
-//}
+
 
 void Call::AreaCall(int mapId)
 {
@@ -315,7 +358,7 @@ void Call::OverMapCall(int direction)
 	if (!jd.IsOpenDoor()) {
 		return;
 	}
-	ULONG64 emptyAddr = 全局空白2 + 1000;
+	ULONG64 emptyAddr = (ULONG64)rw.ApplyMemory(2048);
 	ULONG64 roomData = rw.ReadLong(rw.ReadLong(rw.ReadLong(房间编号) + 时间基址) + 顺图偏移);
 	vector<byte> shellCode = { 65, 185, 255, 255, 255, 255 };
 	shellCode = shellCode + makeByteArray({73, 184}) + IntToBytes(emptyAddr, 8);
