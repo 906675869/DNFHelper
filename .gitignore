@@ -1,0 +1,10 @@
+﻿################################################################################
+# 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
+################################################################################
+
+/.vs/dnf-helper
+/x64/Debug
+/dnf-helper/x64/Debug
+/dnf-helper/x64/Release
+/dnf-helper/ARM64/Debug
+/ARM64/Debug/

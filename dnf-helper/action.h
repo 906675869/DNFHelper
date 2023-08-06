@@ -1,0 +1,24 @@
+#pragma once
+class Action {
+public:
+	// 倍攻
+	static void MutiplyHarm(int x = 0);
+	// hook伤害
+	static void HookHarm();
+	// 发包拾取
+	static void PackPickUp();
+	// 坐标拾取
+	static void CoordinatePickUp();
+	// 遍历怪物
+	static int LoopMonster();
+	// 随机技能
+	static void RandomSkill();
+	// 跟随怪物
+	static void FollowMonster();
+	// 无视建筑
+	static void IgnoreBuildings(bool ok);
+	// 事件处理
+	static void ProcessMsg();
+};
+
+extern Action at;
