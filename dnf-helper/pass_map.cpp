@@ -237,8 +237,11 @@ void PassMap::SimulateOverMap(int direction)
 		x = int(startX + endX / 2);
 		y = int(startY - 20);
 	}
-				
-	sl.OverMap(x, y, jd.GetCurrentRoom());
+	CoordinateStruct coo = jd.GetCurrentRoom();
+	sl.GoDestation(x, y, coo);
 	Sleep(100);
-	sl.OverMap(int(startX + endX / 2), startY, jd.GetCurrentRoom());
+	// 防止已过图执行无效模拟
+	if(jd.CoordinateEqual(coo, jd.GetCurrentRoom())){
+		sl.GoDestation(int(startX + endX / 2), startY, jd.GetCurrentRoom());
+	}
 }
