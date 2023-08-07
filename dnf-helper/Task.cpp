@@ -70,6 +70,7 @@ int Task::HandleMain()
 		return mapId;
 
 	}
+	return 0;
 }
 
 TaskStruct Task::MainLineTask()
@@ -124,14 +125,14 @@ TaskSkip Task::CouldSkip(int taskId)
 int Task::Conditional(string contiditional)
 {
 	string brush_conditions = "[meet npc]#[seek n meet npc]#[reach the range]#[look cinematic]#[question]#[quest clear]";
-	auto result = std::search(brush_conditions.begin(), brush_conditions.end(), contiditional.begin(), contiditional.end());
-	if (result != brush_conditions.end()) {
+	size_t found = brush_conditions.find(contiditional);
+	if (found != string::npos) {
 		return 1;
 	}
 	brush_conditions = "[hunt monster]#[hunt enemy]#[condition under clear]#[clear map]#[question]#[seeking]#[clear dungeon index]";
-	auto result = std::search(brush_conditions.begin(), brush_conditions.end(), contiditional.begin(), contiditional.end());
-	if (result != brush_conditions.end()) {
-		return 2;
+	found = brush_conditions.find(contiditional);
+	if (found != string::npos) {
+		return 1;
 	}
 	return 0;
 }
