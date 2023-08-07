@@ -9,6 +9,7 @@
 #include "keyboard.h"
 #include "helper.h"
 #include "config.h"
+#include "task.h"
 
 static bool firstEnterMap = true;
 
@@ -46,7 +47,13 @@ void Auto::AutoSwitch()
 void Auto::TownProcess()
 {
 	// 进图处理
-	jd.GetMapLevel();
+	if (config.ReadConfigItem(configData.autoModel) == 1) { // 指定地图
+		jd.GetMapLevel();
+	}
+	if (config.ReadConfigItem(configData.autoModel) == 2) {// 剧情
+		gd.mapId = tk.HandleMain();
+		gd.mapLevel = 0;
+	}
 	cl.AreaCall(gd.mapId);
 	Sleep(200);
 	pk.ChooseMap();

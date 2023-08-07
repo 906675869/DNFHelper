@@ -36,7 +36,6 @@ public:
 	// 取最高等级地图
 	static int HighestMap();
 
-
-
-
 };
+
+extern Task tk;

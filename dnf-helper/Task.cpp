@@ -8,6 +8,8 @@
 using namespace std;
 static bool refreshTask = FALSE;
 
+Task tk;
+
 int Task::HandleMain()
 {
 	SubmitTask();

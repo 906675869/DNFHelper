@@ -109,7 +109,7 @@ struct ConfigData
 	wstring skillNum; // 全屏次数
 	wstring skillSize; // 全屏大小
 
-	wstring autoModel; // 自动模式
+	wstring autoModel; // 自动模式 
 	wstring mapId; // 副本id
 	wstring mapLevel;// 副本难度
 
