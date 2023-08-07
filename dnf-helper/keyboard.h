@@ -78,8 +78,12 @@ class Keyboard {
 public:
 	// status 可空 按下+放开  1 #按键_按键  3 #按键_按下  4 #按键_放开  如果状态大于等于5则为按下与放开之间的延时,可解决某些屏蔽
 	void Press(int keycode, int status = 0, bool func = 0);
+	// 是否功能案件code
 	bool IsFuncCode(int keycode);
+	// 获取accii
 	int GetACIICode(int keycode);
+	// 是否按下
+	bool IsPressed(int keycode);
 };
 
 

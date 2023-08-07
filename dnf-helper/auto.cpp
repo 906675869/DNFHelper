@@ -163,15 +163,17 @@ void Auto::ClearMap()
 		Sleep(200);
 		kb.Press(Esc键);
 		// 重新挑战
+		Sleep(200);
 		cout << "执行重新挑战" << endl;
-		kb.Press(F10键);
+		kb.Press(VK_F10);
 	}
 	else {
 		kb.Press(Esc键);
 		Sleep(200);
 		kb.Press(Esc键);
+		Sleep(200);
 		cout << "执行返回城镇" << endl;
-		kb.Press(F12键);
+		kb.Press(VK_F12);
 		
 	}
 	int passMapCnt = 0;

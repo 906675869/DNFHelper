@@ -131,3 +131,8 @@ int Keyboard::GetACIICode(int keycode) {
 	}
 	return acii;
 }
+
+bool Keyboard::IsPressed(int keycode)
+{
+	return GetAsyncKeyState(keycode) & 0x8000;
+}
