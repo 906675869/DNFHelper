@@ -19,6 +19,8 @@ public:
 	static void IgnoreBuildings(bool ok);
 	// 事件处理
 	static void ProcessMsg();
+	// 无敌
+	static void Invincible();
 };
 
 extern Action at;

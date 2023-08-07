@@ -80,6 +80,9 @@ void Auto::EveryRoomLoop()
 	if (firstEnterMap) {
 		firstEnterMap = false;
 		at.IgnoreBuildings(true);
+		if (config.ReadConfigItem(configData.inviciable) == 1) {
+			at.Invincible();
+		}
 	}
 	// 已通关
 	if (jd.IsBossRoom() && jd.IsPassMap()) {
@@ -98,8 +101,12 @@ void Auto::EveryRoomLoop()
 	// 已开门
 	else if(!jd.IsBossRoom()){
 		// 循环捡物
-		// at.PackPickUp();
-		at.CoordinatePickUp();
+		if (config.ReadConfigItem(configData.pickupType) == 1) {
+			at.CoordinatePickUp();
+		}
+		if (config.ReadConfigItem(configData.pickupType) == 2) {
+			at.PackPickUp();
+		}
 		// 过图
 		OverMap();
 	}

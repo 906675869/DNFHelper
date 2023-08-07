@@ -7,6 +7,7 @@
 #include "judge.h"
 #include <iostream>
 #include "simulate.h"
+#include "config.h"
 
 Action at;
 
@@ -272,15 +273,19 @@ void Action::FollowMonster()
 	}
 	ULONG64 monster = gd.globalMonsters[0];
 	CoordinateStruct monsterCoordinate = cl.ReadCoordinate(monster);
-	// Æ¯ÒÆCall(¹ÖÎï, ¹ÖÎï×ø±ê.x, ¹ÖÎï×ø±ê.z, 0);
 	CoordinateStruct personCoordinate = cl.ReadCoordinate(gd.personPtr);
 	// ÅÐ¶Ï¾«¶È
 	int distance = abs(monsterCoordinate.x - personCoordinate.x);
 	if (distance > 80) {
-		//cout << "Ö´ÐÐÆ¯ÒÆ" << endl;
-		// cl.DriftCall(gd.personPtr, monsterCoordinate.x, monsterCoordinate.y, 0, abs(monsterCoordinate.x - personCoordinate.x));
-		// Sleep(200);
-		sl.GoDestation(monsterCoordinate.x, monsterCoordinate.y);
+		if (config.ReadConfigItem(configData.followModel) == 1) {
+			cl.CoordinateCall(monsterCoordinate.x, monsterCoordinate.y, 0);
+		}
+		if (config.ReadConfigItem(configData.followModel) == 2) {
+			cl.DriftCall(gd.personPtr, monsterCoordinate.x, monsterCoordinate.y, 0);
+		}
+		if (config.ReadConfigItem(configData.followModel) == 3) {
+			sl.GoDestation(monsterCoordinate.x, monsterCoordinate.y);
+		}
 	}
 	for (int i = 0; i < 3; i++) {
 		RandomSkill();
@@ -314,4 +319,11 @@ void Action::ProcessMsg()
 		DispatchMessageW(&msg);
 	}
 
+}
+
+void Action::Invincible()
+{
+	rw.WriteLong(gd.personPtr + ÎÞµÐÆ«ÒÆ, 100);
+	rw.WriteLong(gd.personPtr + °ÔÌåÆ«ÒÆ, 1);
+	cout << "°ÔÌåÎÞµÐ¿ªÆô" << endl;
 }
