@@ -87,6 +87,12 @@ void Auto::EveryRoomLoop()
 		if (config.ReadConfigItem(configData.inviciable) == 1) {
 			at.Invincible();
 		}
+		if (config.ReadConfigItem(configData.superBuff) == 1) {
+			at.SuperSpecialBuff();
+		}
+		if (config.ReadConfigItem(configData.goodsBuff) == 1) {
+			at.GoodsBuff();
+		}
 	}
 	// 已通关
 	if (jd.IsBossRoom() && jd.IsPassMap()) {
@@ -143,7 +149,7 @@ void Auto::ClearMap()
 	pk.FlopCard(0, GetRandomNum(0, 3));
 	int st = GetRandomNum(5000, 8000);
 	Sleep(st);
-	kb.Press(Esc键);
+	// kb.Press(Esc键);
 	// 判断是否达到预设的疲劳值
 	if (jd.GetFatigue() < config.ReadConfigItem(configData.leftFatigue)) {
 		// 返回城镇
@@ -159,17 +165,19 @@ void Auto::ClearMap()
 	}
 	bool continueMap = GetRandomNum(0, 10) % 5 < 3;
 	if (continueMap) {
-		kb.Press(Esc键);
+		// kb.Press(Esc键);
 		Sleep(200);
 		kb.Press(Esc键);
+		Sleep(500);
 		// 重新挑战
 		cout << "执行重新挑战" << endl;
 		kb.Press(F10键);
 	}
 	else {
-		kb.Press(Esc键);
+		// kb.Press(Esc键);
 		Sleep(200);
 		kb.Press(Esc键);
+		Sleep(500);
 		cout << "执行返回城镇" << endl;
 		kb.Press(F12键);
 		
