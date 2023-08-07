@@ -56,6 +56,8 @@ public:
 	 static void GoodsCall(INT goodsCode);
 	 // ¹ýÍ¼
 	 static void OverMapCall(int direction);
+	 // ×ø±êcall
+	 static void CoordinateCall(int x, int y, int z);
 
 };
 

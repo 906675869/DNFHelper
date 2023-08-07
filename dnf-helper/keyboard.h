@@ -32,7 +32,9 @@ using namespace std;
 #define CTRL¼ü 17
 #define ALT¼ü 18
 #define C¼ü 67
-// #define X¼ü 88
+#define X¼ü 88
+#define F10¼ü 121
+#define F12¼ü 123
 
 #define ÉÏ 2
 #define ÏÂ 3

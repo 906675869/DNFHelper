@@ -31,12 +31,10 @@ void Auto::AutoSwitch()
 		}
 		else if (jd.IsAtTown()) 
 		{
-			// cout << "当前在城镇" << endl;
 			TownProcess();
 		}
 		else if (jd.IsAtMap())
 		{
-			// cout << "当前在地图" << endl;
 			EveryRoomLoop();
 		}
 
@@ -46,6 +44,11 @@ void Auto::AutoSwitch()
 
 void Auto::TownProcess()
 {
+	Sleep(3000);
+	if (as.chooseRoleNum % 2 > 0) {
+		cout << "为防止刷图过快三方导致行为判定，暂时休眠20~30秒";
+		Sleep(1000 * GetRandomNum(20, 30));
+	}
 	// 进图处理
 	if (config.ReadConfigItem(configData.autoModel) == 1) { // 指定地图
 		jd.GetMapLevel();
@@ -80,6 +83,9 @@ void Auto::EveryRoomLoop()
 	if (firstEnterMap) {
 		firstEnterMap = false;
 		at.IgnoreBuildings(true);
+		if (config.ReadConfigItem(configData.inviciable) == 1) {
+			at.Invincible();
+		}
 	}
 	// 已通关
 	if (jd.IsBossRoom() && jd.IsPassMap()) {
@@ -98,8 +104,12 @@ void Auto::EveryRoomLoop()
 	// 已开门
 	else if(!jd.IsBossRoom()){
 		// 循环捡物
-		// at.PackPickUp();
-		at.CoordinatePickUp();
+		if (config.ReadConfigItem(configData.pickupType) == 1) {
+			at.CoordinatePickUp();
+		}
+		if (config.ReadConfigItem(configData.pickupType) == 2) {
+			at.PackPickUp();
+		}
 		// 过图
 		OverMap();
 	}
@@ -128,6 +138,7 @@ void Auto::ClearMap()
 {
 	at.CoordinatePickUp();
 	cout << "执行翻牌处理" << endl;
+	// 随机翻牌
 	pk.FlopCard(0, GetRandomNum(0, 3));
 	int st = GetRandomNum(5000, 8000);
 	Sleep(st);
@@ -138,28 +149,49 @@ void Auto::ClearMap()
 		cout << "执行返回城镇" << endl;
 		pk.OutMap();
 		while (gd.autoSwitch) {
+			Sleep(200);
 			if (jd.IsAtTown()) {
 				pk.RoleList();
 			}
 		}
 		return;
 	}
-	if (GetRandomNum(0, 10) % 5 < 2)
-	{
+	bool continueMap = GetRandomNum(0, 10) % 5 < 3;
+	if (continueMap) {
+		kb.Press(Esc键);
+		Sleep(200);
+		kb.Press(Esc键);
 		// 重新挑战
 		cout << "执行重新挑战" << endl;
-		pk.ContinueChangle();
+		kb.Press(F10键);
 	}
-	else
-	{
-		// 返回城镇
+	else {
+		kb.Press(Esc键);
+		Sleep(200);
+		kb.Press(Esc键);
 		cout << "执行返回城镇" << endl;
-		pk.OutMap();
+		kb.Press(F12键);
+		
 	}
+	int passMapCnt = 0;
 	while (gd.autoSwitch) {
 		// 在城镇或者重新开始通关
 		if (jd.IsAtTown() || (!jd.IsBossRoom() && !jd.IsPassMap())) {
 			break;
+		}
+		if (passMapCnt++ ==  50 * 5) {
+			if (continueMap)
+			{
+				// 重新挑战
+				cout << "强制执行重新挑战" << endl;
+				pk.ContinueChangle();
+			}
+			else
+			{
+				// 返回城镇
+				cout << "强制执行返回城镇" << endl;
+				pk.OutMap();
+			}
 		}
 		Sleep(20);
 	}

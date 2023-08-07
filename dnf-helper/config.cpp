@@ -59,7 +59,7 @@ void Config::ConfigInit()
 
 	configData.followModel = L"跟随方式";
 	configData.pickupType = L"拾取方式";
-	configData.passMapType = L"顺图方式";
+	// configData.passMapType = L"顺图方式";
 
 	configData.goodsBuff = L"物品Buff";
 	configData.superBuff = L"超级buff";
@@ -98,14 +98,14 @@ void Config::WriteConfigFile()
 	WriteConfigItem(configData.leftFatigue, L"8");
 	WriteConfigItem(configData.roleNum, L"3");
 
-	WriteConfigItem(configData.followModel, L"1		={0}不执行 ={1}坐标跟随 ={2}漂移跟随");
-	WriteConfigItem(configData.pickupType, L"3		={0}不执行 ={1}按键入包 ={2}落地入包 ={3}空中入包");
-	WriteConfigItem(configData.passMapType, L"2		={0}不执行 ={1}坐标顺图 ={2}漂移顺图 ={3}强制顺图");
+	WriteConfigItem(configData.followModel, L"1		={0}不执行 ={1}坐标跟随 ={2}漂移跟随 ={3} 模拟跟随");
+	WriteConfigItem(configData.pickupType, L"1		={0}不执行 ={1}按键入包 ={2}落地入包 ={3}空中入包");
+	// WriteConfigItem(configData.passMapType, L"4		={0}不执行 ={1}坐标顺图 ={2}漂移顺图 ={3}强制顺图 ={4} 模拟顺图");
 	WriteConfigItem(configData.goodsBuff, L"0		={0}否 ={1}是\n");
 	WriteConfigItem(configData.superBuff, L"0		={0}否 ={1}是\n");
 	WriteConfigItem(configData.inviciable, L"0		={0}否 ={1}是\n");
-	WriteConfigItem(configData.goldPerson, L"1		={0}否 ={1}是\n");
-	WriteConfigItem(configData.未央全图, L"0		={0}否 ={1}是\n");
+	WriteConfigItem(configData.goldPerson, L"0		={0}否 ={1}是\n");
+	// WriteConfigItem(configData.未央全图, L"0		={0}否 ={1}是\n");
 
 	WriteConfigItem(configData.whiteEquip, L"0		={0}不执行 ={1}出售 ={2}分解 ={3}丢弃");
 	WriteConfigItem(configData.blueEquip, L"0		={0}不执行 ={1}出售 ={2}分解 ={3}丢弃");

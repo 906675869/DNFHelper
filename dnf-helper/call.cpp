@@ -368,3 +368,20 @@ void Call::OverMapCall(int direction)
 	shellCode = shellCode + makeByteArray({ 255, 208 });
 	MemoryCompileCall(shellCode);
 }
+
+void Call::CoordinateCall(int x, int y, int z)
+{
+	if (gd.personPtr < 1) {
+		return;
+	}
+	vector<byte> shellCode = { 72, 129, 236, 0, 1, 0, 0 };
+	shellCode = shellCode + makeByteArray({ 65, 185 }) + IntToBytes(z, 4);
+	shellCode = shellCode + makeByteArray({ 65, 184 }) + IntToBytes(y, 4);
+	shellCode = shellCode + makeByteArray({ 186 }) + IntToBytes(x, 4);
+	shellCode = shellCode + makeByteArray({ 72, 185 }) + IntToBytes(gd.personPtr);
+	shellCode = shellCode + makeByteArray({ 72, 139, 1 }) ;
+	shellCode = shellCode + makeByteArray({ 255, 144 }) + IntToBytes(×ø±êCALLÆ«ÒÆ, 4) ;
+	shellCode = shellCode + makeByteArray({ 72, 129, 196, 0, 1, 0, 0 }) ;
+	MemoryCompileCall(shellCode);
+
+}
