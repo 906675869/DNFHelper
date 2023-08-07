@@ -64,7 +64,7 @@ void Config::ConfigInit()
 	configData.goodsBuff = L"物品Buff";
 	configData.superBuff = L"超级buff";
 	configData.inviciable = L"霸体无敌";
-	configData.goldPerson = L"小金人";
+	// configData.goldPerson = L"小金人";
 
 	configData.whiteEquip = L"白色装备";
 	configData.blueEquip = L"蓝色装备";
@@ -104,7 +104,7 @@ void Config::WriteConfigFile()
 	WriteConfigItem(configData.goodsBuff, L"0		={0}否 ={1}是\n");
 	WriteConfigItem(configData.superBuff, L"0		={0}否 ={1}是\n");
 	WriteConfigItem(configData.inviciable, L"0		={0}否 ={1}是\n");
-	WriteConfigItem(configData.goldPerson, L"0		={0}否 ={1}是\n");
+	// WriteConfigItem(configData.goldPerson, L"0		={0}否 ={1}是\n");
 	// WriteConfigItem(configData.未央全图, L"0		={0}否 ={1}是\n");
 
 	WriteConfigItem(configData.whiteEquip, L"0		={0}不执行 ={1}出售 ={2}分解 ={3}丢弃");

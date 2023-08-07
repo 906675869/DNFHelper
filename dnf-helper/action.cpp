@@ -226,8 +226,8 @@ void  Action::RandomSkill() {
 		keyPosition = 10;
 	}
 	if (random == 9) {
-		keycode = T¼ü;
-		keyPosition = 11;
+		keycode = ALT¼ü;
+		keyPosition = 6;
 	}
 	if (random == 10) {
 		keycode = ÓÒ¹â±ê¼ü;
@@ -246,8 +246,8 @@ void  Action::RandomSkill() {
 		keyPosition = 13;
 	}
 	if (random == 13) {
-		keycode = ALT¼ü;
-		keyPosition = 6;
+		keycode = T¼ü;
+		keyPosition = 11;
 	}
 	if (random == 14) {
 		keycode = V¼ü;

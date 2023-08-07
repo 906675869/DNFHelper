@@ -64,11 +64,12 @@ void Auto::TownProcess()
 	pk.GetinMap(gd.mapId, gd.mapLevel, NULL, NULL);
 	// ÑÓ³ÙÖÁ½øÍ¼
 	while (gd.autoSwitch) {
-		if (jd.IsAtMap())
+		if (jd.IsAtMap() ||jd.IsAtTown())
 		{
 			break;
 		}
 		Sleep(200);
+		kb.Press(¿Õ¸ñ¼ü);
 	}
 }
 
