@@ -19,4 +19,5 @@ public:
 	static ULONG64 Call(ULONG64 address, vector<ULONG64> data);
 };
 
+extern FastCall fastCall;
 

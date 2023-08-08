@@ -3,6 +3,10 @@
 #include "helper.h"
 #include <iostream>
 
+
+FastCall fastCall;
+
+
 static int g_hook_interface;
 static int g_call_max_len ;
 static int g_RSP ;
@@ -20,7 +24,6 @@ static ULONG64 g_execute_func_refresh_time ;
 static ULONG64 g_execute_func_last_time ;
 static ULONG64 g_execute_func_data ;
 static int g_hook_framework ;
-
 
 // ≥ı ºªØ
 void FastCall::InitCode()
