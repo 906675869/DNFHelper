@@ -33,6 +33,7 @@ using namespace std;
 #define ALT¼ü 18
 #define C¼ü 67
 #define X¼ü 88
+#define Z¼ü 90
 #define F10¼ü 121
 #define F12¼ü 123
 

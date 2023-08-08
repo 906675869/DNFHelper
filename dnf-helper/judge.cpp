@@ -163,4 +163,29 @@ bool Judge::IsDied()
 	// return false;
 }
 
+bool Judge::IsSkillCoolDown(int position)
+{
+	ULONG64 skillPtr = gd.personPtr;
+	skillPtr = rw.ReadLong(skillPtr + ¼¼ÄÜÀ¸);
+	skillPtr = rw.ReadLong(skillPtr + ¼¼ÄÜÀ¸Æ«ÒÆ);
+	skillPtr = rw.ReadLong(rw.ReadLong(skillPtr + position * 24) + 16) - 16;
+	return GetSkillCoolDownLeftTime(skillPtr) == 0;
+}
+
+int Judge::GetSkillCoolDownLeftTime(ULONG64 skill)
+{
+	ULONG64 coolParam1 = ÀäÈ´²ÎÊý_1;
+	ULONG64 coolParam2 = ÀäÈ´²ÎÊý_2 - 8;
+	ULONG64 keyParam = ÅÐ¶ÏÀäÈ´_1;
+	ULONG64 coolOffset = ÅÐ¶ÏÀäÈ´_2;
+	int lastPressTime = rw.ReadInt(skill + keyParam); 
+	int eax = rw.ReadInt(skill + coolOffset);  
+	int edi = rw.ReadInt(skill + coolOffset + 4); 
+	float xmm1 = rw.ReadFloat(skill + coolOffset + 8); 
+	int ret = rw.ReadInt(coolParam1 + rw.ReadInt(coolParam2 + 8) * 4) 
+		+ rw.ReadInt(coolParam2 + 16); 
+	ret = (ret - eax) * (int)xmm1 + edi;
+	return ret - lastPressTime > 0 ? 0 : lastPressTime - ret;
+}
+
 

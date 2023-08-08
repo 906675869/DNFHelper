@@ -185,85 +185,24 @@ int Action::LoopMonster()
 
 
 void  Action::RandomSkill() {
-	int endRandom = jd.IsBossRoom() ? 14 : 10;
-	int random = GetRandomNum(0, endRandom);
-	int keycode = 0, keyPosition = 0;
-
-	if (random == 0) {
-		keycode = A¼ü;
-		keyPosition = 0;
+	int endRandom = jd.IsBossRoom() ? 13 : 10;
+	int random = GetRandomNum(-1, endRandom);
+	vector<int> keyCodes = { A¼ü ,S¼ü, D¼ü, F¼ü, G¼ü ,V¼ü,ALT¼ü,
+	  Q¼ü ,W¼ü, E¼ü, R¼ü, T¼ü ,Y¼ü,CTRL¼ü };
+	if (random == -1) {
+		kb.Press(X¼ü);
+		return;
 	}
-	if (random == 1) {
-		keycode = S¼ü;
-		keyPosition = 1;
-	}
-	if (random == 2) {
-		keycode = D¼ü;
-		keyPosition = 2;
-	}
-	if (random == 3) {
-		keycode = F¼ü;
-		keyPosition = 3;
-	}
-	if (random == 4) {
-		keycode = G¼ü;
-		keyPosition = 4;
-	}
-	if (random == 5) {
-		keycode = Q¼ü;
-		keyPosition = 7;
-	}
-	if (random == 6) {
-		keycode = W¼ü;
-		keyPosition = 8;
-	}
-	if (random == 7) {
-		keycode = E¼ü;
-		keyPosition = 9;
-	}
-	if (random == 8) {
-		keycode = R¼ü;
-		keyPosition = 10;
-	}
-	if (random == 9) {
-		keycode = ALT¼ü;
-		keyPosition = 6;
-	}
-	if (random == 10) {
-		keycode = ÓÒ¹â±ê¼ü;
-		// keyPosition = ÓÒ¹â±ê¼ü;
+	int keyPosition = random;
+	int keycode = keyCodes[random];
+	if (jd.IsSkillCoolDown(keyPosition)) {
 		kb.Press(keycode);
-
-	}
-
-	if (random == 11) {
-		keycode = Y¼ü;
-		keyPosition = 12;
-	}
-
-	if (random == 12) {
-		keycode = CTRL¼ü;
-		keyPosition = 13;
-	}
-	if (random == 13) {
-		keycode = T¼ü;
-		keyPosition = 11;
-	}
-	if (random == 14) {
-		keycode = V¼ü;
-		keyPosition = 5;
-	}
-
-	if (random != 10) {
-		//if (IsSkillCoolDown(keyPosition)) {
-			kb.Press(keycode);
-		//}
 	}
 	if (jd.GetPersonAction() == 0 && random > 3) {
 		kb.Press(X¼ü);
 		kb.Press(X¼ü);
+		kb.Press(Z¼ü);
 	}
-	// ProcessMsg();
 
 }
 // ¸úËæ¹ÖÎï

@@ -753,8 +753,8 @@ constexpr auto 咖啡色基址 = 0xDFDEFFFF; //7度_获取
 
 
 
-constexpr auto 冷却参数_1 = 0x14B0E5750;  //, //14B0D76E0 _小辰已更新
-constexpr auto 冷却参数_2 = 0x14A8CEBE8;//, //14A8C0CA8 _小辰已更新
+constexpr auto 冷却参数_1 = 0x14B0E37B0;  //, //14B0E37B0 _小辰已更新
+constexpr auto 冷却参数_2 = 0x14A8CCC48;//, //14A8CCC48 _小辰已更新
 constexpr auto 判断冷却_1 = 0x1A6C;// , , //1A6C _小辰已更新
 constexpr auto 判断冷却_2 = 0x1BDC;//  , , //1BDC _小辰已更新
 

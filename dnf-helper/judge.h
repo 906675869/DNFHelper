@@ -40,6 +40,10 @@ public:
 	int GetMapLevel();
 	// 角色是否死亡
 	bool IsDied();
+	// 技能是否冷却
+	bool IsSkillCoolDown(int position);
+	// 获取技能冷却剩余时间
+	int GetSkillCoolDownLeftTime(ULONG64 skill);
 };
 
 extern Judge jd;
