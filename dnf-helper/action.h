@@ -25,6 +25,8 @@ public:
 	static void SuperSpecialBuff();
 	// 物品buff
 	static void GoodsBuff();
+	// 超级评分
+	static void SuperScore();
 };
 
 extern Action at;

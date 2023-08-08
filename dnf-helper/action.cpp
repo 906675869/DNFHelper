@@ -341,3 +341,9 @@ void Action::GoodsBuff()
 	cl.GoodsCall(490028988); // 普洱茶60秒 12%双攻
 	cout << "物品buff开启" << endl;
 }
+
+void Action::SuperScore()
+{
+	rw.WriteInt(rw.ReadLong(评分基址) + 评分偏移, GetRandomNum(5201314, 9000000));
+	cout << "超级评分开启" << endl;
+}

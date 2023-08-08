@@ -96,6 +96,7 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate)
 			if (kb.IsPressed(右光标键)) {
 				kb.Press(右光标键, 4);
 			}
+			// 未按下
 			if (!kb.IsPressed(左光标键)) {
 				Sleep(50);
 				kb.Press(左光标键);
@@ -127,13 +128,17 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate)
 			if (kb.IsPressed(下光标键)) {
 				kb.Press(下光标键, 4);
 			}
-			kb.Press(上光标键, 3);
+			if (!kb.IsPressed(上光标键)) {
+				kb.Press(上光标键, 3);
+			}
 		}
 		if (rwCoordinate.y < y - 30) {
 			if (kb.IsPressed(上光标键)) {
 				kb.Press(上光标键, 4);
 			}
-			kb.Press(下光标键, 3);
+			if (!kb.IsPressed(下光标键)) {
+				kb.Press(下光标键, 3);
+			}
 		}
 		Sleep(60);
 

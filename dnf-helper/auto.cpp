@@ -93,6 +93,17 @@ void Auto::EveryRoomLoop()
 		if (config.ReadConfigItem(configData.goodsBuff) == 1) {
 			at.GoodsBuff();
 		}
+		// if(config.ReadConfigItem(configData.))
+		at.SuperScore();
+		// 按键buff
+		kb.Press(右光标键);
+		Sleep(100);
+		kb.Press(右光标键);
+		Sleep(130);
+		kb.Press(空格键);
+		Sleep(500);
+		kb.Press(空格键);
+
 	}
 	// 已通关
 	if (jd.IsBossRoom() && jd.IsPassMap()) {
