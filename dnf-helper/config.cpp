@@ -98,7 +98,7 @@ void Config::WriteConfigFile()
 	WriteConfigItem(configData.leftFatigue, L"8");
 	WriteConfigItem(configData.roleNum, L"3");
 
-	WriteConfigItem(configData.followModel, L"1		={0}不执行 ={1}坐标跟随 ={2}漂移跟随 ={3} 模拟跟随");
+	WriteConfigItem(configData.followModel, L"3		={0}不执行 ={1}坐标跟随 ={2}漂移跟随 ={3} 模拟跟随");
 	WriteConfigItem(configData.pickupType, L"1		={0}不执行 ={1}按键入包 ={2}落地入包 ={3}空中入包");
 	// WriteConfigItem(configData.passMapType, L"4		={0}不执行 ={1}坐标顺图 ={2}漂移顺图 ={3}强制顺图 ={4} 模拟顺图");
 	WriteConfigItem(configData.goodsBuff, L"0		={0}否 ={1}是\n");

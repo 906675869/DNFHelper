@@ -276,8 +276,8 @@ void Action::FollowMonster()
 	CoordinateStruct monsterCoordinate = cl.ReadCoordinate(monster);
 	CoordinateStruct personCoordinate = cl.ReadCoordinate(gd.personPtr);
 	// 判断精度
-	int distance = abs(monsterCoordinate.x - personCoordinate.x);
-	if (distance > 80) {
+	int distance = monsterCoordinate.x - personCoordinate.x;
+	if (abs(distance) > 100) {
 		if (config.ReadConfigItem(configData.followModel) == 1) {
 			cl.CoordinateCall(monsterCoordinate.x, monsterCoordinate.y, 0);
 		}
@@ -287,9 +287,16 @@ void Action::FollowMonster()
 		if (config.ReadConfigItem(configData.followModel) == 3) {
 			sl.GoDestation(monsterCoordinate.x, monsterCoordinate.y);
 		}
-	}
-	for (int i = 0; i < 3; i++) {
-		RandomSkill();
+	}else{
+		if (distance > 0) {
+			kb.Press(右光标键);
+		}
+		else {
+			kb.Press(左光标键);
+		}
+		for (int i = 0; i < 3; i++) {
+			RandomSkill();
+		}
 	}
 }
 

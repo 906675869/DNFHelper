@@ -182,33 +182,15 @@ void Auto::ClearMap()
 		}
 		return;
 	}
-	bool continueMap = GetRandomNum(0, 10) % 5 < 3;
-	if (continueMap) {
-		// kb.Press(Esc键);
-		Sleep(200);
-		kb.Press(Esc键);
-		Sleep(500);
-		// 重新挑战
-		Sleep(200);
-		cout << "执行重新挑战" << endl;
-		kb.Press(VK_F10);
-	}
-	else {
-		// kb.Press(Esc键);
-		Sleep(200);
-		kb.Press(Esc键);
-		Sleep(200);
-		cout << "执行返回城镇" << endl;
-		kb.Press(VK_F12);
-		
-	}
+	bool continueMap = GetRandomNum(0, 9) < 5;
+	
 	int passMapCnt = 0;
 	while (gd.autoSwitch) {
 		// 在城镇或者重新开始通关
 		if (jd.IsAtTown() || (!jd.IsBossRoom() && !jd.IsPassMap())) {
 			break;
 		}
-		if (passMapCnt++ ==  50 * 5) {
+		if (passMapCnt++ ==  10) {
 			if (continueMap)
 			{
 				// 重新挑战
@@ -221,6 +203,23 @@ void Auto::ClearMap()
 				cout << "强制执行返回城镇" << endl;
 				pk.OutMap();
 			}
+		}
+		else {
+			if (continueMap) {
+				kb.Press(Esc键);
+				Sleep(200);
+				// 重新挑战
+				if(passMapCnt == 1) cout << "执行重新挑战" << endl;
+				kb.Press(VK_F10);
+			}
+			else {
+				kb.Press(Esc键);
+				Sleep(200);
+				if (passMapCnt == 1) cout << "执行返回城镇" << endl;
+				kb.Press(VK_F12);
+
+			}
+		
 		}
 		Sleep(20);
 	}
