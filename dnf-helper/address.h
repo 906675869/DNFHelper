@@ -74,8 +74,8 @@ constexpr auto 汇编CALL = 0x13FDC0000; //7度_获取
 constexpr auto 汇编地址 = 0x13FDB0022; //7度_获取
 constexpr auto 内存汇编2 = 0x145385914; //7度_获取
 constexpr auto 内存汇编3 = 0x14533DE31; //7度_获取
-//constexpr auto TranslateMessage = 0x1469BCCC0; //7度_获取
-//constexpr auto GameTimeGetTime = 0x1469BD0A0; //7度_获取
+constexpr auto TranslateMessage1 = 0x1469BCCC0; //7度_获取
+constexpr auto GameTimeGetTime = 0x1469BD0A0; //7度_获取
 
 constexpr auto 丢技能CALL_Rcx = 0x14A07B150; //7度_获取
 constexpr auto 丢技能CALL_1 = 0x143ED0BF0; //7度_获取

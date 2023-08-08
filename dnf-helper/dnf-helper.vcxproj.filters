@@ -60,6 +60,9 @@
     <ClCompile Include="task.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="fastcall.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="keyboard.h">
@@ -105,6 +108,9 @@
       <Filter>源文件\头文件</Filter>
     </ClInclude>
     <ClInclude Include="task.h">
+      <Filter>源文件\头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="fastcall.h">
       <Filter>源文件\头文件</Filter>
     </ClInclude>
   </ItemGroup>

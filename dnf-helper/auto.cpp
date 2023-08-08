@@ -119,6 +119,8 @@ void Auto::EveryRoomLoop()
 		// ¸úËæ¹ÖÎï
 		at.FollowMonster();
 
+
+
 		if (jd.IsDied()) {
 			// ÏûºÄ¸´»î±Ò
 			kb.Press(X¼ü);
