@@ -184,7 +184,8 @@ ULONG64 FastCall::Call(ULONG64 address, vector<ULONG64> data)
     if(rsp / 8 % 2 == 0){
         rsp = rsp + 8;
     }
-    code = makeByteArray({ 72, 129, 236 }) + IntToBytes(rsp, 4) + code 
+    code = makeByteArray({ 72, 129, 236 }) + IntToBytes(rsp, 4) 
+        + code 
         + makeByteArray({ 72, 129, 196 }) + IntToBytes(rsp, 4);
 
     return MemoryCompileCall(code);
