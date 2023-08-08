@@ -2,6 +2,12 @@
 
 class FastCall {
 public:
+	FastCall() {
+		InitCode();
+	}
+	~FastCall() {
+		FreeCode();
+	}
 	// ≥ı ºªØ
 	static void InitCode();
 	static void FreeCode();

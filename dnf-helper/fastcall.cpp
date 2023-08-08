@@ -64,8 +64,7 @@ void FastCall::InitCode()
     code = { 80, 83, 81, 82, 87, 86, 85, 65, 80, 65, 81, 65, 82, 65, 83, 65, 84, 65, 85, 65, 86, 65, 87, 156, 72,
     131, 236, 40 };
     code = code + makeByteArray({ 72, 184 }) + IntToBytes(g_transit_framework_memory, 8) + makeByteArray({255, 208});
-    code = code +
-        makeByteArray({ 72, 131, 196, 40, 157, 65, 95, 65, 94, 65, 93, 65, 92, 65, 91, 65, 90, 65, 89, 65, 88,
+    code = code + makeByteArray({ 72, 131, 196, 40, 157, 65, 95, 65, 94, 65, 93, 65, 92, 65, 91, 65, 90, 65, 89, 65, 88,
         93, 94, 95, 90, 89, 91, 88 });
     code = code + makeByteArray({ 255, 37, 0, 0, 0, 0 }) + IntToBytes(g_old_data, 8);
 
@@ -92,17 +91,17 @@ ULONG64 FastCall::AllocateSpace(int len)
 void FastCall::InitHookType(int interfaceSelect)
 {
     g_old_data_save = AllocateSpace(8);
-        if(interfaceSelect == 1){
-            ULONG64 hook_address = rw.ReadLong(TranslateMessage1);
-            hook_address = hook_address + rw.ReadInt(hook_address + 2) + 6;
-            g_hook_address = hook_address;
-        }
-        if (rw.ReadLong(g_old_data_save) == 0) {
-            g_old_data = rw.ReadLong(g_hook_address);
-        }
-        else{
-            g_old_data = rw.ReadLong(g_old_data_save);
-        }
+    if(interfaceSelect == 1){
+        ULONG64 hook_address = rw.ReadLong(TranslateMessage1);
+        hook_address = hook_address + rw.ReadInt(hook_address + 2) + 6;
+        g_hook_address = hook_address;
+    }
+    if (rw.ReadLong(g_old_data_save) == 0) {
+        g_old_data = rw.ReadLong(g_hook_address);
+    }
+    else{
+        g_old_data = rw.ReadLong(g_old_data_save);
+    }
 
 }
 // µ÷ÓÃµÈ´ý
@@ -162,7 +161,7 @@ ULONG64 FastCall::Call(ULONG64 address, vector<ULONG64> data)
     if (sizeof(data) > 16) {
         return 0;
     }
-    vector<int> instruction_array ={47432, 47688, 47177, 47433};
+    vector<UINT> instruction_array ={ 47432, 47688, 47177, 47433 };
 
     vector<byte> code = {};
     for (int i = 0; i < sizeof(data); i++) {
