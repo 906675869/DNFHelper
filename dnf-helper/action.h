@@ -18,9 +18,13 @@ public:
 	// 无视建筑
 	static void IgnoreBuildings(bool ok);
 	// 事件处理
-	static void ProcessMsg();
+	// static void ProcessMsg();
 	// 无敌
 	static void Invincible();
+	// 超级特效buff
+	static void SuperSpecialBuff();
+	// 物品buff
+	static void GoodsBuff();
 };
 
 extern Action at;

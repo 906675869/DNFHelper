@@ -119,25 +119,7 @@ void Call::SkillCall(ULONG64 人物地址, int 代码, int 伤害, int X, int Y, int Z, 
 	MemoryCompileCall(bytes);
 }
 
-void Call::SpecialEffectCall(int type)
-{
-	ULONG64 emptyAddr = 全局空白 + 2200;
-	vector<BYTE> compileData = AppendBytes({ 72, 129, 236, 0, 1, 0, 0 }, AppendBytes({ 72, 186 }, IntToBytes(1, 8)));// todo size
-	compileData = AppendBytes(compileData, AppendBytes({ 72, 185 }, IntToBytes(emptyAddr + 8, 8)));
-	compileData = AppendBytes(compileData, AppendBytes({ 72, 184 }, IntToBytes(特效缓冲CALL, 8)));
-	compileData = AppendBytes(compileData, AppendBytes({ 255, 208, 72, 186 }, LongToBytes((ULONG)2)));
-	compileData = AppendBytes(compileData, AppendBytes({ 72, 185 }, IntToBytes(emptyAddr + 8, 8)));
-	compileData = AppendBytes(compileData, AppendBytes({ 72, 184 }, IntToBytes(特效缓冲CALL, 8)));
-	compileData = AppendBytes(compileData, AppendBytes({ 255, 208, 72, 185 }, IntToBytes(rw.ReadLong(特效基址), 8)));
-	compileData = AppendBytes(compileData, AppendBytes({ 73, 184 }, IntToBytes(emptyAddr, 8)));
-	compileData = AppendBytes(compileData, AppendBytes({ 72, 199, 194 }, IntToBytes(type, 4)));
-	compileData = AppendBytes(compileData, AppendBytes({ 72, 184 }, IntToBytes(BUFF参数1, 8)));
-	compileData = AppendBytes(compileData, AppendBytes({ 255, 208, 72, 137, 199, 72, 184 }, IntToBytes(特效释放CALL, 8)));
-	compileData = AppendBytes(compileData, AppendBytes({ 255, 208, 72, 137, 193, 72, 137, 250, 72, 184 }, IntToBytes(BUFF参数2, 8)));
-	compileData = AppendBytes(compileData, AppendBytes({ 255, 208, 72, 184 }, IntToBytes(特效释放CALL, 8)));
-	compileData = AppendBytes(compileData, { 255, 208, 72, 129, 196, 0, 1, 0, 0 });
-	MemoryCompileCall(compileData);
-}
+
 
 int Call::GetCoordinateCall(ULONG64 ptr, int direction)
 {
@@ -384,4 +366,24 @@ void Call::CoordinateCall(int x, int y, int z)
 	shellCode = shellCode + makeByteArray({ 72, 129, 196, 0, 1, 0, 0 }) ;
 	MemoryCompileCall(shellCode);
 
+}
+
+
+void Call::SpecialEffectCall(int code) {
+	ULONG64 emptyAddr = 全局空白 + 2200;
+	vector<BYTE> compileData = makeByteArray({ 72, 129, 236, 0, 1, 0, 0 }) + makeByteArray({ 72, 186 }) + IntToBytes(1, 8);
+	compileData = compileData + makeByteArray({ 72, 185 })+ IntToBytes(emptyAddr + 8, 8);
+	compileData = compileData + makeByteArray({ 72, 184 }) + IntToBytes(特效缓冲CALL, 8);
+	compileData = compileData + makeByteArray({ 255, 208, 72, 186 }) + LongToBytes((ULONG)2);
+	compileData = compileData + makeByteArray({ 72, 185 }) + IntToBytes(emptyAddr + 8, 8);
+	compileData = compileData + makeByteArray({ 72, 184 }) + IntToBytes(特效缓冲CALL, 8);
+	compileData = compileData + makeByteArray({ 255, 208, 72, 185 }) + IntToBytes(rw.ReadLong(特效基址), 8);
+	compileData = compileData + makeByteArray({ 73, 184 }) + IntToBytes(emptyAddr, 8);
+	compileData = compileData + makeByteArray({ 72, 199, 194 }) + IntToBytes(code, 4);
+	compileData = compileData + makeByteArray({ 72, 184 }) + IntToBytes(BUFF参数1, 8);
+	compileData = compileData + makeByteArray({ 255, 208, 72, 137, 199, 72, 184 }) + IntToBytes(特效释放CALL, 8);
+	compileData = compileData + makeByteArray({ 255, 208, 72, 137, 193, 72, 137, 250, 72, 184 }) + IntToBytes(BUFF参数2, 8);
+	compileData = compileData + makeByteArray({ 255, 208, 72, 184 }) + IntToBytes(特效释放CALL, 8);
+	compileData = compileData + makeByteArray({ 255, 208, 72, 129, 196, 0, 1, 0, 0 });
+	MemoryCompileCall(compileData);
 }
