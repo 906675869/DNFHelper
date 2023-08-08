@@ -79,6 +79,12 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate)
 		if (x - 30 < rwCoordinate.x && rwCoordinate.x < x + 30 && y - 30 < rwCoordinate.y && rwCoordinate.y < y + 30)
 		{
 			ReleaseAllKeys();
+			if (x - 30 < rwCoordinate.x) {
+				kb.Press(左光标键);
+			}
+			if (rwCoordinate.x < x + 30) {
+				kb.Press(右光标键);
+			}
 			break;
 		}
 

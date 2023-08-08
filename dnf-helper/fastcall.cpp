@@ -3,24 +3,27 @@
 #include "helper.h"
 #include <iostream>
 
+
+FastCall fastCall;
+
+
 static int g_hook_interface;
 static int g_call_max_len ;
 static int g_RSP ;
 static int g_timeout_call_settings ;
 static ULONG64 g_allocate_space ;
-static int g_last_space ;
-static int g_hook_address ;
-static int g_old_data ;
-static int g_old_data_save ;
-static int g_transit_framework_memory ;
+static ULONG64 g_last_space ;
+static ULONG64 g_hook_address ;
+static ULONG64 g_old_data ;
+static ULONG64 g_old_data_save ;
+static ULONG64 g_transit_framework_memory ;
 static ULONG64 g_execute_func_code ;
 static ULONG64 g_execute_func_result ;
 static ULONG64 g_execute_func_control ;
 static ULONG64 g_execute_func_refresh_time ;
 static ULONG64 g_execute_func_last_time ;
 static ULONG64 g_execute_func_data ;
-static int g_hook_framework ;
-
+static ULONG64 g_hook_framework ;
 
 // 初始化
 void FastCall::InitCode()
@@ -28,7 +31,7 @@ void FastCall::InitCode()
     g_hook_interface = 1;
     g_call_max_len = 6666;
     g_RSP = 584;
-    g_allocate_space = (ULONG64)rw.ApplyMemory(4096 * 1024);
+    g_allocate_space = (ULONG64)rw.ApplyMemory(4906 * 1024);
     g_timeout_call_settings = 1000 * 60;
     g_last_space = g_allocate_space;
 
@@ -39,7 +42,7 @@ void FastCall::InitCode()
     94, 91, 95, 65, 94, 73, 137, 6, 199, 7, 0, 0, 0, 0, 72, 139, 116, 36, 48, 72, 139, 124, 36, 56, 72, 131,
     196, 32, 65, 94, 195 };
 
-    g_execute_func_code = AllocateSpace(sizeof(code));
+    g_execute_func_code = AllocateSpace(code.size());
     g_execute_func_data = AllocateSpace(g_call_max_len);
     g_execute_func_control = AllocateSpace(8);
     g_execute_func_refresh_time = AllocateSpace(8);
@@ -55,9 +58,9 @@ void FastCall::InitCode()
     rw.WriteLong(g_execute_func_code + 0x5E + 2, g_execute_func_data);
 
     code = { 72, 137, 92, 36, 8, 72, 137, 116, 36, 16, 87, 72, 131, 236, 32 };
-    code = code + makeByteArray({ 72, 184 }) + IntToBytes(g_execute_func_code, 8), makeByteArray({ 255, 208 });
+    code = code + makeByteArray({ 72, 184 }) + IntToBytes(g_execute_func_code, 8) + makeByteArray({ 255, 208 });
     code = code + makeByteArray({ 72, 139, 92, 36, 48, 72, 139, 116, 36, 56, 72, 131, 196, 32, 95, 195 });
-    g_transit_framework_memory = AllocateSpace(sizeof(code));
+    g_transit_framework_memory = AllocateSpace(code.size());
     rw.WriteBytes(g_transit_framework_memory, code);
     InitHookType(g_hook_interface);
 
@@ -68,7 +71,7 @@ void FastCall::InitCode()
         93, 94, 95, 90, 89, 91, 88 });
     code = code + makeByteArray({ 255, 37, 0, 0, 0, 0 }) + IntToBytes(g_old_data, 8);
 
-    g_hook_framework = AllocateSpace(sizeof(code));
+    g_hook_framework = AllocateSpace(code.size());
 
     rw.WriteBytes(g_hook_framework, code);
     rw.WriteLong(g_old_data_save, g_old_data);
@@ -81,7 +84,7 @@ void FastCall::FreeCode()
     rw.WriteBytes(g_transit_framework_memory, GetEmptyBytes(g_last_space - g_allocate_space));
 }
 // 分配空间
-ULONG64 FastCall::AllocateSpace(int len)
+ULONG64 FastCall::AllocateSpace(ULONG64 len)
 {
     ULONG64 result = g_last_space;
     g_last_space = g_last_space + len;
@@ -112,8 +115,7 @@ void FastCall::CallWait()
     }
 
     while (rw.ReadInt(g_execute_func_control) == 2) {
-        int refresh_time = rw.ReadInt(g_execute_func_refresh_time) - rw.ReadInt(
-            g_execute_func_last_time);
+        int refresh_time = rw.ReadInt(g_execute_func_refresh_time) - rw.ReadInt(g_execute_func_last_time);
         if (g_timeout_call_settings != 0 and refresh_time > g_timeout_call_settings) {
             break;
         }
@@ -144,7 +146,7 @@ ULONG64 FastCall::MemoryCompileCall(vector<byte> callData)
 {
     CallWait();
     callData = callData + makeByteArray({ 195 });
-    if (sizeof(callData) > g_call_max_len) {
+    if (callData.size() > g_call_max_len) {
         cout << "调用数过长" << endl;
         return 0;
     }
@@ -152,19 +154,19 @@ ULONG64 FastCall::MemoryCompileCall(vector<byte> callData)
     rw.WriteBytes(g_execute_func_data, callData);
     rw.WriteInt(g_execute_func_control, 1);
     CallWait();
-    rw.WriteBytes(g_execute_func_data, GetEmptyBytes(sizeof(callData)));
+    rw.WriteBytes(g_execute_func_data, GetEmptyBytes(callData.size()));
     return rw.ReadLong(g_execute_func_result);
 }
 
 ULONG64 FastCall::Call(ULONG64 address, vector<ULONG64> data)
 {
-    if (sizeof(data) > 16) {
+    if (data.size() > 16) {
         return 0;
     }
     vector<UINT> instruction_array ={ 47432, 47688, 47177, 47433 };
 
     vector<byte> code = {};
-    for (int i = 0; i < sizeof(data); i++) {
+    for (int i = 0; i < data.size(); i++) {
         if(i < 4){
             code = code + IntToBytes(instruction_array[i], 2);
             code = code + IntToBytes(data[i], 8);
@@ -176,10 +178,10 @@ ULONG64 FastCall::Call(ULONG64 address, vector<ULONG64> data)
     }
     code = code + makeByteArray({ 72, 184 }) + IntToBytes(address, 8) + makeByteArray({ 255, 208 });
     int rsp;
-    if (sizeof(data) < 4) {
+    if (data.size() < 4) {
         rsp = 4 * 8 + 8;
     }else{
-        rsp = sizeof(data) * 8 + 8;
+        rsp = data.size() * 8 + 8;
     }
     if(rsp / 8 % 2 == 0){
         rsp = rsp + 8;

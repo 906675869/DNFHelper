@@ -6,7 +6,7 @@ ReadWrite rw;
 LPVOID ReadWrite::ApplyMemory( DWORD len)
 {
 	HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, false, gd.pid);
-	LPVOID address = VirtualAllocEx(hProcess, 0, len, 4096, 64);
+	LPVOID address = VirtualAllocEx(hProcess, 0, len, MEM_COMMIT| MEM_RESERVE, PAGE_EXECUTE_READWRITE);
 	CloseHandle(hProcess);
 	return address;
 }

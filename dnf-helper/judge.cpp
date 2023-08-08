@@ -157,10 +157,9 @@ int Judge::GetMapLevel()
 
 bool Judge::IsDied()
 {
-	int maxHp = rw.ReadInt(gd.personPtr + 满血偏移);
+	//int maxHp = rw.ReadInt(gd.personPtr + 满血偏移);
 	int currentHp = rw.ReadInt(gd.personPtr + 当前血量);
-	cout << "当前血量:" << currentHp <<":"<< maxHp << endl;
-	return GetPersonAction() == 5;
+	return GetPersonAction() == 5 || currentHp == 0;
 	// return false;
 }
 
