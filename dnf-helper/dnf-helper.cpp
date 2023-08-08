@@ -70,11 +70,9 @@ VOID HomeActive()
 	}
 
 	//AddHotkey({ VK_F1, 0, 0, (LPTHREAD_START_ROUTINE)FullScreenSwitch });
-	//AddHotkey({ VK_F2, 0, 0, (LPTHREAD_START_ROUTINE)GoodsBuffA });
-	//AddHotkey({ VK_F3, 0, 0, (LPTHREAD_START_ROUTINE)SuperSpecialBuff });
-	//AddHotkey({ VK_F4, 0, 0, (LPTHREAD_START_ROUTINE)Invincible });
-
-	// hk.AddHotkey({ VK_F1, 0, 0, (LPTHREAD_START_ROUTINE)sl.GoDestation });
+	hk.AddHotkey({ VK_F2, 0, 0, (LPTHREAD_START_ROUTINE)at.GoodsBuff });
+	hk.AddHotkey({ VK_F3, 0, 0, (LPTHREAD_START_ROUTINE)at.SuperSpecialBuff });
+	hk.AddHotkey({ VK_F4, 0, 0, (LPTHREAD_START_ROUTINE)at.Invincible });
 	hk.AddHotkey({ VK_F5, 0, 0, (LPTHREAD_START_ROUTINE)at.HookHarm });
 	hk.AddHotkey({ VK_F6, 0, 0, (LPTHREAD_START_ROUTINE)at.MutiplyHarm });
 
@@ -87,13 +85,13 @@ VOID HomeActive()
 	printf("\n");
 	printf("⊙贪狼⊙ >>  程序激活成功 ！\n");
 	//printf("⊙贪狼⊙ F1  开启技能全屏 ！\n");
-	//printf("⊙贪狼⊙ F2  开启物品BUFF ！\n");
-	//printf("⊙贪狼⊙ F3  开启超级BUFF ！\n");
-	//printf("⊙贪狼⊙ F4  开启霸体无敌 ！\n");
+	printf("⊙贪狼⊙ F2  开启物品BUFF ！\n");
+	printf("⊙贪狼⊙ F3  开启超级BUFF ！\n");
+	printf("⊙贪狼⊙ F4  开启霸体无敌 ！\n");
 	printf("⊙贪狼⊙ F5  开启HOOK高伤！\n");
 	printf("⊙贪狼⊙ F6  开启浮点倍攻！\n");
 	//GodNotice(L"⊙贪狼⊙ F6  开启小金人！");
-	// printf("⊙贪狼⊙ END  开启自动刷图 ！\n");
+	printf("⊙贪狼⊙ END  开启自动刷图 ！\n");
 	config.ConfigInit();
 	config.WriteConfigFile();
 	CreateUserThead(GetPersonPtr);
