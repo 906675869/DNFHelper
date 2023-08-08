@@ -118,6 +118,12 @@ void Auto::EveryRoomLoop()
 	{
 		// 跟随怪物
 		at.FollowMonster();
+
+		if (jd.IsDied()) {
+			// 消耗复活币
+			kb.Press(X键);
+		}
+
 	}
 	// 已开门
 	else if(!jd.IsBossRoom()){

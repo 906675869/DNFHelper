@@ -38,6 +38,8 @@ public:
 	int GetPersonAction();
 	// 获取地图等级
 	int GetMapLevel();
+	// 角色是否死亡
+	bool IsDied();
 };
 
 extern Judge jd;

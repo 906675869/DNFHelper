@@ -1,5 +1,6 @@
 #include "judge.h"
 #include "config.h"
+#include <iostream>
 Judge jd;
 // 获取角色疲劳
 int Judge::GetFatigue()
@@ -152,6 +153,15 @@ int Judge::GetMapLevel()
 		}
 	}
 	return gd.mapLevel;
+}
+
+bool Judge::IsDied()
+{
+	int maxHp = rw.ReadInt(gd.personPtr + 满血偏移);
+	int currentHp = rw.ReadInt(gd.personPtr + 当前血量);
+	cout << "当前血量:" << currentHp <<":"<< maxHp << endl;
+	return GetPersonAction() == 5;
+	// return false;
 }
 
 
