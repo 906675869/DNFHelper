@@ -25,6 +25,8 @@ static ULONG64 g_execute_func_last_time ;
 static ULONG64 g_execute_func_data ;
 static ULONG64 g_hook_framework ;
 
+
+static bool INIT = false;
 // ≥ı ºªØ
 void FastCall::InitCode()
 {
@@ -162,6 +164,10 @@ ULONG64 FastCall::Call(ULONG64 address, vector<ULONG64> data)
 {
     if (data.size() > 16) {
         return 0;
+    }
+    if (!INIT) {
+        InitCode();
+        INIT = TRUE;
     }
     vector<UINT> instruction_array ={ 47432, 47688, 47177, 47433 };
 

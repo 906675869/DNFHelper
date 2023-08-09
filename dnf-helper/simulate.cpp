@@ -69,7 +69,7 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate)
 		}
 		// 当前为boss房间 不执行过图
 		CoordinateStruct bossCoordinate = jd.GetBossRoom();
-		if (jd.CoordinateEqual(bossCoordinate, currentCoordinate)) {
+		if (jd.CoordinateEqual(bossCoordinate, currentCoordinate) && jd.IsPassMap()) {
 			ReleaseAllKeys();
 			break;
 		}

@@ -13,7 +13,7 @@ Action at;
 
 bool hookSwitch = false;
 vector<BYTE> originHook;
-
+   
 
 void Action::MutiplyHarm(int x)
 {
@@ -163,8 +163,7 @@ int Action::LoopMonster()
 		ULONG loopCode = rw.ReadInt(loopPtr + 代码偏移);
 		wstring loopName = UnicodeToAnsi(rw.ReadBytes(rw.ReadLong(loopPtr + 名称偏移), 100));
 		ULONG64 blood = rw.ReadLong(loopPtr + 怪物血量);
-		if (loopType == 529 || loopType == 273
-			// || loopType == 545 || loopType == 61440
+		if (loopType == 529 || loopType == 273 || loopType == 545 || loopType == 61440
 			)
 		{
 			// 过滤人物
@@ -222,21 +221,26 @@ void Action::FollowMonster()
 	CoordinateStruct personCoordinate = cl.ReadCoordinate(gd.personPtr);
 	ULONG64 monster = gd.globalMonsters[0];
 	CoordinateStruct monsterCoordinate = cl.ReadCoordinate(monster);
-	int absoluteDistance = 0;
-	for (int i = 0; i < gd.globalMonsters.size(); i++) {
-		ULONG64 tmpMonster = gd.globalMonsters[i];
-		CoordinateStruct tmpMonsterCoordinate = cl.ReadCoordinate(tmpMonster);
-		int tempDistance = (int)pow((pow(abs(personCoordinate.x - tmpMonsterCoordinate.x), 2)
-			+ pow(abs(personCoordinate.y - tmpMonsterCoordinate.y), 2)), 1 / (float)2);
-		if (absoluteDistance == 0 || tempDistance < absoluteDistance) {
-			absoluteDistance = tempDistance;
-			monster = tmpMonster;
-			monsterCoordinate = tmpMonsterCoordinate;
+	int distance = (int)sqrt((pow(abs(personCoordinate.x - monsterCoordinate.x), 2)
+		+ pow(abs(personCoordinate.y - monsterCoordinate.y), 2)));
+	//  超过一个
+	if(gd.globalMonsters.size() > 1){
+		for (int i = 0; i < gd.globalMonsters.size(); i++) {
+			ULONG64 tmpMonster = gd.globalMonsters[i];
+			CoordinateStruct tmpMonsterCoordinate = cl.ReadCoordinate(tmpMonster);
+			int tempDistance = (int)sqrt((pow(abs(personCoordinate.x - tmpMonsterCoordinate.x), 2)
+				+ pow(abs(personCoordinate.y - tmpMonsterCoordinate.y), 2)));
+			if (tempDistance < distance) {
+				distance = tempDistance;
+				monster = tmpMonster;
+				monsterCoordinate = tmpMonsterCoordinate;
+			}
 		}
 	}
+	// cout << "计算怪物与人物之间的距离为：" << distance << endl;
 	// 判断精度
-	int distance = monsterCoordinate.x - personCoordinate.x;
-	if (abs(distance) > 100) {
+	if (abs(distance) > 60) {
+		// cout << "前往怪物坐标x=" << monsterCoordinate.x << "y="<< monsterCoordinate.y << endl;
 		if (config.ReadConfigItem(configData.followModel) == 1) {
 			cl.CoordinateCall(monsterCoordinate.x, monsterCoordinate.y, 0);
 		}
@@ -247,18 +251,11 @@ void Action::FollowMonster()
 			sl.GoDestation(monsterCoordinate.x, monsterCoordinate.y);
 		}
 	}else{
-		if (distance > 0) {
+		if (monsterCoordinate.x - personCoordinate.x > 0) {
 			kb.Press(右光标键);
 		}
 		else {
 			kb.Press(左光标键);
-		}
-		if (distance < 20 && distance > -20) {
-			kb.Press(下光标键, 3);
-			Sleep(50);
-			kb.Press(C键);
-			kb.Press(下光标键, 4);
-			kb.Press(X键);
 		}
 
 		for (int i = 0; i < 3; i++) {

@@ -46,6 +46,13 @@ VOID GetPersonPtr()
 	}
 }
 
+//void testPress() {
+//	Sleep(3000);
+//	kb.Press(Esc键);
+//	kb.Press(VK_F1);
+//}
+
+
 
 VOID HomeActive()
 {
@@ -80,6 +87,8 @@ VOID HomeActive()
 	hk.AddHotkey({ 下光标键, 18, 0, (LPTHREAD_START_ROUTINE)pm.PackPassMapDown });
 	hk.AddHotkey({ 左光标键, 18, 0, (LPTHREAD_START_ROUTINE)pm.PackPassMapLeft });
 	hk.AddHotkey({ 右光标键, 18, 0, (LPTHREAD_START_ROUTINE)pm.PackPassMapRight });
+
+	// hk.AddHotkey({ Esc键, 0, 0, (LPTHREAD_START_ROUTINE)testPress });
 	printf("\n");
 	printf("⊙贪狼⊙ >>  程序激活成功 ！\n");
 	//printf("⊙贪狼⊙ F1  开启技能全屏 ！\n");
@@ -92,7 +101,7 @@ VOID HomeActive()
 	printf("⊙贪狼⊙ END  开启自动刷图 ！\n");
 	config.ConfigInit();
 	config.WriteConfigFile();
-	fastCall.InitCode();
+	// fastCall.InitCode();
 	CreateUserThead(GetPersonPtr);
 	//CreateUserThead(HalfAutoActive);
 

@@ -120,6 +120,26 @@ void Keyboard::Press(int keycode, int status, bool func) {
 
 }
 
+void Keyboard::FnPress(int keycode, int status)
+{
+	if (status == 0) {
+		status = 10;
+	}
+	switch (status) {
+	case 3:
+		keybd_event(keycode, MapVirtualKey(keycode, 0), 0, 0);
+		break;
+	case 4:
+		keybd_event(keycode, MapVirtualKey(keycode, 0), 2, 0);
+		break;
+	default:
+		keybd_event(keycode, MapVirtualKey(keycode, 0), 0, 0);
+		Sleep(status);
+		keybd_event(keycode, MapVirtualKey(keycode, 0), 2, 0);
+	}
+
+}
+
 bool Keyboard::IsFuncCode(int keycode) {
 	return GetACIICode(keycode) == 0;
 }

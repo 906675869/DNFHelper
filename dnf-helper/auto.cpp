@@ -46,8 +46,8 @@ void Auto::TownProcess()
 {
 	Sleep(3000);
 	if (as.chooseRoleNum % 2 > 0) {
-		cout << "为防止刷图过快三方导致行为判定，暂时休眠20~30秒";
-		Sleep(1000 * GetRandomNum(20, 30));
+		cout << "为防止刷图过快三方导致行为判定，暂时休眠3~5min";
+		Sleep(60 * 1000 * GetRandomNum(3, 5));
 	}
 	// 进图处理
 	if (config.ReadConfigItem(configData.autoModel) == 1) { // 指定地图
@@ -118,10 +118,8 @@ void Auto::EveryRoomLoop()
 	{
 		// 跟随怪物
 		at.FollowMonster();
-
-
-
 		if (jd.IsDied()) {
+			Sleep(3000);
 			// 消耗复活币
 			kb.Press(X键);
 		}
@@ -182,7 +180,7 @@ void Auto::ClearMap()
 		}
 		return;
 	}
-	bool continueMap = GetRandomNum(0, 9) < 5;
+	bool continueMap = GetRandomNum(0, 9) < 6;
 	
 	int passMapCnt = 0;
 	while (gd.autoSwitch) {
@@ -190,7 +188,7 @@ void Auto::ClearMap()
 		if (jd.IsAtTown() || (!jd.IsBossRoom() && !jd.IsPassMap())) {
 			break;
 		}
-		if (passMapCnt++ ==  10) {
+		if (passMapCnt++ ==  30) {
 			if (continueMap)
 			{
 				// 重新挑战
@@ -206,22 +204,26 @@ void Auto::ClearMap()
 		}
 		else {
 			if (continueMap) {
-				kb.Press(Esc键);
-				Sleep(200);
+				if (passMapCnt <= 3) {
+					kb.Press(Esc键);
+					Sleep(200);
+				}
 				// 重新挑战
 				if(passMapCnt == 1) cout << "执行重新挑战" << endl;
-				kb.Press(VK_F10);
+				kb.FnPress(VK_F10);
 			}
 			else {
-				kb.Press(Esc键);
-				Sleep(200);
+				if (passMapCnt <= 3) {
+					kb.Press(Esc键);
+					Sleep(200);
+				}
 				if (passMapCnt == 1) cout << "执行返回城镇" << endl;
-				kb.Press(VK_F12);
+				kb.FnPress(VK_F12);
 
 			}
 		
 		}
-		Sleep(20);
+		Sleep(200);
 	}
 	
 }
