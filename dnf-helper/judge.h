@@ -44,6 +44,8 @@ public:
 	bool IsSkillCoolDown(int position);
 	// 获取技能冷却剩余时间
 	int GetSkillCoolDownLeftTime(ULONG64 skill);
+	// 特殊技能处理
+	wstring GetSkillName(int position);
 };
 
 extern Judge jd;

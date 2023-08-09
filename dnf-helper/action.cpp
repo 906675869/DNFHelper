@@ -196,9 +196,17 @@ void  Action::RandomSkill() {
 	int keyPosition = random;
 	int keycode = keyCodes[random];
 	if (jd.IsSkillCoolDown(keyPosition)) {
+		// 特殊技能特殊处理
+		wstring skillName = jd.GetSkillName(keyPosition);
 		kb.Press(keycode);
+		if (skillName.find(L"流星") != string::npos) {
+			kb.Press(X键);
+			// kb.Press(C键);
+			kb.Press(Z键);
+		}
 	}
 	if (jd.GetPersonAction() == 0 && random > 3) {
+		kb.Press(X键);
 		kb.Press(X键);
 		kb.Press(X键);
 		kb.Press(Z键);
@@ -233,6 +241,14 @@ void Action::FollowMonster()
 		else {
 			kb.Press(左光标键);
 		}
+		if (distance < 20 && distance > -20) {
+			kb.Press(下光标键, 3);
+			Sleep(50);
+			kb.Press(C键);
+			kb.Press(下光标键, 4);
+			kb.Press(X键);
+		}
+
 		for (int i = 0; i < 3; i++) {
 			RandomSkill();
 		}

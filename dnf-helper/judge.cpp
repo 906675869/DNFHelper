@@ -1,6 +1,8 @@
 #include "judge.h"
 #include "config.h"
 #include <iostream>
+#include "helper.h"
+#include "keyboard.h"
 Judge jd;
 // 获取角色疲劳
 int Judge::GetFatigue()
@@ -186,6 +188,15 @@ int Judge::GetSkillCoolDownLeftTime(ULONG64 skill)
 		+ rw.ReadInt(coolParam2 + 16); 
 	ret = (ret - eax) * (int)xmm1 + edi;
 	return ret - lastPressTime > 0 ? 0 : lastPressTime - ret;
+}
+
+wstring Judge::GetSkillName(int position)
+{
+	ULONG64 skillPtr = gd.personPtr;
+	skillPtr = rw.ReadLong(skillPtr + 技能栏);
+	skillPtr = rw.ReadLong(skillPtr + 技能栏偏移);
+	skillPtr = rw.ReadLong(rw.ReadLong(skillPtr + position * 24) + 16) - 16;
+	return UnicodeToAnsi(rw.ReadBytes(rw.ReadLong(skillPtr + 技能名称), 100));
 }
 
 
