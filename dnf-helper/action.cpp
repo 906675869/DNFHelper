@@ -219,9 +219,21 @@ void Action::FollowMonster()
 	if (LoopMonster() == 0) {
 		return;
 	}
+	CoordinateStruct personCoordinate = cl.ReadCoordinate(gd.personPtr);
 	ULONG64 monster = gd.globalMonsters[0];
 	CoordinateStruct monsterCoordinate = cl.ReadCoordinate(monster);
-	CoordinateStruct personCoordinate = cl.ReadCoordinate(gd.personPtr);
+	int absoluteDistance = 0;
+	for (int i = 0; i < gd.globalMonsters.size(); i++) {
+		ULONG64 tmpMonster = gd.globalMonsters[i];
+		CoordinateStruct tmpMonsterCoordinate = cl.ReadCoordinate(tmpMonster);
+		int tempDistance = (int)pow((pow(abs(personCoordinate.x - tmpMonsterCoordinate.x), 2)
+			+ pow(abs(personCoordinate.y - tmpMonsterCoordinate.y), 2)), 1 / (float)2);
+		if (absoluteDistance == 0 || tempDistance < absoluteDistance) {
+			absoluteDistance = tempDistance;
+			monster = tmpMonster;
+			monsterCoordinate = tmpMonsterCoordinate;
+		}
+	}
 	// ÅÐ¶Ï¾«¶È
 	int distance = monsterCoordinate.x - personCoordinate.x;
 	if (abs(distance) > 100) {
