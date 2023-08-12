@@ -18,10 +18,10 @@ void Auto::AutoSwitch()
 {
 	gd.autoSwitch = !gd.autoSwitch;
 	if (gd.autoSwitch) {
-		cout << "开启自动刷图" << endl;
+		cout << ">> 开启自动刷图" << endl;
 	}
 	else {
-		cout << "关闭自动刷图" << endl;
+		cout << ">> 关闭自动刷图" << endl;
 	}
 	while (gd.autoSwitch)
 	{
@@ -46,7 +46,7 @@ void Auto::TownProcess()
 {
 	Sleep(3000);
 	if (as.chooseRoleNum % 2 > 0) {
-		cout << "为防止刷图过快三方导致行为判定，暂时休眠3~5min";
+		cout << ">> 为防止刷图过快三方导致行为判定，暂时休眠3~5min";
 		Sleep(60 * 1000 * GetRandomNum(3, 5));
 	}
 	// 进图处理
@@ -83,7 +83,9 @@ void Auto::EveryRoomLoop()
 	}
 	if (firstEnterMap) {
 		firstEnterMap = false;
-		at.IgnoreBuildings(true);
+		if (config.ReadConfigItem(configData.followModel) == 3) {
+			at.IgnoreBuildings(true);
+		}
 		if (config.ReadConfigItem(configData.inviciable) == 1) {
 			at.Invincible();
 		}
@@ -107,11 +109,15 @@ void Auto::EveryRoomLoop()
 	}
 	// 已通关
 	if (jd.IsBossRoom() && jd.IsPassMap()) {
-		cout << "执行通关处理" << endl;
+		cout << ">> 执行通关处理" << endl;
 		ClearMap();
 		firstEnterMap = true;
 		as.overMapCnt = 0;
-		at.IgnoreBuildings(false);
+		// 出地图后重置
+		if (config.ReadConfigItem(configData.followModel) == 3 && jd.IsAtTown()) {
+			at.IgnoreBuildings(false);
+		}
+		
 	}
 	// 未开门
 	if (!jd.IsOpenDoor())
@@ -170,7 +176,7 @@ void Auto::ClearMap()
 	// 判断是否达到预设的疲劳值
 	if (jd.GetFatigue() < config.ReadConfigItem(configData.leftFatigue)) {
 		// 返回城镇
-		cout << "执行返回城镇" << endl;
+		cout << ">> 执行返回城镇" << endl;
 		pk.OutMap();
 		while (gd.autoSwitch) {
 			Sleep(200);
@@ -192,13 +198,13 @@ void Auto::ClearMap()
 			if (continueMap)
 			{
 				// 重新挑战
-				cout << "强制执行重新挑战" << endl;
+				cout << ">> 强制执行重新挑战" << endl;
 				pk.ContinueChangle();
 			}
 			else
 			{
 				// 返回城镇
-				cout << "强制执行返回城镇" << endl;
+				cout << ">> 强制执行返回城镇" << endl;
 				pk.OutMap();
 			}
 		}
@@ -209,7 +215,7 @@ void Auto::ClearMap()
 					Sleep(200);
 				}
 				// 重新挑战
-				if(passMapCnt == 1) cout << "执行重新挑战" << endl;
+				if(passMapCnt == 1) cout << ">> 执行重新挑战" << endl;
 				kb.FnPress(VK_F10);
 			}
 			else {
@@ -217,7 +223,7 @@ void Auto::ClearMap()
 					kb.Press(Esc键);
 					Sleep(200);
 				}
-				if (passMapCnt == 1) cout << "执行返回城镇" << endl;
+				if (passMapCnt == 1) cout << ">> 执行返回城镇" << endl;
 				kb.FnPress(VK_F12);
 
 			}
@@ -235,18 +241,23 @@ void Auto::EnterTown()
 	roleNum = min(totalRoleNum, roleNum);
 	as.chooseRoleNum = as.chooseRoleNum + 1;
 	if (as.chooseRoleNum > roleNum) {
-		cout << "完成指定角色数量" << endl;
+		cout << ">> 完成指定角色数量,停止刷图!" << endl;
 		gd.autoSwitch = FALSE;
 		return;
 	}
 	Sleep(200);
-	pk.ChooseRole(roleNum);
+	kb.Press(右光标键);
 	Sleep(500);
-	cout << "进入角色:" << as.chooseRoleNum + 1 <<endl;
-	
+	kb.Press(空格键);
+	cout << ">> 进入角色:" << as.chooseRoleNum + 1 <<endl;
+	int dely = 0;
 	while (gd.autoSwitch) {
 		if (jd.IsAtTown()) {
 			break;
+		}
+		if (dely++ == 30) {
+			cout << ">> 强制进入角色:" << as.chooseRoleNum + 1 << endl;
+			pk.ChooseRole(roleNum);
 		}
 		Sleep(200);
 	}
