@@ -106,17 +106,16 @@ void Action::CoordinatePickUp()
 			continue;
 		}
 		ULONG loopType = rw.ReadInt(loopPtr + 类型偏移);
-		ULONG loopTypeA = rw.ReadInt(loopPtr + 类型偏移 + 4);
+		// ULONG loopTypeA = rw.ReadInt(loopPtr + 类型偏移 + 4);
 		ULONG camp = rw.ReadInt(loopPtr + 阵营偏移);
-		if (camp == 200 && (loopType == 289 || loopTypeA == 289))
+		if (loopType == 289)
 		{
 			ULONG64 goodsPtr = rw.ReadLong(loopPtr + 地面物品);
 			wstring	goodName = UnicodeToAnsi(rw.ReadBytes(rw.ReadLong(goodsPtr + 物品名称), 100));
-			if (sizeof(goodName) >= 2) {
-				ULONG 物品ID = rw.ReadInt(loopPtr + 发包拾取);
-				if (物品ID > 0) {
-					coordinates.push_back(cl.ReadCoordinate(loopPtr));
-				}
+			CoordinateStruct coordinate = cl.ReadCoordinate(loopPtr);
+			if (goodName.size() >= 2) {
+				cout << "物品坐标(" << coordinate.x << "," << coordinate.y << ")" << endl;
+				coordinates.push_back(coordinate);
 			}
 		}
 		if (coordinates.size() == 0) 
@@ -129,7 +128,7 @@ void Action::CoordinatePickUp()
 			// cl.DriftCall(personPtr, coordinates[i].x, coordinates[i].y, 0, 50);
 			sl.GoDestation(coordinates[i].x, coordinates[i].y);
 			kb.Press(X键);
-			Sleep(200);
+			Sleep(20);
 		}
 
 	}
@@ -205,8 +204,6 @@ void  Action::RandomSkill() {
 		}
 	}
 	if (jd.GetPersonAction() == 0 && random > 3) {
-		kb.Press(X键);
-		kb.Press(X键);
 		kb.Press(X键);
 		kb.Press(Z键);
 	}

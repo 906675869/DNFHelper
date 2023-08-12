@@ -10,6 +10,7 @@
 #include "auto.h"
 #include "config.h"
 #include "fastcall.h"
+#include "judge.h"
 
 GlobalData gd;
 Simulate sl;
@@ -21,7 +22,7 @@ VOID GetPersonPtr()
 	bool initFlag = false;
 	while (true)
 	{
-		if (!initFlag && (rw.ReadInt(游戏状态) == 1 || gd.personPtr ==0))
+		if (!initFlag && (rw.ReadInt(游戏状态) == 1 || rw.ReadInt(游戏状态) == 3))
 		{
 			std::cout << "执行获取人物地址...";
 			cl.PersonCall();
@@ -41,6 +42,12 @@ VOID GetPersonPtr()
 		if (rw.ReadInt(游戏状态) == 0 || rw.ReadInt(游戏状态) == 5)
 		{
 			initFlag = false;
+		}
+		if (jd.IsAtMap() && jd.IsDied())
+		{
+			Sleep(3000);
+			// 消耗复活币
+			kb.Press(X键);
 		}
 		Sleep(200);
 	}

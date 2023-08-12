@@ -53,7 +53,7 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate)
 		return;
 	}
 	while (gd.autoSwitch) {
-		if (loopCnt++ > 200) {
+		if (loopCnt++ > 600) {
 			ReleaseAllKeys();
 			break;
 		}
@@ -146,7 +146,7 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate)
 				kb.Press(ÏÂ¹â±ê¼ü, 3);
 			}
 		}
-		Sleep(60);
+		Sleep(20);
 
 	}
 

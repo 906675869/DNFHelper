@@ -183,6 +183,9 @@ void Auto::ClearMap()
 			if (jd.IsAtTown()) {
 				pk.RoleList();
 			}
+			if (jd.IsAtRoleList()) {
+				break;
+			}
 		}
 		return;
 	}
