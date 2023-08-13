@@ -129,7 +129,7 @@ void Action::CoordinatePickUp()
 	{
 		// 漂移至坐标
 		// cl.DriftCall(personPtr, coordinates[i].x, coordinates[i].y, 0, 50);
-		sl.GoDestation(coordinates[i].x, coordinates[i].y);
+		sl.GoDestation(coordinates[i].x, coordinates[i].y, jd.GetCurrentRoom(), true);
 		kb.Press(X键);
 		Sleep(20);
 	}
@@ -237,7 +237,7 @@ void Action::FollowMonster()
 	}
 	// cout << "计算怪物与人物之间的距离为：" << distance << endl;
 	// 判断精度
-	if (abs(distance) > 60) {
+	if (abs(distance) > 120) {
 		// cout << "前往怪物坐标x=" << monsterCoordinate.x << "y="<< monsterCoordinate.y << endl;
 		if (config.ReadConfigItem(configData.followModel) == 1) {
 			cl.CoordinateCall(monsterCoordinate.x, monsterCoordinate.y, 0);

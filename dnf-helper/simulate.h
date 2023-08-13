@@ -5,7 +5,7 @@
 class Simulate {
 
 public:
-	static void GoDestation(int targetX, int targetY, CoordinateStruct beforeCoordinate = {-1, -1, -1});
+	static void GoDestation(int targetX, int targetY, CoordinateStruct beforeCoordinate = {-1, -1, -1}, bool findGoods = false);
 
 };
 
