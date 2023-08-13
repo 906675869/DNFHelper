@@ -36,6 +36,8 @@ using namespace std;
 #define Z¼ü 90
 #define F10¼ü 121
 #define F12¼ü 123
+#define µÈ¼ü 187
+
 
 #define ÉÏ 2
 #define ÏÂ 3

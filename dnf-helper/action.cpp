@@ -58,7 +58,7 @@ void Action::PackPickUp()
 	ULONG loopCnt = (ULONG)(endAddress - startAddress) / 24;
 	for (ULONG i = 0; i < loopCnt; i++)
 	{
-		ULONG64 loopPtr = rw.ReadLong(startAddress + i * 24);
+		ULONG64 loopPtr = rw.ReadLong(startAddress + (ULONG64)i * 24);
 		loopPtr = rw.ReadLong(loopPtr + 16) - 32;
 		if (loopPtr == 0 || loopPtr == personPtr) {
 			continue;
@@ -100,7 +100,7 @@ void Action::CoordinatePickUp()
 	vector<CoordinateStruct> coordinates;
 	for (ULONG i = 0; i < loopCnt; i++)
 	{
-		ULONG64 loopPtr = rw.ReadLong(startAddress + i * 24);
+		ULONG64 loopPtr = rw.ReadLong(startAddress + (ULONG64)i * 24);
 		loopPtr = rw.ReadLong(loopPtr + 16) - 32;
 		if (loopPtr == 0 || loopPtr == personPtr) {
 			continue;
@@ -118,19 +118,20 @@ void Action::CoordinatePickUp()
 				coordinates.push_back(coordinate);
 			}
 		}
-		if (coordinates.size() == 0) 
-		{
-			return;
-		}
-		for (int i = 0; i < coordinates.size(); i++)
-		{
-			// Æ¯ÒÆÖÁ×ø±ê
-			// cl.DriftCall(personPtr, coordinates[i].x, coordinates[i].y, 0, 50);
-			sl.GoDestation(coordinates[i].x, coordinates[i].y);
-			kb.Press(X¼ü);
-			Sleep(20);
-		}
 
+	}
+
+	if (coordinates.size() == 0)
+	{
+		return;
+	}
+	for (int i = 0; i < coordinates.size(); i++)
+	{
+		// Æ¯ÒÆÖÁ×ø±ê
+		// cl.DriftCall(personPtr, coordinates[i].x, coordinates[i].y, 0, 50);
+		sl.GoDestation(coordinates[i].x, coordinates[i].y);
+		kb.Press(X¼ü);
+		Sleep(20);
 	}
 
 
@@ -152,7 +153,7 @@ int Action::LoopMonster()
 	ULONG loopCnt = (ULONG)((endAddress - startAddress) / 24);
 	for (ULONG i = 0; i < loopCnt; i++)
 	{
-		ULONG64 loopPtr = rw.ReadLong(startAddress + i * 24);
+		ULONG64 loopPtr = rw.ReadLong(startAddress + (ULONG64)i * 24);
 		loopPtr = rw.ReadLong(loopPtr + 16) - 32;
 		if (loopPtr == 0) {
 			continue;

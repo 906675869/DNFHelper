@@ -76,29 +76,29 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate)
 
 		CoordinateStruct rwCoordinate = cl.ReadCoordinate(gd.personPtr);
 		// 到达目标地址
-		if (x - 30 < rwCoordinate.x && rwCoordinate.x < x + 30 && y - 30 < rwCoordinate.y && rwCoordinate.y < y + 30)
+		if (x - 20 < rwCoordinate.x && rwCoordinate.x < x + 20 && y - 10 < rwCoordinate.y && rwCoordinate.y < y + 10)
 		{
 			ReleaseAllKeys();
-			if (x - 30 < rwCoordinate.x) {
+			if (x - 20 < rwCoordinate.x) {
 				kb.Press(左光标键);
 			}
-			if (rwCoordinate.x < x + 30) {
+			if (rwCoordinate.x < x + 20) {
 				kb.Press(右光标键);
 			}
 			break;
 		}
 
-		if (x - 30 < rwCoordinate.x && rwCoordinate.x < x + 30) {
+		if (x - 20 < rwCoordinate.x && rwCoordinate.x < x + 20) {
 			ReleaseXKeys();
 			Sleep(50);
 		}
 
-		if (y - 30 < rwCoordinate.y && rwCoordinate.y < y + 30) {
+		if (y - 10 < rwCoordinate.y && rwCoordinate.y < y + 10) {
 			ReleaseYKeys();
 			Sleep(50);
 		}
 
-		if (rwCoordinate.x > x + 30) {
+		if (rwCoordinate.x > x + 20) {
 			if (kb.IsPressed(右光标键)) {
 				kb.Press(右光标键, 4);
 			}
@@ -111,11 +111,11 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate)
 				kb.Press(左光标键, 3);
 				Sleep(20);
 				kb.Press(左光标键, 3);
-				Sleep(abs(rwCoordinate.x - x) / 1163 * 1000);
+				// Sleep(abs(rwCoordinate.x - x) / 1163 * 1000);
 			}
 
 		}
-		if (rwCoordinate.x < x - 30) {
+		if (rwCoordinate.x < x - 20) {
 			if (kb.IsPressed(左光标键)) {
 				kb.Press(左光标键, 4);
 			}
@@ -127,10 +127,10 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate)
 				kb.Press(右光标键, 3);
 				Sleep(20);
 				kb.Press(右光标键, 3);
-				Sleep(abs(rwCoordinate.x - x) / 1163 * 1000);
+				// Sleep(abs(rwCoordinate.x - x) / 1163 * 1000);
 			}
 		}
-		if (rwCoordinate.y > y + 30) {
+		if (rwCoordinate.y > y + 10) {
 			if (kb.IsPressed(下光标键)) {
 				kb.Press(下光标键, 4);
 			}
@@ -138,7 +138,7 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate)
 				kb.Press(上光标键, 3);
 			}
 		}
-		if (rwCoordinate.y < y - 30) {
+		if (rwCoordinate.y < y - 10) {
 			if (kb.IsPressed(上光标键)) {
 				kb.Press(上光标键, 4);
 			}

@@ -172,6 +172,7 @@ void Auto::ClearMap()
 	pk.FlopCard(0, GetRandomNum(0, 3));
 	int st = GetRandomNum(5000, 8000);
 	Sleep(st);
+	kb.Press(等键);
 	// kb.Press(Esc键);
 	// 判断是否达到预设的疲劳值
 	if (jd.GetFatigue() < config.ReadConfigItem(configData.leftFatigue)) {
