@@ -86,6 +86,8 @@ void Action::PackPickUp()
 	}
 }
 
+static wstring filterGoodsNames = L"风化的碎骨#破旧的皮革#最下级硬化剂#破旧的布片#破碎的铁片#最下级元素结晶";
+
 void Action::CoordinatePickUp()
 {
 	if (rw.ReadInt(游戏状态) != 3)
@@ -113,8 +115,8 @@ void Action::CoordinatePickUp()
 			ULONG64 goodsPtr = rw.ReadLong(loopPtr + 地面物品);
 			wstring	goodName = UnicodeToAnsi(rw.ReadBytes(rw.ReadLong(goodsPtr + 物品名称), 100));
 			CoordinateStruct coordinate = cl.ReadCoordinate(loopPtr);
-			if (goodName.size() >= 2) {
-				cout << "物品坐标(" << coordinate.x << "," << coordinate.y << ")" << endl;
+			if (goodName.size() >= 2 && filterGoodsNames.find(goodName) == string::npos) {
+				// cout << "物品坐标(" << coordinate.x << "," << coordinate.y << ")" << endl;
 				coordinates.push_back(coordinate);
 			}
 		}
@@ -199,8 +201,12 @@ void  Action::RandomSkill() {
 		wstring skillName = jd.GetSkillName(keyPosition);
 		kb.Press(keycode);
 		if (skillName.find(L"流星") != string::npos) {
+			kb.Press(C键);
+			Sleep(550);
 			kb.Press(X键);
-			// kb.Press(C键);
+			Sleep(550);
+			kb.Press(Z键);
+			Sleep(550);
 			kb.Press(Z键);
 		}
 	}

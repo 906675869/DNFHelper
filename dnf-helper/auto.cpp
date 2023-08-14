@@ -142,7 +142,7 @@ void Auto::EveryRoomLoop()
 	else if(!jd.IsBossRoom()){
 		// Ñ­»·¼ñÎï
 		if (config.ReadConfigItem(configData.pickupType) == 1) {
-			Sleep(200);
+			Sleep(2812);
 			at.CoordinatePickUp();
 		}
 		if (config.ReadConfigItem(configData.pickupType) == 2) {
