@@ -100,6 +100,7 @@ void Action::CoordinatePickUp()
 	ULONG64 endAddress = rw.ReadLong(mapPtr + 地图结束2);
 	ULONG loopCnt = (ULONG)(endAddress - startAddress) / 24;
 	vector<CoordinateStruct> coordinates;
+	vector<wstring> goodNames;
 	for (ULONG i = 0; i < loopCnt; i++)
 	{
 		ULONG64 loopPtr = rw.ReadLong(startAddress + (ULONG64)i * 24);
@@ -113,11 +114,12 @@ void Action::CoordinatePickUp()
 		if (loopType == 289)
 		{
 			ULONG64 goodsPtr = rw.ReadLong(loopPtr + 地面物品);
-			wstring	goodName = UnicodeToAnsi(rw.ReadBytes(rw.ReadLong(goodsPtr + 物品名称), 100));
+			wstring	goodsName = UnicodeToAnsi(rw.ReadBytes(rw.ReadLong(goodsPtr + 物品名称), 100));
 			CoordinateStruct coordinate = cl.ReadCoordinate(loopPtr);
-			if (goodName.size() >= 2 && filterGoodsNames.find(goodName) == string::npos) {
+			if (goodsName.size() >= 2 && filterGoodsNames.find(goodsName) == string::npos) {
 				// cout << "物品坐标(" << coordinate.x << "," << coordinate.y << ")" << endl;
 				coordinates.push_back(coordinate);
+				goodNames.push_back(goodsName);
 			}
 		}
 
@@ -133,7 +135,9 @@ void Action::CoordinatePickUp()
 		// cl.DriftCall(personPtr, coordinates[i].x, coordinates[i].y, 0, 50);
 		sl.GoDestation(coordinates[i].x, coordinates[i].y, jd.GetCurrentRoom(), true);
 		Sleep(800);
-		kb.Press(X键);
+		if (goodNames[i] != L"金币") {
+			kb.Press(X键);
+		}
 		Sleep(20);
 	}
 

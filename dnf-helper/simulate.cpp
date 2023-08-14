@@ -8,19 +8,19 @@ void ReleaseAllKeys()
 {
 	if (kb.IsPressed(左光标键)) {
 		kb.Press(左光标键, 4);
-		Sleep(5);
+		Sleep(10);
 	}
 	if (kb.IsPressed(右光标键)) {
 		kb.Press(右光标键, 4);
-		Sleep(5);
+		Sleep(10);
 	}
 	if (kb.IsPressed(上光标键)) {
 		kb.Press(上光标键, 4);
-		Sleep(5);
+		Sleep(10);
 	}
 	if (kb.IsPressed(下光标键)) {
 		kb.Press(下光标键, 4);
-		Sleep(5);
+		Sleep(10);
 	}
 }
 
@@ -28,11 +28,11 @@ void ReleaseXKeys()
 {
 	if (kb.IsPressed(左光标键)) {
 		kb.Press(左光标键, 4);
-		Sleep(5);
+		Sleep(10);
 	}
 	if (kb.IsPressed(右光标键)) {
 		kb.Press(右光标键, 4);
-		Sleep(5);
+		Sleep(10);
 	}
 }
 
@@ -40,11 +40,11 @@ void ReleaseYKeys()
 {
 	if (kb.IsPressed(上光标键)) {
 		kb.Press(上光标键, 4);
-		Sleep(5);
+		Sleep(10);
 	}
 	if (kb.IsPressed(下光标键)) {
 		kb.Press(下光标键, 4);
-		Sleep(5);
+		Sleep(10);
 	}
 }
 
@@ -65,6 +65,7 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 	{
 		offset = 20;
 	}
+	CoordinateStruct rwCoordinate = {0, 0, 0};
 
 	while (gd.autoSwitch) {
 		// 容错
@@ -78,6 +79,7 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 		}
 		// 获取当前房间坐标
 		CoordinateStruct currentCoordinate = jd.GetCurrentRoom();
+		// 已过图
 		if (!jd.CoordinateEqual(beforeCoordinate, currentCoordinate)) {
 			ReleaseAllKeys();
 			break;
@@ -88,8 +90,16 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 			ReleaseAllKeys();
 			break;
 		}
-
-		CoordinateStruct rwCoordinate = cl.ReadCoordinate(gd.personPtr);
+		CoordinateStruct personCoordinate = cl.ReadCoordinate(gd.personPtr);
+		// 比较上次按键的人物坐标和当前坐标
+		if (rwCoordinate.x && rwCoordinate.y && jd.CoordinateEqual(rwCoordinate, personCoordinate))
+		{
+			// 未移动人物，可能按键卡死
+			ReleaseAllKeys();
+			break;
+		}
+		// 执行按键前获取一次坐标
+		rwCoordinate = personCoordinate;
 		// 到达目标地址
 		if (x - offset < rwCoordinate.x && rwCoordinate.x < x + offset && y - offset < rwCoordinate.y && rwCoordinate.y < y + offset)
 		{
@@ -105,12 +115,10 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 
 		if (x - offset < rwCoordinate.x && rwCoordinate.x < x + offset) {
 			ReleaseXKeys();
-			Sleep(5);
 		}
 
 		if (y - offset < rwCoordinate.y && rwCoordinate.y < y + offset) {
 			ReleaseYKeys();
-			Sleep(5);
 		}
 
 		if (rwCoordinate.x > x + offset) {
@@ -121,13 +129,11 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 			// 未按下
 			if (!kb.IsPressed(左光标键)) {
 				kb.Press(左光标键);
-				// kb.Press(左光标键);
-				Sleep(20);
+				Sleep(10);
 				kb.Press(左光标键, 3);
-				Sleep(20);
+				Sleep(10);
 				kb.Press(左光标键, 3);
 				Sleep(5);
-				// Sleep(abs(rwCoordinate.x - x) / 1163 * 1000);
 			}
 
 		}
@@ -138,13 +144,11 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 			}
 			if (!kb.IsPressed(右光标键)) {
 				kb.Press(右光标键);
-				// kb.Press(右光标键);
-				Sleep(20);
+				Sleep(10);
 				kb.Press(右光标键, 3);
-				Sleep(20);
+				Sleep(10);
 				kb.Press(右光标键, 3);
 				Sleep(5);
-				// Sleep(abs(rwCoordinate.x - x) / 1163 * 1000);
 			}
 		}
 		if (rwCoordinate.y > y + offset/2) {
@@ -167,8 +171,9 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 				Sleep(10);
 			}
 		}
+		
 		Sleep(20);
-
+		
 	}
 
 }

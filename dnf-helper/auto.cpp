@@ -12,6 +12,7 @@
 #include "task.h"
 
 static bool firstEnterMap = true;
+static UINT passMapCnt = 0;
 
 // 开启自动
 void Auto::AutoSwitch()
@@ -116,7 +117,7 @@ void Auto::EveryRoomLoop()
 	}
 	// 已通关
 	if (jd.IsBossRoom() && jd.IsPassMap()) {
-		cout << ">> 执行通关处理" << endl;
+		cout << ">> 执行通关处理,已通关["<< passMapCnt ++ <<"]次" << endl;
 		ClearMap();
 		firstEnterMap = true;
 		as.overMapCnt = 0;
@@ -131,18 +132,13 @@ void Auto::EveryRoomLoop()
 	{
 		// 跟随怪物
 		at.FollowMonster();
-		if (jd.IsDied()) {
-			Sleep(3000);
-			// 消耗复活币
-			kb.Press(X键);
-		}
-
 	}
+
 	// 已开门
-	else if(!jd.IsBossRoom()){
+	if(jd.IsOpenDoor() && !jd.IsBossRoom()){
 		// 循环捡物
 		if (config.ReadConfigItem(configData.pickupType) == 1) {
-			Sleep(512);
+			// Sleep(512);
 			at.CoordinatePickUp();
 		}
 		if (config.ReadConfigItem(configData.pickupType) == 2) {
@@ -161,11 +157,33 @@ void Auto::OverMap()
 	while (gd.autoSwitch) {
 		// 未开门
 		as.overMapCnt++;
+		// 纠错
+		if (as.overMapCnt == 10) {
+			kb.Press(左光标键, 3);
+			Sleep(10);
+			kb.Press(下光标键, 3);
+			Sleep(500);
+			kb.Press(左光标键, 4);
+			Sleep(10);
+			kb.Press(下光标键, 4);
+		}
+		// 纠错
+		if (as.overMapCnt == 20) {
+			kb.Press(右光标键, 3);
+			Sleep(10);
+			kb.Press(上光标键, 3);
+			Sleep(500);
+			kb.Press(右光标键, 4);
+			Sleep(10);
+			kb.Press(上光标键, 4);
+		}
+
 		pm.FixFindRoute();
 		Sleep(300);
 		CoordinateStruct  currentCoorinate = jd.GetCurrentRoom();
 		// 成功过图
 		if (!jd.IsAtMap() || !jd.IsOpenDoor() || !jd.CoordinateEqual(beforeCoorinate, currentCoorinate) ) {
+			// 不在图内，未开门，已过图
 			as.overMapCnt = 0;
 			break;
 		}
@@ -203,6 +221,8 @@ void Auto::ContinueMap(bool continueMap)
 				}
 				// 重新挑战
 				if (passMapCnt == 1) cout << ">> 执行重新挑战" << endl;
+				kb.FnPress(空格键);
+				Sleep(500);
 				kb.FnPress(VK_F10);
 			}
 			else {
@@ -240,7 +260,7 @@ void Auto::ClearMap()
 		while (gd.autoSwitch) {
 			Sleep(200);
 			if (jd.IsAtTown()) {
-				Sleep(2000);
+				Sleep(3000);
 				pk.RoleList();
 			}
 			if (jd.IsAtRoleList()) {
