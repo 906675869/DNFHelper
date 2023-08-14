@@ -249,10 +249,10 @@ void PassMap::SimulateOverMap(int direction)
 		y = int(startY - 20);
 	}
 	CoordinateStruct coo = jd.GetCurrentRoom();
-	sl.GoDestation(x, y, coo);
+	sl.GoDestation(x, y, coo, true);
 	Sleep(100);
 	// 防止已过图执行无效模拟
 	if(jd.CoordinateEqual(coo, jd.GetCurrentRoom())){
-		sl.GoDestation(int(startX + endX / 2), startY, jd.GetCurrentRoom());
+		sl.GoDestation(int(startX + endX / 2), startY, jd.GetCurrentRoom(),true);
 	}
 }

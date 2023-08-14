@@ -49,7 +49,7 @@ void ReleaseYKeys()
 }
 
 // 模拟到达指定坐标
-void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool findGoods)
+void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool lowOffset)
 {
 	int loopCnt = 0;
 	if (beforeCoordinate.x == -1)
@@ -61,7 +61,7 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 		return;
 	}
 	int offset = 60;
-	if (findGoods) 
+	if (lowOffset)
 	{
 		offset = 10;
 	}

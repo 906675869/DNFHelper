@@ -262,7 +262,7 @@ void Action::FollowMonster()
 			kb.Press(左光标键);
 		}
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 5; i++) {
 			RandomSkill();
 		}
 	}
@@ -319,6 +319,6 @@ void Action::GoodsBuff()
 
 void Action::SuperScore()
 {
-	rw.WriteInt(rw.ReadLong(评分基址) + 评分偏移, GetRandomNum(5201314, 9000000));
+	rw.WriteInt(rw.ReadLong(评分基址) + 评分偏移, GetRandomNum(520314, 900000));
 	cout << "超级评分开启" << endl;
 }
