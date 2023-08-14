@@ -148,17 +148,21 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 		if (rwCoordinate.y > y + offset) {
 			if (kb.IsPressed(下光标键)) {
 				kb.Press(下光标键, 4);
+				Sleep(20);
 			}
 			if (!kb.IsPressed(上光标键)) {
 				kb.Press(上光标键, 3);
+				Sleep(20);
 			}
 		}
 		if (rwCoordinate.y < y - offset) {
 			if (kb.IsPressed(上光标键)) {
 				kb.Press(上光标键, 4);
+				Sleep(20);
 			}
 			if (!kb.IsPressed(下光标键)) {
 				kb.Press(下光标键, 3);
+				Sleep(20);
 			}
 		}
 		Sleep(20);

@@ -42,12 +42,19 @@ void Auto::AutoSwitch()
 	}
 }
 
+int townSleepFlag = false;
+
 void Auto::TownProcess()
 {
 	Sleep(3000);
-	if (as.chooseRoleNum % 2 > 0) {
+	// 延迟进图
+	if (as.chooseRoleNum % 2 == 0) {
+		townSleepFlag = false;
+	}
+	if (as.chooseRoleNum % 2 > 0 && !townSleepFlag) {
 		cout << ">> 为防止刷图过快三方导致行为判定，暂时休眠3~5min";
 		Sleep(60 * 1000 * GetRandomNum(3, 5));
+		townSleepFlag = true;
 	}
 	// 进图处理
 	if (config.ReadConfigItem(configData.autoModel) == 1) { // 指定地图
@@ -135,6 +142,7 @@ void Auto::EveryRoomLoop()
 	else if(!jd.IsBossRoom()){
 		// 循环捡物
 		if (config.ReadConfigItem(configData.pickupType) == 1) {
+			Sleep(200);
 			at.CoordinatePickUp();
 		}
 		if (config.ReadConfigItem(configData.pickupType) == 2) {
@@ -166,13 +174,14 @@ void Auto::OverMap()
 
 void Auto::ClearMap()
 {
-	at.CoordinatePickUp();
+	Sleep(1400);
 	cout << "执行翻牌处理" << endl;
 	// 随机翻牌
-	pk.FlopCard(0, GetRandomNum(0, 3));
+	// pk.FlopCard(0, GetRandomNum(0, 3));
 	int st = GetRandomNum(5000, 8000);
 	Sleep(st);
 	kb.Press(等键);
+	at.CoordinatePickUp();
 	// kb.Press(Esc键);
 	// 判断是否达到预设的疲劳值
 	if (jd.GetFatigue() < config.ReadConfigItem(configData.leftFatigue)) {
