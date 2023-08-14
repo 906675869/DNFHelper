@@ -8,19 +8,19 @@ void ReleaseAllKeys()
 {
 	if (kb.IsPressed(左光标键)) {
 		kb.Press(左光标键, 4);
-		Sleep(10);
+		Sleep(5);
 	}
 	if (kb.IsPressed(右光标键)) {
 		kb.Press(右光标键, 4);
-		Sleep(10);
+		Sleep(5);
 	}
 	if (kb.IsPressed(上光标键)) {
 		kb.Press(上光标键, 4);
-		Sleep(10);
+		Sleep(5);
 	}
 	if (kb.IsPressed(下光标键)) {
 		kb.Press(下光标键, 4);
-		Sleep(10);
+		Sleep(5);
 	}
 }
 
@@ -28,11 +28,11 @@ void ReleaseXKeys()
 {
 	if (kb.IsPressed(左光标键)) {
 		kb.Press(左光标键, 4);
-		Sleep(10);
+		Sleep(5);
 	}
 	if (kb.IsPressed(右光标键)) {
 		kb.Press(右光标键, 4);
-		Sleep(10);
+		Sleep(5);
 	}
 }
 
@@ -40,11 +40,11 @@ void ReleaseYKeys()
 {
 	if (kb.IsPressed(上光标键)) {
 		kb.Press(上光标键, 4);
-		Sleep(10);
+		Sleep(5);
 	}
 	if (kb.IsPressed(下光标键)) {
 		kb.Press(下光标键, 4);
-		Sleep(10);
+		Sleep(5);
 	}
 }
 
@@ -63,7 +63,7 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 	int offset = 60;
 	if (lowOffset)
 	{
-		offset = 10;
+		offset = 20;
 	}
 
 	while (gd.autoSwitch) {
@@ -105,27 +105,28 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 
 		if (x - offset < rwCoordinate.x && rwCoordinate.x < x + offset) {
 			ReleaseXKeys();
-			Sleep(50);
+			Sleep(5);
 		}
 
 		if (y - offset < rwCoordinate.y && rwCoordinate.y < y + offset) {
 			ReleaseYKeys();
-			Sleep(50);
+			Sleep(5);
 		}
 
 		if (rwCoordinate.x > x + offset) {
 			if (kb.IsPressed(右光标键)) {
 				kb.Press(右光标键, 4);
+				Sleep(5);
 			}
 			// 未按下
 			if (!kb.IsPressed(左光标键)) {
-				Sleep(50);
 				kb.Press(左光标键);
 				// kb.Press(左光标键);
 				Sleep(20);
 				kb.Press(左光标键, 3);
 				Sleep(20);
 				kb.Press(左光标键, 3);
+				Sleep(5);
 				// Sleep(abs(rwCoordinate.x - x) / 1163 * 1000);
 			}
 
@@ -133,36 +134,37 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 		if (rwCoordinate.x < x - offset) {
 			if (kb.IsPressed(左光标键)) {
 				kb.Press(左光标键, 4);
+				Sleep(5);
 			}
 			if (!kb.IsPressed(右光标键)) {
-				Sleep(50);
 				kb.Press(右光标键);
 				// kb.Press(右光标键);
 				Sleep(20);
 				kb.Press(右光标键, 3);
 				Sleep(20);
 				kb.Press(右光标键, 3);
+				Sleep(5);
 				// Sleep(abs(rwCoordinate.x - x) / 1163 * 1000);
 			}
 		}
-		if (rwCoordinate.y > y + offset) {
+		if (rwCoordinate.y > y + offset/2) {
 			if (kb.IsPressed(下光标键)) {
 				kb.Press(下光标键, 4);
-				Sleep(20);
+				Sleep(10);
 			}
 			if (!kb.IsPressed(上光标键)) {
 				kb.Press(上光标键, 3);
-				Sleep(20);
+				Sleep(10);
 			}
 		}
-		if (rwCoordinate.y < y - offset) {
+		if (rwCoordinate.y < y - offset/2) {
 			if (kb.IsPressed(上光标键)) {
 				kb.Press(上光标键, 4);
-				Sleep(20);
+				Sleep(10);
 			}
 			if (!kb.IsPressed(下光标键)) {
 				kb.Press(下光标键, 3);
-				Sleep(20);
+				Sleep(10);
 			}
 		}
 		Sleep(20);

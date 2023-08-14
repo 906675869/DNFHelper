@@ -11,6 +11,8 @@ public:
 	static void CoordinatePickUp();
 	// 遍历怪物
 	static int LoopMonster();
+	// 特殊技能处理
+	static void SpecialSkill(int keycode, wstring skillName);
 	// 随机技能
 	static void RandomSkill();
 	// 跟随怪物

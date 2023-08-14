@@ -86,7 +86,7 @@ void Action::PackPickUp()
 	}
 }
 
-static wstring filterGoodsNames = L"风化的碎骨#破旧的皮革#最下级硬化剂#破旧的布片#破碎的铁片#最下级元素结晶";
+static wstring filterGoodsNames = L"风化的碎骨#破旧的皮革#最下级硬化剂#碎布片#最下级元素结晶#生锈的铁片#最下级砥石";
 
 void Action::CoordinatePickUp()
 {
@@ -132,6 +132,7 @@ void Action::CoordinatePickUp()
 		// 漂移至坐标
 		// cl.DriftCall(personPtr, coordinates[i].x, coordinates[i].y, 0, 50);
 		sl.GoDestation(coordinates[i].x, coordinates[i].y, jd.GetCurrentRoom(), true);
+		Sleep(800);
 		kb.Press(X键);
 		Sleep(20);
 	}
@@ -183,6 +184,43 @@ int Action::LoopMonster()
 	return gd.globalMonsters.size();
 }
 
+void Action::SpecialSkill(int keycode, wstring skillName)
+{
+	if (skillName.find(L"流星") != string::npos) {
+		kb.Press(C键);
+		Sleep(550);
+		kb.Press(X键);
+		Sleep(550);
+		kb.Press(X键);
+		Sleep(550);
+		kb.Press(Z键);
+		Sleep(550);
+		kb.Press(Z键);
+	}
+
+	if (skillName.find(L"猛龙") != string::npos) {
+		Sleep(300);
+		kb.Press(左光标键);
+		kb.FnPress(keycode);
+		Sleep(300);
+		kb.Press(右光标键);
+		kb.FnPress(keycode);
+	}
+	if (skillName.find(L"拔刀") != string::npos) {
+		Sleep(300);
+		kb.FnPress(keycode);
+	}
+	if (skillName.find(L"里鬼") != string::npos) {
+		Sleep(300);
+		kb.FnPress(keycode);
+		Sleep(300);
+		kb.FnPress(keycode);
+		Sleep(300);
+		kb.Press(Z键);
+	}
+
+}
+
 
 
 void  Action::RandomSkill() {
@@ -199,20 +237,12 @@ void  Action::RandomSkill() {
 	if (jd.IsSkillCoolDown(keyPosition)) {
 		// 特殊技能特殊处理
 		wstring skillName = jd.GetSkillName(keyPosition);
-		kb.Press(keycode);
-		if (skillName.find(L"流星") != string::npos) {
-			kb.Press(C键);
-			Sleep(550);
-			kb.Press(X键);
-			Sleep(550);
-			kb.Press(Z键);
-			Sleep(550);
-			kb.Press(Z键);
-		}
+		kb.FnPress(keycode);
+		SpecialSkill(keycode, skillName);
 	}
 	if (jd.GetPersonAction() == 0 && random > 3) {
 		kb.Press(X键);
-		kb.Press(Z键);
+		//kb.Press(Z键);
 	}
 
 }
@@ -262,9 +292,9 @@ void Action::FollowMonster()
 			kb.Press(左光标键);
 		}
 
-		for (int i = 0; i < 5; i++) {
-			RandomSkill();
-		}
+		//for (int i = 0; i < 5; i++) {
+		RandomSkill();
+		//}
 	}
 }
 
@@ -319,6 +349,6 @@ void Action::GoodsBuff()
 
 void Action::SuperScore()
 {
-	rw.WriteInt(rw.ReadLong(评分基址) + 评分偏移, GetRandomNum(520314, 900000));
+	rw.WriteInt(rw.ReadLong(评分基址) + 评分偏移, GetRandomNum(101010, 520314));
 	cout << "超级评分开启" << endl;
 }
