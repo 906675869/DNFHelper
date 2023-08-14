@@ -85,11 +85,11 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 			break;
 		}
 		// 当前为boss房间 不执行过图
-		CoordinateStruct bossCoordinate = jd.GetBossRoom();
-		if (jd.CoordinateEqual(bossCoordinate, currentCoordinate) && jd.IsPassMap()) {
-			ReleaseAllKeys();
-			break;
-		}
+		//CoordinateStruct bossCoordinate = jd.GetBossRoom();
+		//if (jd.CoordinateEqual(bossCoordinate, currentCoordinate) && jd.IsPassMap()) {
+			//ReleaseAllKeys();
+			//break;
+		//}
 		CoordinateStruct personCoordinate = cl.ReadCoordinate(gd.personPtr);
 		// 比较上次按键的人物坐标和当前坐标
 		if (rwCoordinate.x && rwCoordinate.y && jd.CoordinateEqual(rwCoordinate, personCoordinate))

@@ -182,8 +182,8 @@ void Auto::OverMap()
 		Sleep(300);
 		CoordinateStruct  currentCoorinate = jd.GetCurrentRoom();
 		// 成功过图
-		if (!jd.IsAtMap() || !jd.IsOpenDoor() || !jd.CoordinateEqual(beforeCoorinate, currentCoorinate) ) {
-			// 不在图内，未开门，已过图
+		if (!jd.IsAtMap() || !jd.IsOpenDoor() || !jd.CoordinateEqual(beforeCoorinate, currentCoorinate) || jd.IsPassMap() ) {
+			// 不在图内，未开门，已过图, 已通关
 			as.overMapCnt = 0;
 			break;
 		}
@@ -255,7 +255,6 @@ void Auto::ClearMap()
 	if (jd.GetFatigue() < config.ReadConfigItem(configData.leftFatigue)) {
 		// 返回城镇
 		cout << ">> 执行返回城镇" << endl;
-		// pk.OutMap();
 		ContinueMap(false);
 		while (gd.autoSwitch) {
 			Sleep(200);
