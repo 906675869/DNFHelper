@@ -137,7 +137,8 @@ void FixFindRouteC() {
 	// 1 1 1 1 1 1
 	// 0 1 1 1 0 0
 	CoordinateStruct cr = jd.GetCurrentRoom();
-	int x = cr.x;  int y = cr.y;
+	int x = cr.x;  
+	int y = cr.y;
 	int direction = 0;
 	if (x == 0 && y == 1) {
 		as.pass1 = 0;
@@ -150,8 +151,7 @@ void FixFindRouteC() {
 		{
 			direction = RIGHT;
 			as.pass1 = 1;
-		}
-		else
+		}else if(as.pass1 == 1)
 		{
 			direction = DOWN;
 		}
@@ -162,8 +162,7 @@ void FixFindRouteC() {
 		{
 			direction = UP;
 			as.pass2 = 1;
-		}
-		else
+		}else if(as.pass2 == 1)
 		{
 			direction = RIGHT;
 		}
@@ -191,8 +190,6 @@ void FixFindRouteC() {
 	}
 	if (y == 1 && x == 4)
 	{
-		as.pass1 = 0;
-		as.pass2 = 0;
 		direction = RIGHT;
 	}
 	
