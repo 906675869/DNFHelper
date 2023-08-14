@@ -53,12 +53,6 @@ VOID GetPersonPtr()
 	}
 }
 
-//void testPress() {
-//	Sleep(3000);
-//	kb.Press(Esc键);
-//	kb.Press(VK_F1);
-//}
-
 
 
 VOID HomeActive()

@@ -65,9 +65,9 @@ void Auto::TownProcess()
 		gd.mapLevel = 0;
 	}
 	cl.AreaCall(gd.mapId);
-	Sleep(200);
+	Sleep(1200);
 	pk.ChooseMap();
-	Sleep(50);
+	Sleep(300);
 	pk.GetinMap(gd.mapId, gd.mapLevel, NULL, NULL);
 	// 延迟至进图
 	while (gd.autoSwitch) {
@@ -142,7 +142,7 @@ void Auto::EveryRoomLoop()
 	else if(!jd.IsBossRoom()){
 		// 循环捡物
 		if (config.ReadConfigItem(configData.pickupType) == 1) {
-			Sleep(2812);
+			Sleep(512);
 			at.CoordinatePickUp();
 		}
 		if (config.ReadConfigItem(configData.pickupType) == 2) {
@@ -159,12 +159,13 @@ void Auto::OverMap()
 {
 	CoordinateStruct beforeCoorinate = jd.GetCurrentRoom();
 	while (gd.autoSwitch) {
+		// 未开门
 		as.overMapCnt++;
 		pm.FixFindRoute();
 		Sleep(300);
 		CoordinateStruct  currentCoorinate = jd.GetCurrentRoom();
 		// 成功过图
-		if (!jd.IsAtMap() || !jd.CoordinateEqual(beforeCoorinate, currentCoorinate) ) {
+		if (!jd.IsAtMap() || !jd.IsOpenDoor() || !jd.CoordinateEqual(beforeCoorinate, currentCoorinate) ) {
 			as.overMapCnt = 0;
 			break;
 		}
@@ -172,42 +173,15 @@ void Auto::OverMap()
 	}
 }
 
-void Auto::ClearMap()
+void Auto::ContinueMap(bool continueMap)
 {
-	Sleep(1400);
-	cout << "执行翻牌处理" << endl;
-	// 随机翻牌
-	// pk.FlopCard(0, GetRandomNum(0, 3));
-	int st = GetRandomNum(5000, 8000);
-	Sleep(st);
-	kb.Press(等键);
-	at.CoordinatePickUp();
-	// kb.Press(Esc键);
-	// 判断是否达到预设的疲劳值
-	if (jd.GetFatigue() < config.ReadConfigItem(configData.leftFatigue)) {
-		// 返回城镇
-		cout << ">> 执行返回城镇" << endl;
-		pk.OutMap();
-		while (gd.autoSwitch) {
-			Sleep(200);
-			if (jd.IsAtTown()) {
-				pk.RoleList();
-			}
-			if (jd.IsAtRoleList()) {
-				break;
-			}
-		}
-		return;
-	}
-	bool continueMap = GetRandomNum(0, 9) < 6;
-	
 	int passMapCnt = 0;
 	while (gd.autoSwitch) {
 		// 在城镇或者重新开始通关
 		if (jd.IsAtTown() || (!jd.IsBossRoom() && !jd.IsPassMap())) {
 			break;
 		}
-		if (passMapCnt++ ==  30) {
+		if (passMapCnt++ == 30) {
 			if (continueMap)
 			{
 				// 重新挑战
@@ -228,7 +202,7 @@ void Auto::ClearMap()
 					Sleep(200);
 				}
 				// 重新挑战
-				if(passMapCnt == 1) cout << ">> 执行重新挑战" << endl;
+				if (passMapCnt == 1) cout << ">> 执行重新挑战" << endl;
 				kb.FnPress(VK_F10);
 			}
 			else {
@@ -240,10 +214,42 @@ void Auto::ClearMap()
 				kb.FnPress(VK_F12);
 
 			}
-		
+
 		}
 		Sleep(200);
 	}
+}
+
+void Auto::ClearMap()
+{
+	Sleep(400);
+	kb.Press(等键);
+	cout << "执行翻牌处理" << endl;
+	// 随机翻牌
+	// pk.FlopCard(0, GetRandomNum(0, 3));
+	int st = GetRandomNum(5000, 8000);
+	Sleep(st);
+	at.CoordinatePickUp();
+	// kb.Press(Esc键);
+	// 判断是否达到预设的疲劳值
+	if (jd.GetFatigue() < config.ReadConfigItem(configData.leftFatigue)) {
+		// 返回城镇
+		cout << ">> 执行返回城镇" << endl;
+		// pk.OutMap();
+		ContinueMap(false);
+		while (gd.autoSwitch) {
+			Sleep(200);
+			if (jd.IsAtTown()) {
+				Sleep(2000);
+				pk.RoleList();
+			}
+			if (jd.IsAtRoleList()) {
+				break;
+			}
+		}
+		return;
+	}
+	ContinueMap(GetRandomNum(0, 9) < 6);
 	
 }
 

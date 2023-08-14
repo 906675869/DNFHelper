@@ -10,6 +10,8 @@ public:
 	static void EveryRoomLoop();
 	// 过图处理
 	static void OverMap();
+	// 再次刷图
+	static void ContinueMap(bool continueMap);
 	// 通关处理
 	static void ClearMap();
 	// 进入城镇

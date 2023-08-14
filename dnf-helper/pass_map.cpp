@@ -253,6 +253,6 @@ void PassMap::SimulateOverMap(int direction)
 	Sleep(100);
 	// 防止已过图执行无效模拟
 	if(jd.CoordinateEqual(coo, jd.GetCurrentRoom())){
-		sl.GoDestation(int(startX + endX / 2), startY, jd.GetCurrentRoom(),true);
+		sl.GoDestation(int(startX + endX / 2), startY, jd.GetCurrentRoom(), true);
 	}
 }
