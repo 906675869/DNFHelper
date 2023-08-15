@@ -1,4 +1,7 @@
 #pragma once
+#include "common.h"
+
+using namespace std;
 class Action {
 public:
 	// ±¶¹¥
