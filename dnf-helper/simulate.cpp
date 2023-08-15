@@ -63,13 +63,13 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 	int offset = 60;
 	if (lowOffset)
 	{
-		offset = 20;
+		offset = 10;
 	}
 	CoordinateStruct rwCoordinate = {0, 0, 0};
 
 	while (gd.autoSwitch) {
 		// 容错
-		if (loopCnt++ > 150) {
+		if (loopCnt++ > 200) {
 			ReleaseAllKeys();
 			break;
 		}
@@ -96,7 +96,7 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 		{
 			// 未移动人物，可能按键卡死
 			ReleaseAllKeys();
-			break;
+			// break;
 		}
 		// 执行按键前获取一次坐标
 		rwCoordinate = personCoordinate;
