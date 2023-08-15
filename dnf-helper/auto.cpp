@@ -140,6 +140,13 @@ void Auto::EveryRoomLoop()
 		if (config.ReadConfigItem(configData.pickupType) == 1) {
 			// Sleep(512);
 			at.CoordinatePickUp();
+			// ÈÝ´í
+			if (jd.HasGoods() && as.pickUpCnt ++ < 20) 
+			{
+				return;
+			}
+			as.pickUpCnt = 0;
+
 		}
 		if (config.ReadConfigItem(configData.pickupType) == 2) {
 			at.PackPickUp();

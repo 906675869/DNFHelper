@@ -93,6 +93,8 @@ struct AutoStruct {
 	int simulateX;
 	int simulateY;
 
+	int pickUpCnt;
+
 };
 
 extern AutoStruct as;

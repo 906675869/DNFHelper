@@ -46,6 +46,9 @@ public:
 	int GetSkillCoolDownLeftTime(ULONG64 skill);
 	// 特殊技能处理
 	wstring GetSkillName(int position);
+
+	// 地图中存在需要拾取的物品
+	bool HasGoods();
 };
 
 extern Judge jd;

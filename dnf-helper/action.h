@@ -10,6 +10,7 @@ public:
 	static void HookHarm();
 	// 发包拾取
 	static void PackPickUp();
+	
 	// 坐标拾取
 	static void CoordinatePickUp();
 	// 遍历怪物

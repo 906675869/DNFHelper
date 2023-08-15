@@ -69,7 +69,7 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 
 	while (gd.autoSwitch) {
 		// ÈÝ´í
-		if (loopCnt++ > 200) {
+		if (loopCnt++ > 500) {
 			ReleaseAllKeys();
 			break;
 		}

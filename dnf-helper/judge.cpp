@@ -3,6 +3,7 @@
 #include <iostream>
 #include "helper.h"
 #include "keyboard.h"
+#include "call.h"
 Judge jd;
 // 获取角色疲劳
 int Judge::GetFatigue()
@@ -197,6 +198,48 @@ wstring Judge::GetSkillName(int position)
 	skillPtr = rw.ReadLong(skillPtr + 技能栏偏移);
 	skillPtr = rw.ReadLong(rw.ReadLong(skillPtr + position * 24) + 16) - 16;
 	return UnicodeToAnsi(rw.ReadBytes(rw.ReadLong(skillPtr + 技能名称), 100));
+}
+
+
+static wstring filterGoodsNames = L"风化的碎骨#破旧的皮革#最下级硬化剂#碎布片#最下级元素结晶#生锈的铁片#最下级砥石";
+
+bool Judge::HasGoods()
+{
+
+	if (rw.ReadInt(游戏状态) != 3)
+	{
+		return;
+	}
+	ULONG64 personPtr = gd.personPtr;
+	ULONG64 mapPtr = rw.ReadLong(rw.ReadLong(personPtr + 地图偏移) + 16);
+	ULONG64 startAddress = rw.ReadLong(mapPtr + 地图开始2);
+	ULONG64 endAddress = rw.ReadLong(mapPtr + 地图结束2);
+	ULONG loopCnt = (ULONG)(endAddress - startAddress) / 24;
+	vector<CoordinateStruct> coordinates;
+	vector<wstring> goodNames;
+	for (ULONG i = 0; i < loopCnt; i++)
+	{
+		ULONG64 loopPtr = rw.ReadLong(startAddress + (ULONG64)i * 24);
+		loopPtr = rw.ReadLong(loopPtr + 16) - 32;
+		if (loopPtr == 0 || loopPtr == personPtr) {
+			continue;
+		}
+		ULONG loopType = rw.ReadInt(loopPtr + 类型偏移);
+		// ULONG loopTypeA = rw.ReadInt(loopPtr + 类型偏移 + 4);
+		ULONG camp = rw.ReadInt(loopPtr + 阵营偏移);
+		if (loopType == 289)
+		{
+			ULONG64 goodsPtr = rw.ReadLong(loopPtr + 地面物品);
+			wstring	goodsName = UnicodeToAnsi(rw.ReadBytes(rw.ReadLong(goodsPtr + 物品名称), 100));
+			CoordinateStruct coordinate = cl.ReadCoordinate(loopPtr);
+			if (goodsName.size() >= 2 && filterGoodsNames.find(goodsName) == string::npos) {
+				return true;
+			}
+		}
+
+	}
+
+	return false;
 }
 
 
