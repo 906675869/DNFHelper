@@ -94,6 +94,8 @@ struct AutoStruct {
 	int simulateY;
 
 	int pickUpCnt;
+	// Ãÿ ‚¥¶¿Ì
+	bool specialProcess;
 
 };
 

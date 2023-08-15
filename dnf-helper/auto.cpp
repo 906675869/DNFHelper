@@ -137,7 +137,7 @@ void Auto::EveryRoomLoop()
 	// 已开门
 	if(jd.IsOpenDoor() && !jd.IsBossRoom()){
 		// 循环捡物
-		if (config.ReadConfigItem(configData.pickupType) == 1) {
+		if (config.ReadConfigItem(configData.pickupType) == 1 && !as.specialProcess) {
 			// Sleep(512);
 			at.CoordinatePickUp();
 			// 容错
@@ -148,8 +148,14 @@ void Auto::EveryRoomLoop()
 			as.pickUpCnt = 0;
 
 		}
-		if (config.ReadConfigItem(configData.pickupType) == 2) {
+		if (config.ReadConfigItem(configData.pickupType) == 2 || as.specialProcess) {
 			at.PackPickUp();
+			// 容错
+			if (jd.HasGoods() && as.pickUpCnt++ < 3)
+			{
+				return;
+			}
+			as.pickUpCnt = 0;
 		}
 		// 过图
 		OverMap();
@@ -164,27 +170,6 @@ void Auto::OverMap()
 	while (gd.autoSwitch) {
 		// 未开门
 		as.overMapCnt++;
-		// 纠错
-		if (as.overMapCnt == 10) {
-			kb.Press(左光标键, 3);
-			Sleep(10);
-			kb.Press(下光标键, 3);
-			Sleep(500);
-			kb.Press(左光标键, 4);
-			Sleep(10);
-			kb.Press(下光标键, 4);
-		}
-		// 纠错
-		if (as.overMapCnt == 20) {
-			kb.Press(右光标键, 3);
-			Sleep(10);
-			kb.Press(上光标键, 3);
-			Sleep(500);
-			kb.Press(右光标键, 4);
-			Sleep(10);
-			kb.Press(上光标键, 4);
-		}
-
 		pm.FixFindRoute();
 		Sleep(600);
 		CoordinateStruct  currentCoorinate = jd.GetCurrentRoom();
@@ -192,6 +177,7 @@ void Auto::OverMap()
 		if (!jd.IsAtMap() || !jd.IsOpenDoor() || !jd.CoordinateEqual(beforeCoorinate, currentCoorinate) || jd.IsPassMap() ) {
 			// 不在图内，未开门，已过图, 已通关
 			as.overMapCnt = 0;
+			as.specialProcess = false;
 			break;
 		}
 		

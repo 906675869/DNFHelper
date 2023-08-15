@@ -57,6 +57,12 @@ void PassMap::PassMapProcess(int direction)
 	{
 		return;
 	}
+	if (as.specialProcess) {
+		if (as.overMapCnt % 5 == 0 && as.overMapCnt <= 15) {
+			pm.PackPassMap(direction);
+		}
+		return;
+	}
 	if (as.overMapCnt % 2 == 0 && as.overMapCnt % 30 != 0) {
 		// OverMapCall(direction);
 		pm.SimulateOverMap(direction);

@@ -70,16 +70,16 @@ void Action::PackPickUp()
 		if (camp == 200 && (loopType == 289 || loopTypeA == 289))
 		{
 			// 物品数量 = 物品数量 + 1
-			// CoordinateStruct 物品坐标 = ReadCoordinate(loopPtr);
+			CoordinateStruct coordinate = cl.ReadCoordinate(loopPtr);
 			ULONG64 goodsPtr = rw.ReadLong(loopPtr + 地面物品);
-			wstring	goodName = UnicodeToAnsi(rw.ReadBytes(rw.ReadLong(goodsPtr + 物品名称), 100));
-			if (sizeof(goodName) >= 2) {
+			wstring	goodsName = UnicodeToAnsi(rw.ReadBytes(rw.ReadLong(goodsPtr + 物品名称), 100));
+			if (sizeof(goodsName) >= 2) {
 				ULONG 物品ID = rw. ReadInt(loopPtr + 发包拾取);
-				if (物品ID > 0) {
+				if (物品ID > 0 && coordinate.z > 0 && filterGoodsNames.find(goodsName) == string::npos) {
 					//goodsList.push_back(物品ID);
 					// goodsNameList.push_back(goodName);
 					pk.PackPickup(物品ID);
-					printf("执行拾取:%s" , goodName);
+					printf("执行拾取:%s" , goodsName);
 				}
 			}
 		}
@@ -171,6 +171,11 @@ int Action::LoopMonster()
 		ULONG loopCode = rw.ReadInt(loopPtr + 代码偏移);
 		wstring loopName = UnicodeToAnsi(rw.ReadBytes(rw.ReadLong(loopPtr + 名称偏移), 100));
 		ULONG64 blood = rw.ReadLong(loopPtr + 怪物血量);
+		// 当前存在不稳定的裂缝
+		if (loopCode == 407003631) 
+		{
+			as.specialProcess = true;
+		}
 		if (loopType == 529 || loopType == 273 || loopType == 545 || loopType == 61440
 			)
 		{
