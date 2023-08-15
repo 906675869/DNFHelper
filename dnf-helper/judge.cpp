@@ -208,7 +208,7 @@ bool Judge::HasGoods()
 
 	if (rw.ReadInt(сно╥в╢л╛) != 3)
 	{
-		return;
+		return false;
 	}
 	ULONG64 personPtr = gd.personPtr;
 	ULONG64 mapPtr = rw.ReadLong(rw.ReadLong(personPtr + ╣ьм╪ф╚рф) + 16);
