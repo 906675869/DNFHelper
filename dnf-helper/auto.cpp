@@ -216,7 +216,9 @@ void Auto::ContinueMap(bool continueMap)
 				if (passMapCnt == 1) cout << ">> 执行重新挑战" << endl;
 				kb.FnPress(空格键);
 				Sleep(500);
-				kb.FnPress(VK_F10);
+				if (passMapCnt > 5) {
+					kb.FnPress(VK_F10);
+				}
 			}
 			else {
 				if (passMapCnt <= 3) {
@@ -243,6 +245,14 @@ void Auto::ClearMap()
 	int st = GetRandomNum(5000, 8000);
 	Sleep(st);
 	at.CoordinatePickUp();
+	int cnt = 0;
+	while (jd.HasGoods()) {
+		Sleep(200);
+		at.CoordinatePickUp();
+		if (cnt++ > 10) {
+			break;
+		}
+	}
 	// kb.Press(Esc键);
 	// 判断是否达到预设的疲劳值
 	if (jd.GetFatigue() < config.ReadConfigItem(configData.leftFatigue)) {
