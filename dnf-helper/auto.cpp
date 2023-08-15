@@ -179,7 +179,7 @@ void Auto::OverMap()
 		}
 
 		pm.FixFindRoute();
-		Sleep(300);
+		Sleep(600);
 		CoordinateStruct  currentCoorinate = jd.GetCurrentRoom();
 		// ³É¹¦¹ýÍ¼
 		if (!jd.IsAtMap() || !jd.IsOpenDoor() || !jd.CoordinateEqual(beforeCoorinate, currentCoorinate) || jd.IsPassMap() ) {
