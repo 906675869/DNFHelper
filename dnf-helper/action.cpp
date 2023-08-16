@@ -114,12 +114,19 @@ void Action::CoordinatePickUp()
 		ULONG loopType = rw.ReadInt(loopPtr + 类型偏移);
 		// ULONG loopTypeA = rw.ReadInt(loopPtr + 类型偏移 + 4);
 		ULONG camp = rw.ReadInt(loopPtr + 阵营偏移);
+		ULONG loopCode = rw.ReadInt(loopPtr + 代码偏移);
+		// 当前存在不稳定的裂缝
+		if (loopCode == 407003631)
+		{
+			as.specialProcess = true;
+			return;
+		}
 		if (loopType == 289)
 		{
 			ULONG64 goodsPtr = rw.ReadLong(loopPtr + 地面物品);
 			wstring	goodsName = UnicodeToAnsi(rw.ReadBytes(rw.ReadLong(goodsPtr + 物品名称), 100));
 			CoordinateStruct coordinate = cl.ReadCoordinate(loopPtr);
-			if (goodsName.size() >= 2 && filterGoodsNames.find(goodsName) == string::npos && coordinate.z > 0) {
+			if (goodsName.size() >= 2 && filterGoodsNames.find(goodsName) == string::npos && coordinate.z == 0) {
 				// cout << "物品坐标(" << coordinate.x << "," << coordinate.y << ")" << endl;
 				coordinates.push_back(coordinate);
 				goodNames.push_back(goodsName);

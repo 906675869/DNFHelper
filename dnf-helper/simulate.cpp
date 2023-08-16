@@ -63,13 +63,13 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 	int offset = 60;
 	if (lowOffset)
 	{
-		offset = 10;
+		offset = 6;
 	}
 	CoordinateStruct rwCoordinate = {0, 0, 0};
 
 	while (gd.autoSwitch) {
 		// 容错
-		if (loopCnt++ > 500) {
+		if (loopCnt++ > 250) {
 			ReleaseAllKeys();
 			break;
 		}
@@ -100,7 +100,7 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 		// 执行按键前获取一次坐标
 		rwCoordinate = personCoordinate;
 		// 到达目标地址
-		if (x - offset < rwCoordinate.x && rwCoordinate.x < x + offset && y - offset < rwCoordinate.y && rwCoordinate.y < y + offset)
+		if (x - offset < rwCoordinate.x && rwCoordinate.x < x + offset && y - offset/3 < rwCoordinate.y && rwCoordinate.y < y + offset/3)
 		{
 			ReleaseAllKeys();
 			if (x - offset < rwCoordinate.x) {
@@ -116,7 +116,7 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 			ReleaseXKeys();
 		}
 
-		if (y - offset < rwCoordinate.y && rwCoordinate.y < y + offset) {
+		if (y - offset/3 < rwCoordinate.y && rwCoordinate.y < y + offset/3) {
 			ReleaseYKeys();
 		}
 
@@ -145,7 +145,7 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 				Sleep(10);
 			}
 		}
-		if (rwCoordinate.y > y + offset/2) {
+		if (rwCoordinate.y > y + offset/3) {
 			if (kb.IsPressed(下光标键)) {
 				kb.Press(下光标键, 4);
 				Sleep(10);
@@ -155,7 +155,7 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 				Sleep(10);
 			}
 		}
-		if (rwCoordinate.y < y - offset/2) {
+		if (rwCoordinate.y < y - offset/3) {
 			if (kb.IsPressed(上光标键)) {
 				kb.Press(上光标键, 4);
 				Sleep(10);
