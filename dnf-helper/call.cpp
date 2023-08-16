@@ -5,6 +5,7 @@
 #include "pack.h"
 #include "action.h"
 #include "judge.h"
+#include "fastcall.h"
 
 Call cl;
 static boolean syncFlag;
@@ -366,6 +367,17 @@ void Call::CoordinateCall(int x, int y, int z)
 	shellCode = shellCode + makeByteArray({ 72, 129, 196, 0, 1, 0, 0 }) ;
 	MemoryCompileCall(shellCode);
 
+}
+
+void Call::SystemDecompose(vector<int>  positions)
+{
+	int decomposeId = 317;
+	for (int i = 0; i < positions.size(); i++) 
+	{
+		fastCall.Call(分解添加CALL, { rw.ReadLong(背包基址), (ULONG64)positions[i],(ULONG64)decomposeId});
+		Sleep(600);
+	}
+	fastCall.Call(分解CALL, { rw.ReadLong(背包基址), (ULONG64)65535,(ULONG64)decomposeId });
 }
 
 

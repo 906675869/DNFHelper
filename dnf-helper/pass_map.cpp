@@ -69,7 +69,6 @@ void PassMap::PassMapProcess(int direction)
 	}
 	// ¿¨°ü´¦Àí
 	else if (as.overMapCnt % 30 == 0) {
-		// PackPassMap(direction);
 		pm.PackPassMap(direction);
 	}
 

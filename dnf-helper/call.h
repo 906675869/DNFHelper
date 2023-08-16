@@ -58,6 +58,8 @@ public:
 	 static void OverMapCall(int direction);
 	 // 坐标call
 	 static void CoordinateCall(int x, int y, int z);
+	 // 系統分解
+	 static void SystemDecompose(vector<int> positions);
 
 };
 

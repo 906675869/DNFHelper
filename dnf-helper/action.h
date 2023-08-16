@@ -33,6 +33,8 @@ public:
 	static void GoodsBuff();
 	// 超级评分
 	static void SuperScore();
+	// 装备处理
+	static void EquipProcess();
 };
 
 extern Action at;

@@ -49,6 +49,9 @@ public:
 
 	// 地图中存在需要拾取的物品
 	bool HasGoods();
+
+	// 获取负重
+	int GetWeight();
 };
 
 extern Judge jd;

@@ -362,3 +362,66 @@ void Action::SuperScore()
 	rw.WriteInt(rw.ReadLong(评分基址) + 评分偏移, GetRandomNum(101010, 520314));
 	cout << "超级评分开启" << endl;
 }
+
+void Action::EquipProcess()
+{
+	ULONG64 addrStart = rw.ReadLong(rw.ReadLong(背包基址) + 物品栏偏移) + 0x48;
+	vector<int> wEquips, bEquips, pEquips;
+	for (int i = 0; i < 56; i++) {
+		ULONG64 equipAddr = rw.ReadLong(rw.ReadLong(addrStart + i * 8) - 72 + 16);
+		if (equipAddr == 0) {
+			continue;
+		}
+		wstring name = UnicodeToAnsi(rw.ReadBytes(rw.ReadLong(equipAddr + 物品名称), 100));
+		if (name.size() == 0) {
+			continue;
+		}
+
+		int level = rw.ReadInt(equipAddr + 装备品级);
+		if (level > 10) {
+			continue;
+		}
+		if (level == 0) {
+			wEquips.push_back(i + 9);
+		}
+		if (level == 1) {
+			bEquips.push_back(i + 9);
+		}
+		if (level == 2) {
+			pEquips.push_back(i + 9);
+		}
+	}
+	cout << "执行装备处理, 白装：[" << wEquips.size() << "]件;高级：[" << bEquips.size() << "}件;稀有：{" << pEquips.size() << "]件." << endl;
+	if (wEquips.size()> 0)
+	{
+		if (config.ReadConfigItem(configData.whiteEquip) == 1) {
+			pk.PackSale(wEquips.size(), wEquips);
+		}
+		if (config.ReadConfigItem(configData.whiteEquip) == 2) {
+			cl.SystemDecompose(wEquips);
+		}
+		
+		Sleep(3000);
+	}
+	if (bEquips.size() > 0)
+	{
+		if (config.ReadConfigItem(configData.blueEquip) == 1) {
+			pk.PackSale(bEquips.size(), bEquips);
+		}
+		if (config.ReadConfigItem(configData.blueEquip) == 2) {
+			cl.SystemDecompose(bEquips);
+		}
+		Sleep(3000);
+	}
+	if (pEquips.size() > 0)
+	{
+		if (config.ReadConfigItem(configData.purpleEquip) == 1) {
+			pk.PackSale(bEquips.size(), pEquips);
+		}
+		if (config.ReadConfigItem(configData.purpleEquip) == 2) {
+			cl.SystemDecompose(pEquips);
+		}
+		Sleep(3000);
+	}
+	
+}

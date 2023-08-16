@@ -4,6 +4,8 @@
 #include "helper.h"
 #include "keyboard.h"
 #include "call.h"
+#include "fastcall.h"
+
 Judge jd;
 // 获取角色疲劳
 int Judge::GetFatigue()
@@ -240,6 +242,13 @@ bool Judge::HasGoods()
 	}
 
 	return false;
+}
+
+int Judge::GetWeight()
+{
+	int current = rw.ReadInt(当前负重);
+	int max = rw.ReadInt(gd.personPtr + 最大负重) + rw.ReadInt(负重基址) * 10000;
+	return (int)((float)current / max *100);
 }
 
 

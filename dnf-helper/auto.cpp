@@ -65,11 +65,19 @@ void Auto::TownProcess()
 		gd.mapId = tk.HandleMain();
 		gd.mapLevel = 0;
 	}
+
+	if (jd.GetWeight() > 90)
+	{
+		at.EquipProcess();
+	}
+
+
 	cl.AreaCall(gd.mapId);
 	Sleep(1200);
 	pk.ChooseMap();
 	Sleep(300);
 	pk.GetinMap(gd.mapId, gd.mapLevel, NULL, NULL);
+	
 	// 延迟至进图
 	while (gd.autoSwitch) {
 		if (jd.IsAtMap() ||jd.IsAtTown())
@@ -253,6 +261,12 @@ void Auto::ClearMap()
 			break;
 		}
 	}
+	// 减少负重
+	if (jd.GetWeight() > 90)
+	{
+		at.EquipProcess();
+	}
+
 	// kb.Press(Esc键);
 	// 判断是否达到预设的疲劳值
 	if (jd.GetFatigue() < config.ReadConfigItem(configData.leftFatigue)) {
