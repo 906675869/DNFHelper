@@ -119,7 +119,7 @@ void Action::CoordinatePickUp()
 			ULONG64 goodsPtr = rw.ReadLong(loopPtr + 地面物品);
 			wstring	goodsName = UnicodeToAnsi(rw.ReadBytes(rw.ReadLong(goodsPtr + 物品名称), 100));
 			CoordinateStruct coordinate = cl.ReadCoordinate(loopPtr);
-			if (goodsName.size() >= 2 && filterGoodsNames.find(goodsName) == string::npos && coordinate.z > 0) {
+			if (goodsName.size() >= 2 && filterGoodsNames.find(goodsName) == string::npos && coordinate.z == 0) {
 				// cout << "物品坐标(" << coordinate.x << "," << coordinate.y << ")" << endl;
 				coordinates.push_back(coordinate);
 				goodNames.push_back(goodsName);
