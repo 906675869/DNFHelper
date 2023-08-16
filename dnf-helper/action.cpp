@@ -45,6 +45,8 @@ void Action::HookHarm()
 	}
 }
 
+static wstring filterGoodsNames = L"风化的碎骨#破旧的皮革#最下级硬化剂#碎布片#最下级元素结晶#生锈的铁片#最下级砥石";
+
 void Action::PackPickUp()
 {
 	if (rw. ReadInt(游戏状态) != 3)
@@ -87,7 +89,7 @@ void Action::PackPickUp()
 }
 
 
-static wstring filterGoodsNames = L"风化的碎骨#破旧的皮革#最下级硬化剂#碎布片#最下级元素结晶#生锈的铁片#最下级砥石";
+
 
 void Action::CoordinatePickUp()
 {
