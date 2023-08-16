@@ -392,13 +392,14 @@ void Action::EquipProcess()
 			pEquips.push_back(i + 9);
 		}
 	}
-	cout << "执行装备处理, 白装：[" << wEquips.size() << "]件;高级：[" << bEquips.size() << "}件;稀有：{" << pEquips.size() << "]件." << endl;
 	if (wEquips.size()> 0)
 	{
 		if (config.ReadConfigItem(configData.whiteEquip) == 1) {
+			cout << "执行组包出售, 白装：[" << wEquips.size() << "]件;" << endl;
 			pk.PackSale(wEquips.size(), wEquips);
 		}
 		if (config.ReadConfigItem(configData.whiteEquip) == 2) {
+			cout << "执行系统分解, 白装：[" << wEquips.size() << "]件;" << endl;
 			cl.SystemDecompose(wEquips);
 		}
 		
@@ -407,9 +408,11 @@ void Action::EquipProcess()
 	if (bEquips.size() > 0)
 	{
 		if (config.ReadConfigItem(configData.blueEquip) == 1) {
+			cout << "执行组包出售, 高级：[" << wEquips.size() << "]件;" << endl;
 			pk.PackSale(bEquips.size(), bEquips);
 		}
 		if (config.ReadConfigItem(configData.blueEquip) == 2) {
+			cout << "执行系统分解, 高级：[" << wEquips.size() << "]件;" << endl;
 			cl.SystemDecompose(bEquips);
 		}
 		Sleep(3000);
@@ -417,9 +420,11 @@ void Action::EquipProcess()
 	if (pEquips.size() > 0)
 	{
 		if (config.ReadConfigItem(configData.purpleEquip) == 1) {
+			cout << "执行组包出售, 稀有：[" << wEquips.size() << "]件;" << endl;
 			pk.PackSale(bEquips.size(), pEquips);
 		}
 		if (config.ReadConfigItem(configData.purpleEquip) == 2) {
+			cout << "执行系统分解, 稀有：[" << wEquips.size() << "]件;" << endl;
 			cl.SystemDecompose(pEquips);
 		}
 		Sleep(3000);

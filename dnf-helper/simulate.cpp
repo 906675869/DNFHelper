@@ -96,7 +96,6 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 		{
 			// 未移动人物，可能按键卡死
 			ReleaseAllKeys();
-			// break;
 		}
 		// 执行按键前获取一次坐标
 		rwCoordinate = personCoordinate;
@@ -127,28 +126,23 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 				Sleep(5);
 			}
 			// 未按下
-			if (!kb.IsPressed(左光标键)) {
+			if (!kb.IsPressed(左光标键) || jd.GetPersonAction() != 14) {
 				kb.Press(左光标键);
 				Sleep(10);
 				kb.Press(左光标键, 3);
 				Sleep(10);
-				kb.Press(左光标键, 3);
-				Sleep(5);
 			}
-
 		}
 		if (rwCoordinate.x < x - offset) {
 			if (kb.IsPressed(左光标键)) {
 				kb.Press(左光标键, 4);
 				Sleep(5);
 			}
-			if (!kb.IsPressed(右光标键)) {
+			if (!kb.IsPressed(右光标键) || jd.GetPersonAction() != 14) {
 				kb.Press(右光标键);
 				Sleep(10);
 				kb.Press(右光标键, 3);
 				Sleep(10);
-				kb.Press(右光标键, 3);
-				Sleep(5);
 			}
 		}
 		if (rwCoordinate.y > y + offset/2) {
