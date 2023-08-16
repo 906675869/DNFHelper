@@ -248,7 +248,7 @@ int Judge::GetWeight()
 {
 	int current = rw.ReadInt(当前负重);
 	int max = rw.ReadInt(gd.personPtr + 最大负重) + rw.ReadInt(负重基址) * 10000;
-	return (int)((float)current / max *100);
+	return (int)((float)current / (float)max * 100);
 }
 
 

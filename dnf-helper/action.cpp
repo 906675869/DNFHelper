@@ -339,10 +339,10 @@ void Action::SuperSpecialBuff()
 	if (!jd.IsAtMap()) {
 		return;
 	}
-	cl.SpecialEffectCall(1219);
-	cl.SpecialEffectCall(1211);
-	cl.SpecialEffectCall(165);
-	cl.SpecialEffectCall(174);
+	// cl.SpecialEffectCall(1219);
+	// cl.SpecialEffectCall(1211);
+	cl.SpecialEffectCall(165); // - 30 cd
+	// cl.SpecialEffectCall(174);
 	cout << "特效buff开启" << endl;
 }
 
@@ -351,9 +351,10 @@ void Action::GoodsBuff()
 	if (!jd.IsAtMap()) {
 		return;
 	}
-	cl.GoodsCall(490013664); // 雪人药 14000力智
-	cl.GoodsCall(490014049); // 成长药水14000力智
+	// cl.GoodsCall(490013664); // 雪人药 14000力智
+	// cl.GoodsCall(490014049); // 成长药水14000力智
 	cl.GoodsCall(490028988); // 普洱茶60秒 12%双攻
+	cl.GoodsCall(10088698); //  -13 cd
 	cout << "物品buff开启" << endl;
 }
 
