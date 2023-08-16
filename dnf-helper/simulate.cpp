@@ -63,7 +63,7 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 	int offset = 60;
 	if (lowOffset)
 	{
-		offset = 10;
+		offset = 5;
 	}
 	CoordinateStruct rwCoordinate = {0, 0, 0};
 
