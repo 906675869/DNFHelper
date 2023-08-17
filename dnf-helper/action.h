@@ -35,6 +35,8 @@ public:
 	static void SuperScore();
 	// 装备处理
 	static void EquipProcess();
+	// 技能无cd
+	static void SkillNotCd();
 };
 
 extern Action at;

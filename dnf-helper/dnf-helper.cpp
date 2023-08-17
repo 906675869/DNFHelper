@@ -75,7 +75,7 @@ VOID HomeActive()
 		return;
 	}
 
-	//AddHotkey({ VK_F1, 0, 0, (LPTHREAD_START_ROUTINE)FullScreenSwitch });
+	hk.AddHotkey({ VK_F1, 0, 0, (LPTHREAD_START_ROUTINE)at.SkillNotCd });
 	hk.AddHotkey({ VK_F2, 0, 0, (LPTHREAD_START_ROUTINE)at.GoodsBuff });
 	hk.AddHotkey({ VK_F3, 0, 0, (LPTHREAD_START_ROUTINE)at.SuperSpecialBuff });
 	hk.AddHotkey({ VK_F4, 0, 0, (LPTHREAD_START_ROUTINE)at.Invincible });
@@ -92,7 +92,7 @@ VOID HomeActive()
 	// hk.AddHotkey({ Esc键, 0, 0, (LPTHREAD_START_ROUTINE)testPress });
 	printf("\n");
 	printf("⊙贪狼⊙ >>  程序激活成功 ！\n");
-	//printf("⊙贪狼⊙ F1  开启技能全屏 ！\n");
+	printf("⊙贪狼⊙ F1  技能无cd ！\n");
 	printf("⊙贪狼⊙ F2  开启物品BUFF ！\n");
 	printf("⊙贪狼⊙ F3  开启超级BUFF ！\n");
 	printf("⊙贪狼⊙ F4  开启霸体无敌 ！\n");
