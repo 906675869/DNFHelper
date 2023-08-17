@@ -7,19 +7,19 @@
 void ReleaseAllKeys()
 {
 	if (kb.IsPressed(左光标键)) {
-		kb.Press(左光标键, 4);
+		mskKb.KeyUp(左光标键);
 		Sleep(10);
 	}
 	if (kb.IsPressed(右光标键)) {
-		kb.Press(右光标键, 4);
+		mskKb.KeyUp(右光标键);
 		Sleep(10);
 	}
 	if (kb.IsPressed(上光标键)) {
-		kb.Press(上光标键, 4);
+		mskKb.KeyUp(上光标键);
 		Sleep(10);
 	}
 	if (kb.IsPressed(下光标键)) {
-		kb.Press(下光标键, 4);
+		mskKb.KeyUp(下光标键);
 		Sleep(10);
 	}
 }
@@ -27,11 +27,11 @@ void ReleaseAllKeys()
 void ReleaseXKeys() 
 {
 	if (kb.IsPressed(左光标键)) {
-		kb.Press(左光标键, 4);
+		mskKb.KeyUp(左光标键);
 		Sleep(10);
 	}
 	if (kb.IsPressed(右光标键)) {
-		kb.Press(右光标键, 4);
+		mskKb.KeyUp(右光标键);
 		Sleep(10);
 	}
 }
@@ -39,11 +39,11 @@ void ReleaseXKeys()
 void ReleaseYKeys()
 {
 	if (kb.IsPressed(上光标键)) {
-		kb.Press(上光标键, 4);
+		mskKb.KeyUp(上光标键);
 		Sleep(10);
 	}
 	if (kb.IsPressed(下光标键)) {
-		kb.Press(下光标键, 4);
+		mskKb.KeyUp(下光标键);
 		Sleep(10);
 	}
 }
@@ -104,10 +104,10 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 		{
 			ReleaseAllKeys();
 			if (x - offset < rwCoordinate.x) {
-				kb.Press(左光标键);
+				mskKb.Press(左光标键);
 			}
 			if (rwCoordinate.x < x + offset) {
-				kb.Press(右光标键);
+				mskKb.Press(右光标键);
 			}
 			break;
 		}
@@ -122,46 +122,46 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 
 		if (rwCoordinate.x > x + offset) {
 			if (kb.IsPressed(右光标键)) {
-				kb.Press(右光标键, 4);
+				mskKb.KeyUp(右光标键);
 				Sleep(5);
 			}
 			// 未按下
 			if (!kb.IsPressed(左光标键) || jd.GetPersonAction() != 14) {
-				kb.Press(左光标键);
+				mskKb.Press(左光标键);
 				Sleep(10);
-				kb.Press(左光标键, 3);
+				mskKb.KeyDown(左光标键);
 				Sleep(10);
 			}
 		}
 		if (rwCoordinate.x < x - offset) {
 			if (kb.IsPressed(左光标键)) {
-				kb.Press(左光标键, 4);
+				mskKb.KeyUp(左光标键);
 				Sleep(5);
 			}
 			if (!kb.IsPressed(右光标键) || jd.GetPersonAction() != 14) {
-				kb.Press(右光标键);
+				mskKb.Press(右光标键);
 				Sleep(10);
-				kb.Press(右光标键, 3);
+				mskKb.KeyDown(右光标键);
 				Sleep(10);
 			}
 		}
 		if (rwCoordinate.y > y + offset/3) {
 			if (kb.IsPressed(下光标键)) {
-				kb.Press(下光标键, 4);
+				mskKb.KeyUp(下光标键);
 				Sleep(10);
 			}
 			if (!kb.IsPressed(上光标键)) {
-				kb.Press(上光标键, 3);
+				mskKb.KeyDown(上光标键);
 				Sleep(10);
 			}
 		}
 		if (rwCoordinate.y < y - offset/3) {
 			if (kb.IsPressed(上光标键)) {
-				kb.Press(上光标键, 4);
+				mskKb.KeyUp(上光标键);
 				Sleep(10);
 			}
 			if (!kb.IsPressed(下光标键)) {
-				kb.Press(下光标键, 3);
+				mskKb.KeyDown(下光标键);
 				Sleep(10);
 			}
 		}

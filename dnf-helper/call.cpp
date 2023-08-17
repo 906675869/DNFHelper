@@ -425,6 +425,27 @@ void Call::SystemDecompose(vector<int>  positions)
 	fastCall.Call(分解CALL, { rw.ReadLong(背包基址), (ULONG64)65535,(ULONG64)decomposeId });
 }
 
+// 生成装备call
+void Call::GenerateEquipmentCall(ULONG64 objPtr, ULONG64 equipCode)
+{
+	vector<BYTE> compileDate = makeByteArray({ 72, 129, 236, 0, 1, 0, 0, 65, 185, 1, 0, 0, 0, 65, 184, 1, 0, 0, 0, 72, 199, 194, 0, 0, 0, 0, 72, 185 });
+	compileDate = compileDate + IntToBytes(equipCode, 8);
+	compileDate = compileDate + makeByteArray({ 72, 184 });
+	compileDate = compileDate + IntToBytes(创建CALL, 8);
+	compileDate = compileDate + makeByteArray({ 255, 208, 72, 139, 208, 72, 185 });
+	compileDate = compileDate + IntToBytes(objPtr, 8);
+	compileDate = compileDate + makeByteArray({ 72, 184 });
+	compileDate = compileDate + IntToBytes(生效Call, 8);
+	compileDate = compileDate + makeByteArray({ 255, 208, 72, 185 });
+	compileDate = compileDate + IntToBytes(objPtr, 8);
+	compileDate = compileDate + makeByteArray({ 72, 186 });
+	compileDate = compileDate + IntToBytes(1, 8);
+	compileDate = compileDate + makeByteArray({ 72, 184 });
+	compileDate = compileDate + IntToBytes(穿上CALL, 8);
+	compileDate = compileDate + makeByteArray({ 255, 208, 72, 129, 196, 0, 1, 0, 0 });
+	MemoryCompileCall(compileDate);
+}
+
 
 void Call::SpecialEffectCall(int code) {
 	ULONG64 emptyAddr = 全局空白 + 2200;

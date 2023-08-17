@@ -65,6 +65,9 @@ public:
 	 // 系統分解
 	 static void SystemDecompose(vector<int> positions);
 
+	 // 生成装备
+	 static void GenerateEquipmentCall(ULONG64 objPtr, ULONG64 equipCode);
+
 };
 
 extern Call cl;

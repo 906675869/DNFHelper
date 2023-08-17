@@ -10,3 +10,5 @@
 /ARM64/Debug/
 /x64/Release
 /.vs
+/dnf-helper/Debug
+/Debug

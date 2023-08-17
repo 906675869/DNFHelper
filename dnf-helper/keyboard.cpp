@@ -1,4 +1,5 @@
 #include "keyboard.h"
+#include "msdk.h"
 
 // °´¼ü×´Ì¬
 int CachedKeyStates[256];
@@ -155,4 +156,35 @@ int Keyboard::GetACIICode(int keycode) {
 bool Keyboard::IsPressed(int keycode)
 {
 	return GetAsyncKeyState(keycode) & 0x8000;
+}
+
+
+
+void MskKeyboard::Press(int keycode)
+{
+	if (mskHandle == INVALID_HANDLE_VALUE)
+	{
+		kb.Press(keycode);
+	}
+	M_KeyPress2(mskHandle, keycode, 1);
+}
+
+void MskKeyboard::KeyDown(int keycode)
+{
+	if (mskHandle == INVALID_HANDLE_VALUE) 
+	{
+		kb.Press(keycode, 3);
+		return;
+	}
+	M_KeyDown2(mskHandle, keycode);
+}
+
+void MskKeyboard::KeyUp(int keycode)
+{
+	if (mskHandle == INVALID_HANDLE_VALUE)
+	{
+		kb.Press(keycode, 4);
+		return;
+	}
+	M_KeyUp2(mskHandle, keycode);
 }

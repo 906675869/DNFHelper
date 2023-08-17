@@ -11,11 +11,14 @@
 #include "config.h"
 #include "fastcall.h"
 #include "judge.h"
+#include "msdk.h"
 
 GlobalData gd;
 Simulate sl;
 AutoStruct as;
 Auto aut;
+HANDLE mskHandle;
+MskKeyboard mskKb;
 
 VOID GetPersonPtr()
 {
@@ -73,6 +76,12 @@ VOID HomeActive()
 		printf("游戏未启动\n");
 		gd.helperInit = !gd.helperInit;
 		return;
+	}
+
+	HANDLE mskHandle = M_Open(1);
+	if (mskHandle == INVALID_HANDLE_VALUE)
+	{
+		cout << "易鼠标加载失败" << endl;
 	}
 
 	hk.AddHotkey({ VK_F1, 0, 0, (LPTHREAD_START_ROUTINE)at.SkillNotCd });

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -158,12 +158,16 @@
     <ClInclude Include="helper.h" />
     <ClInclude Include="judge.h" />
     <ClInclude Include="keyboard.h" />
+    <ClInclude Include="msdk.h" />
     <ClInclude Include="pack.h" />
     <ClInclude Include="pass_map.h" />
     <ClInclude Include="readwrite.h" />
     <ClInclude Include="route.h" />
     <ClInclude Include="simulate.h" />
     <ClInclude Include="task.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="msdk.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

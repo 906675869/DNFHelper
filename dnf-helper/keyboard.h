@@ -95,3 +95,18 @@ public:
 extern Keyboard kb;
 
 
+
+extern HANDLE mskHandle;
+
+class MskKeyboard {
+public :
+
+	void Press(int keycode);
+
+	void KeyDown(int keycode);
+
+	void KeyUp(int keycode);
+
+};
+
+extern MskKeyboard mskKb;

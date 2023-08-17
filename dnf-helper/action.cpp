@@ -446,3 +446,10 @@ void Action::SkillNotCd()
 	rw.WriteBytes(技能无CD, { 128, 243, 0, 128, 243, 0 });
 	cout << "技能无CD开启" << endl;
 }
+
+
+void Action :: FirePerson() 
+{
+	cl.GenerateEquipmentCall(gd.personPtr, 500310176);
+	cout << "火人开启" << endl;
+}

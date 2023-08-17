@@ -37,6 +37,8 @@ public:
 	static void EquipProcess();
 	// 技能无cd
 	static void SkillNotCd();
+	// 火人
+	static void FirePerson();
 };
 
 extern Action at;
