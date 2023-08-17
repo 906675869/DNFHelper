@@ -6,7 +6,9 @@
 #include "action.h"
 #include "judge.h"
 #include "fastcall.h"
+#include <iostream>
 
+using namespace std;
 Call cl;
 static boolean syncFlag;
 
@@ -23,6 +25,49 @@ vector<BYTE> Call::AddResp(int i) {
 		return AppendBytes({ 72, 129, 196 }, IntToBytes(i, 4));
 	}
 	return AppendBytes({ 72, 131, 196 }, { (BYTE)i });
+}
+
+vector<byte> Call::HookJmp(ULONG64 hookAddr, ULONG64 jumpAddr, vector<byte> extra)
+{
+	vector<byte> jump = makeByteArray({ 233 }) + IntToBytes(jumpAddr - hookAddr - 5, 4);
+	if (extra.size() > 0) 
+	{
+		jump = jump + extra;
+	}
+
+	return jump;
+}
+
+static bool hookMonsterSwitch = false;
+
+static vector<byte> monsterOriginBytes;
+
+void Call::HookMonster()
+{
+	ULONG64 hookMonsterAddr = HOOK变怪 + 3;
+	ULONG64 emptyAddr = 全局空白 + 4100;
+	hookMonsterSwitch = !hookMonsterSwitch;
+	vector<byte> hookData;
+	if (hookMonsterSwitch) {
+		monsterOriginBytes = rw.ReadBytes(hookMonsterAddr, 7);
+
+		hookData = hookData + makeByteArray({ 0xB9 }) + IntToBytes(61500, 4);
+		hookData = hookData + makeByteArray({ 0xBA }) + IntToBytes(120, 4);
+		hookData = hookData + monsterOriginBytes;
+		hookData = hookData + HookJmp(emptyAddr + monsterOriginBytes.size(), hookMonsterAddr + 7, { 144 });
+		rw.WriteBytes(emptyAddr, hookData);
+		rw.WriteBytes(hookMonsterAddr, HookJmp(hookMonsterAddr, emptyAddr, { 144,144 }));
+		cout << "变怪开启" << endl;
+	}
+	else {
+	
+		rw.WriteBytes(hookMonsterAddr, monsterOriginBytes);
+		rw.WriteBytes(emptyAddr, GetEmptyBytes(50));
+		cout << "变怪关闭" << endl;
+	}
+
+
+
 }
 
 vector<byte> Call::SimpleCall(ULONG64 addr)

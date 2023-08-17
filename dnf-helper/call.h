@@ -7,6 +7,10 @@ public:
 
 	 static vector<BYTE> AddResp(int i);
 
+	 static vector<byte> HookJmp(ULONG64 hookAddr, ULONG64 jumpAddr, vector<byte> extra);
+
+	 static void HookMonster();
+
 	 static vector<byte> SimpleCall(ULONG64 addr);
 	// ÄÚ´æ»ã±à
 	 static void MemoryCompileCall(vector<BYTE> vals);
