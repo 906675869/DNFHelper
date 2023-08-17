@@ -166,7 +166,7 @@ void Simulate::GoDestation(int x, int y, CoordinateStruct beforeCoordinate, bool
 			}
 		}
 		
-		Sleep(20);
+		Sleep(10);
 		
 	}
 
