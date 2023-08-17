@@ -9,6 +9,8 @@ public:
 	bool IsAtRoleList();
 	// 是否在城镇
 	bool IsAtTown();
+	// 是否在选图
+	bool IsAtChooseMap();
 	// 是否在地图内
 	bool IsAtMap();
 

@@ -24,6 +24,7 @@ void Auto::AutoSwitch()
 	else {
 		cout << ">> 关闭自动刷图" << endl;
 	}
+	int choseMapCnt = 0;
 	while (gd.autoSwitch)
 	{
 		if (jd.IsAtRoleList()) 
@@ -34,8 +35,25 @@ void Auto::AutoSwitch()
 		{
 			TownProcess();
 		}
+		else if (jd.IsAtChooseMap()) 
+		{
+			// 选图容错
+			if (choseMapCnt++ % 15 == 0) 
+			{
+				if (choseMapCnt / 15) 
+				{
+					for (int i = 0; i < choseMapCnt / 15; i++) 
+					{
+						kb.Press(左光标键);
+						Sleep(200);
+					}
+				}
+				kb.Press(空格键);
+			}
+		}
 		else if (jd.IsAtMap())
 		{
+			choseMapCnt = 0;
 			EveryRoomLoop();
 		}
 
@@ -73,19 +91,19 @@ void Auto::TownProcess()
 
 
 	cl.AreaCall(gd.mapId);
-	Sleep(1200);
+	Sleep(3200);
 	pk.ChooseMap();
 	Sleep(300);
 	pk.GetinMap(gd.mapId, gd.mapLevel, NULL, NULL);
+	int dely = 0;
 	
 	// 延迟至进图
 	while (gd.autoSwitch) {
-		if (jd.IsAtMap() ||jd.IsAtTown())
+		if (jd.IsAtMap() ||jd.IsAtTown() || dely++ == 50)
 		{
 			break;
 		}
 		Sleep(200);
-		kb.Press(空格键);
 	}
 }
 
@@ -123,6 +141,10 @@ void Auto::EveryRoomLoop()
 		kb.Press(空格键);
 
 	}
+	// 跟随怪物
+	at.FollowMonster();
+
+
 	// 已通关
 	if (jd.IsBossRoom() && jd.IsPassMap()) {
 		cout << ">> 执行通关处理,已通关["<< passMapCnt ++ <<"]次" << endl;
@@ -133,13 +155,8 @@ void Auto::EveryRoomLoop()
 		if (config.ReadConfigItem(configData.followModel) == 3 && jd.IsAtTown()) {
 			at.IgnoreBuildings(false);
 		}
+		return;
 		
-	}
-	// 未开门
-	if (!jd.IsOpenDoor())
-	{
-		// 跟随怪物
-		at.FollowMonster();
 	}
 
 	// 已开门

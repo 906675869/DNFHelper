@@ -21,7 +21,11 @@ bool Judge::IsAtRoleList()
 bool Judge::IsAtTown()
 {
 	return rw.ReadInt(сно╥в╢л╛) == 1;
-	// return false;
+}
+
+bool Judge::IsAtChooseMap()
+{
+	return rw.ReadInt(сно╥в╢л╛) == 2;
 }
 
 bool Judge::IsAtMap()
