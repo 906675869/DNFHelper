@@ -145,3 +145,9 @@ extern ConfigData configData;
 
 
 vector<byte> operator+(vector<byte> a, vector<byte> b);
+
+
+string BytesToHexStr(vector<byte> bytes);
+
+
+vector<byte> HexToBytes(const string hex);

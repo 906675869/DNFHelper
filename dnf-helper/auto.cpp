@@ -44,11 +44,11 @@ void Auto::AutoSwitch()
 				{
 					for (int i = 0; i < choseMapCnt / 15; i++) 
 					{
-						kb.Press(左光标键);
+						mskKb.Press(左光标键);
 						Sleep(200);
 					}
 				}
-				kb.Press(空格键);
+				mskKb.Press(空格键);
 			}
 		}
 		else if (jd.IsAtMap())
@@ -132,13 +132,13 @@ void Auto::EveryRoomLoop()
 		// if(config.ReadConfigItem(configData.))
 		at.SuperScore();
 		// 按键buff
-		kb.Press(右光标键);
+		mskKb.Press(右光标键);
 		Sleep(100);
-		kb.Press(右光标键);
+		mskKb.Press(右光标键);
 		Sleep(130);
-		kb.Press(空格键);
+		mskKb.Press(空格键);
 		Sleep(500);
-		kb.Press(空格键);
+		mskKb.Press(空格键);
 
 	}
 	// 跟随怪物
@@ -234,12 +234,12 @@ void Auto::ContinueMap(bool continueMap)
 		else {
 			if (continueMap) {
 				if (passMapCnt <= 3) {
-					kb.Press(Esc键);
+					mskKb.Press(Esc键);
 					Sleep(200);
 				}
 				// 重新挑战
 				if (passMapCnt == 1) cout << ">> 执行重新挑战" << endl;
-				kb.FnPress(空格键);
+				mskKb.Press(空格键);
 				Sleep(500);
 				if (passMapCnt > 5) {
 					kb.FnPress(VK_F10);
@@ -247,11 +247,11 @@ void Auto::ContinueMap(bool continueMap)
 			}
 			else {
 				if (passMapCnt <= 3) {
-					kb.Press(Esc键);
+					mskKb.Press(Esc键);
 					Sleep(200);
 				}
 				if (passMapCnt == 1) cout << ">> 执行返回城镇" << endl;
-				kb.FnPress(VK_F12);
+				mskKb.Press(VK_F12);
 
 			}
 

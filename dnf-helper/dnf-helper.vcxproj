@@ -135,16 +135,20 @@
     <ClCompile Include="call.cpp" />
     <ClCompile Include="common.cpp" />
     <ClCompile Include="config.cpp" />
+    <ClCompile Include="dmrw.cpp" />
+    <ClCompile Include="dmrw.h" />
     <ClCompile Include="dnf-helper.cpp" />
     <ClCompile Include="fastcall.cpp" />
     <ClCompile Include="helper.cpp" />
     <ClCompile Include="judge.cpp" />
     <ClCompile Include="keyboard.cpp" />
+    <ClCompile Include="dm.cpp" />
     <ClCompile Include="pack.cpp" />
     <ClCompile Include="pass_map.cpp" />
     <ClCompile Include="readwrite.cpp" />
     <ClCompile Include="route.cpp" />
     <ClCompile Include="simulate.cpp" />
+    <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="task.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -159,15 +163,20 @@
     <ClInclude Include="judge.h" />
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="msdk.h" />
+    <ClInclude Include="dm.h" />
     <ClInclude Include="pack.h" />
     <ClInclude Include="pass_map.h" />
     <ClInclude Include="readwrite.h" />
     <ClInclude Include="route.h" />
     <ClInclude Include="simulate.h" />
+    <ClInclude Include="stdafx.h" />
     <ClInclude Include="task.h" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="msdk.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="msdk.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

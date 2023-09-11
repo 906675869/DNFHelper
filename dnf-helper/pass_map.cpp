@@ -111,16 +111,15 @@ void FixFindRouteA() {
 	if (x == 4 && y == 2) {
 		if (as.pass1 == 0) {
 			direction = DOWN;
-			as.pass1 = 1;
 		}
 		else
 		{
 			direction = UP;
 		}
 	}
-
 	// 右下角
 	if (x == 4 && y == 3) {
+		as.pass1 = 1;
 		direction = RIGHT;
 	}
 	if (x == 4 && y == 1) {
@@ -151,23 +150,33 @@ void FixFindRouteC() {
 		if (as.pass1 == 0)
 		{
 			direction = RIGHT;
-			as.pass1 = 1;
 		}else if(as.pass1 == 1)
 		{
 			direction = DOWN;
 		}
 	}
+	if (x == 2 && y == 1)
+	{
+		as.pass1 = 1;
+	}
+
+
 	// 循环2
 	if (x == 3 && y == 1) {
 		if (as.pass2 == 0)
 		{
 			direction = UP;
-			as.pass2 = 1;
+			
 		}else if(as.pass2 == 1)
 		{
 			direction = RIGHT;
 		}
 	}
+
+	if (x == 3 && y == 0) {
+		as.pass2 = 1;
+	}
+
 	// 第一层 左上角
 	if (y == 0 && x == 1) {
 		as.pass1 = 1;

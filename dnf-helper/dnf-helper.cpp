@@ -50,7 +50,7 @@ VOID GetPersonPtr()
 		{
 			Sleep(3000);
 			// 消耗复活币
-			kb.Press(X键);
+			mskKb.Press(X键);
 		}
 		Sleep(200);
 	}
