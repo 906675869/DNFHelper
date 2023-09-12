@@ -27,4 +27,6 @@ namespace game{
 
 
 	};
+
+	extern DmReadWrite rw;
 }

@@ -266,6 +266,8 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="address.h" />
+    <ClInclude Include="call.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="dm.h" />
     <ClInclude Include="dmrw.h" />
@@ -278,6 +280,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="call.cpp" />
     <ClCompile Include="dm.cpp" />
     <ClCompile Include="dmrw.cpp" />
     <ClCompile Include="helper.cpp" />

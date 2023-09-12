@@ -34,5 +34,12 @@ namespace game
 
 	extern ProcessConfig processConfig;
 
+
+
+	struct CoordinateStruct {
+		int x;
+		int y;
+		int z;
+	};
 }
 
