@@ -1,0 +1,11 @@
+﻿  pch.cpp
+  dm.cpp
+C:\Users\Q\source\repos\DNFHelper\mfc\dm.cpp(35,53): warning C4838: 从“int”转换到“UINT”需要收缩转换
+  dmrw.cpp
+C:\Users\Q\source\repos\DNFHelper\mfc\dmrw.cpp(18,26): warning C4244: “return”: 从“LONGLONG”转换到“DWORD”，可能丢失数据
+  helper.cpp
+  mfc.cpp
+  mfcDlg.cpp
+  正在生成代码
+  已完成代码的生成
+  mfc.vcxproj -> C:\Users\Q\source\repos\DNFHelper\ARM64\Release\mfc.exe
